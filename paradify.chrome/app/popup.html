@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta http-equiv="content-security-policy" content="script-src 'self'"/>
+    <title>Paradify</title>
+    <script src="jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/popup.js" type="text/javascript" charset="utf-8"></script>
+    <link href="styles/bootstrap.min.css" rel="stylesheet"/>
+    <link href="styles/main.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="main">
+    <div id="footer"><img src="images/footer-logo.png" width="100" height="30"/></div>
+    <div id="waiting">
+        <img src="images/loading.gif" width="90" height="90"/>
+    </div>
+
+    <div id="result" class="hidden"></div>
+
+    <div id="form" class="hidden">
+        <form method="get" action="">
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <h3 class="text-center text-danger">Songs to Spotify</h3>
+                    <label class="control-label" for="focusedInput"></label>
+                    <input class="form-control searchBox" id="q" type="text" placeholder="Search song">
+                    <button type="button" class="btn btn-primary clickButton">Search</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

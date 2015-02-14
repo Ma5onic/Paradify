@@ -1,0 +1,22 @@
+{
+  "name": "Nodejs",
+  "version": "0.0.0",
+  "description": "Nodejs",
+  "main": "app.js",
+  "author": {
+    "name": "volkan",
+    "email": ""
+  },
+  "number": 33,
+  "dependencies": {
+    "body-parser": "^1.9.2",
+    "connect-mongo": "^0.5.3",
+    "express": "^4.10.2",
+    "express-session": "^1.9.1",
+    "mongoose": "^3.8.21",
+    "restler": "^3.2.2",
+    "spotify-web-api-node": "^1.1.0",
+    "swig": "^1.4.2",
+    "util": "^0.10.3"
+  }
+}

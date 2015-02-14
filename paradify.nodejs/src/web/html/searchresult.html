@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Paradify - Songs to Spotify</title>
+    <script src="{{url}}/src/web/js/jquery.min.js"></script>
+    <script src="{{url}}/src/web/js/playback.js"></script>
+    <link rel='stylesheet' href='{{url}}/src/web/css/bootstrap.min.css' type='text/css'/>
+    <link rel='stylesheet' href='{{url}}/src/web/css/searchresult.css' type='text/css'/>
+    <link rel='stylesheet' href='{{url}}/src/web/css/playback.css' type='text/css'/>
+
+</head>
+<body>
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#"><img src="{{url}}/src/web/images/logo.png"/></a>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <form action="/Search" method="GET" class="navbar-form navbar-left">
+            <input type="text" id="q" name="q" placeholder="Search Track, Artist" class="form-control col-lg-8"
+                   value="{{q}}">
+            <!--<input type="submit" value="Search">-->
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+            {%if dataMe != undefined && dataMe.images.length>0%}
+            <li><img width="38" height="38" src="{{dataMe.images[0].url}}"></li>
+            {%endif%}
+            <li><a href="javascript:void(0);">{{dataMe.id}}</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="main">
+    {% if err != undefined %}
+    <p class="text-primary"><strong>Oh snap!</strong> {{err.message}}</p>
+    {% endif %}
+
+    {% if err == undefined && dataTracks == undefined || dataTracks.tracks.items.length ==0 %}
+    <p class="text-primary"><strong>Oh snap!</strong> No tracks found</p>
+    {% endif %}
+
+    {% if dataTracks != undefined && dataTracks.tracks.items.length>0 %}
+    <div class="list-group">
+        <a href="#" class="list-group-item active">
+            Select a track
+        </a>
+        {% for item in dataTracks.tracks.items %}
+<div class="tracks" playback="{{item.preview_url}}">
+    {% if item.preview_url!=null %}
+        <span class="player">            <span class="play-pause"></span>                </span>
+    {% endif %}
+        <a href="javascript:void(0)" onclick="select('{{item.id}}','track');" class="list-group-item">
+            <input type="radio" name="trackRadio" id="{{item.id}}" value="{{item.uri}}" class="track"/>
+
+
+
+            {% if item.album.images.length > 0 %}
+                <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>
+            {% endif %}
+
+            {{item.artists[0].name }} - {{item.name }}
+        </a>
+      </div>
+        {% endfor %}
+
+    </div>
+
+
+    <div class="list-group">
+        <a href="#" class="list-group-item active">
+            Select a playlist
+        </a>
+        {% for itemPlaylist in dataPlaylist.items %}
+        {% if itemPlaylist.owner.id == dataMe.id%}
+        <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
+            <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
+                   value="{{itemPlaylist.id}}"/>
+            {{itemPlaylist.name }}
+        </a>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <div class="list-group list-group-button">
+        <a href="javascript:void(0);" class="btn btn-success add-to-playlist-button">Add to playlist</a>
+        <span id="loading" style="display: none;"><img src="/src/web/images/loading.gif" width="25" height="25"/></span>
+
+        <div class="resultError text-primary"></div>
+        <div class="resultSuccess text-success"></div>
+
+    </div>
+    <script type="text/javascript">
+
+        function select(_this, listName) {
+
+            if (listName == 'track') {
+                $(".track").prop("checked", false);
+            } else if (listName == 'playlist') {
+                $(".playlist").prop("checked", false);
+            }
+
+            $("#" + _this).prop("checked", true);
+            $('html, body').animate({
+                scrollTop: $(".add-to-playlist-button").offset().top
+            }, 500);
+        }
+
+
+        $(".add-to-playlist-button").click(function () {
+            $("#loading").show();
+
+            if ($("input[name=trackRadio]:checked").length > 0 && $("input[name=playlistRadio]:checked").length > 0) {
+
+                var dataJson = {};
+                dataJson.playlistId = $("input[name=playlistRadio]:checked").val();
+                dataJson.track = $("input[name=trackRadio]:checked").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/playlist",
+                    data: dataJson,
+                    success: function (result) {
+                        if (result.snapshot_id != undefined) {
+                            showMessage("added successfully!");
+                            // $(".add-to-playlist-button").hide();
+                        } else {
+                            showError("can not added : " + result.errorMessage);
+                        }
+                        $("#loading").hide();
+                    },
+                    error: function (xhr, textStatus, err) {
+                        $("#loading").hide();
+                    }
+                });
+
+            } else {
+                showError("select a track and a playlist");
+                $("#loading").hide();
+            }
+
+        });
+        function showError(msg) {
+            $(".resultError").show();
+            $(".resultSuccess").hide();
+            $(".resultError").html(msg);
+        }
+
+        function showMessage(msg) {
+            $(".resultError").hide();
+            $(".resultSuccess").show();
+            $(".resultSuccess").html(msg);
+        }
+
+
+
+    </script>
+
+    {% endif %}
+</div>
+
+
+</body>
+</html>
