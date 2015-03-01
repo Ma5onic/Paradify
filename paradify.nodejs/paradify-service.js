@@ -2,7 +2,7 @@ var SpotifyWebApi = require("./src/spotify-web-api");
 db = require('./model/db');
 var config = require('./config');
 
-var scopes = ['playlist-read-private', 'playlist-modify-public', 'playlist-modify-private', 'user-library-modify', 'user-read-private' , 'user-read-email']; //'user-library-read'
+var scopes = ['playlist-read-private', 'playlist-modify-public', 'playlist-modify-private', 'user-library-modify', 'user-read-private'];
 var client_id = 'aba4782305d0480f9dbe2b63a7a77b42';
 var client_secret = '4f2585881e99474f92b0e67ea69b22d0';
 var redirect_uri = config.virtualUrl + '/callback';
@@ -55,6 +55,14 @@ function paradifyService(token) {
 
     this.search = function (q, callback) {
         spotifyApi.searchTracksArtists(q).then(function (dataTracks) {
+            //return is token not exist
+            if (token == undefined) {
+                call_back_function({
+                    callback: callback,
+                    data: {dataTracks: dataTracks}
+                });
+                return;
+            }
 
             spotifyApi.setAccessToken(token);
 
@@ -85,7 +93,12 @@ function paradifyService(token) {
                                 if (dataPlaylistAgain.items.length > 0) {
                                     call_back_function({
                                         callback: callback,
-                                        data: {dataMe: dataMe, dataTracks: dataTracks, dataPlaylist: dataPlaylistAgain, newCreatedPlaylist: true}
+                                        data: {
+                                            dataMe: dataMe,
+                                            dataTracks: dataTracks,
+                                            dataPlaylist: dataPlaylistAgain,
+                                            newCreatedPlaylist: true
+                                        }
                                     });
                                 } else {
                                     call_back_function({
@@ -161,13 +174,22 @@ function paradifyService(token) {
                 id: me.id,
                 display_name: me.display_name,
                 product: me.product,
-                email : me.email
+                email: me.email
             }
             db.connect();
             User = db.mongoose.model('User');
-            User.findOneAndUpdate({id: userModel.id}, userModel, {upsert: true}, function (err, doc) {});
+            User.findOneAndUpdate({id: userModel.id}, userModel, {upsert: true}, function (err, doc) {
+            });
             db.disconnect();
-        }, function (err) {});
+        }, function (err) {
+        });
     };
+
+    this.getMe = function(){
+        spotifyApi.getMe().then(function (me) {
+            var result = me;
+        }, function (err) {
+        });
+    }
 };
 module.exports = paradifyService;

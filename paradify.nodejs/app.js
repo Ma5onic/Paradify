@@ -21,17 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var swig = require('swig');
 
-app.get('/test.html', function (req, res, next) {
-
-    swig.renderFile('test.html', {
-
-    }, function (err, output) {
-        res.send(output);
-    });
-});
-
 app.get('/', function (req, res, next) {
-
     swig.renderFile('src/web/html/index.html', {
         url: config.virtualUrl
     }, function (err, output) {
@@ -49,13 +39,7 @@ app.get('/search', function (req, res) {
         res.redirect("/");
         return;
     }
-    if (token.accessToken == undefined) {
-        res.redirect("/authorize?returnUrl=" + getUrl(req));
-        return;
-    }
-    var service = new paradifyService(token.accessToken);
     search(req, res, q, token.accessToken);
-
 });
 app.post('/playlist', function (req, res) {
     addToPlaylist(req, res);
@@ -115,18 +99,7 @@ function search(req, res, q, accessToken, again) {
     var service = new paradifyService(accessToken);
     service.search(q, function (data, err) {
         if (err != undefined) {
-            if (err.message == "No token provided" || err.message == "The access token expired") {
-                refreshToken(req, res, function (dataToken) {
-                    token = getToken(req);
-                    if (again == undefined) {
-                        search(req, res, q, token.accessToken, true);
-                    }
-                });
-            } else if (err.message == "Invalid access token") {
-                res.redirect("/authorize");
-            } else {
-                showSearchResult(res, {}, err, q);
-            }
+            showSearchResult(res, {}, err, q);
         }
         else {
             showSearchResult(res, data, undefined, q);

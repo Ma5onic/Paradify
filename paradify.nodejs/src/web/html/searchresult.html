@@ -70,15 +70,22 @@
         <a href="#" class="list-group-item active">
             Select a playlist
         </a>
-        {% for itemPlaylist in dataPlaylist.items %}
-        {% if itemPlaylist.owner.id == dataMe.id%}
-        <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
-            <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
-                   value="{{itemPlaylist.id}}"/>
-            {{itemPlaylist.name }}
-        </a>
+        {% if dataPlaylist != undefined %}
+            {% for itemPlaylist in dataPlaylist.items %}
+                {% if itemPlaylist.owner.id == dataMe.id%}
+                <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
+                    <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
+                           value="{{itemPlaylist.id}}"/>
+                    {{itemPlaylist.name }}
+                </a>
+                {% endif %}
+            {% endfor %}
         {% endif %}
-        {% endfor %}
+        {% if dataPlaylist == undefined %}
+            <br/>
+            <p class="text-center">you are not login.</p>
+            <p class="text-center"><a href="/authorize">click here</a> to login Spotify to select your playlist</p>
+        {% endif %}
 
     </div>
 
