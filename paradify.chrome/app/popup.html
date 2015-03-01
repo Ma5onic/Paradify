@@ -3,9 +3,12 @@
     <meta http-equiv="content-security-policy" content="script-src 'self'"/>
     <title>Paradify</title>
     <script src="jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="scripts/playback.js" type="text/javascript" charset="utf-8"></script>
     <script src="scripts/popup.js" type="text/javascript" charset="utf-8"></script>
     <link href="styles/bootstrap.min.css" rel="stylesheet"/>
     <link href="styles/main.css" rel="stylesheet"/>
+    <link href="styles/playback.css" rel="stylesheet"/>
+    <link href="styles/searchresult.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="main">
@@ -13,9 +16,7 @@
     <div id="waiting">
         <img src="images/loading.gif" width="90" height="90"/>
     </div>
-
     <div id="result" class="hidden"></div>
-
     <div id="form" class="hidden">
         <form method="get" action="">
             <div class="form-group">
@@ -29,8 +30,6 @@
 
         </form>
     </div>
-
-
 </div>
 </body>
 </html>

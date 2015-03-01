@@ -1,5 +1,18 @@
+String.format = function () {
+    var s = arguments[0];
+
+    for (var i = 0; i < arguments.length - 1; i++) {
+        var reg = new RegExp("\\{" + i + "\\}", "gm");
+        s = s.replace(reg, arguments[i + 1]);
+    }
+
+    return s;
+}
+
 var defaults = {
-    searchUrl: "http://search.paradify.com/Search",
+    url: "http://search.paradify.com/",
+    searchJsonPath: "searchJson",
+    searchPath: "search",
     searchBoxClass: ".searchBox",
     clickButtonClass: ".clickButton",
     query: "#q",
@@ -15,33 +28,43 @@ $(document).ready(function () {
     initQuery();
 
     $(defaults.clickButtonClass).click(function () {
-        showIframe($(defaults.searchBoxClass).val());
+        searchQuery($(defaults.searchBoxClass).val());
     });
     $(defaults.query).keypress(function (event) {
         if (event.which == defaults.events.ENTER) {
-            showIframe($(defaults.searchBoxClass).val());
+            searchQuery($(defaults.searchBoxClass).val());
         }
     });
 });
 
 
-function showIframe(query) {
-    var fullUrl = String.format("{0}?q={1}", defaults.searchUrl, encodeURIComponent(query));
-    chrome.tabs.create({url: fullUrl});
+function searchQuery(query) {
+    window.q = encodeURIComponent(query);
+    window.fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, encodeURIComponent(query));
+
+    $.ajax({
+        type: "GET",
+        url: window.fullJsonUrl,
+        success: function (htmlResult) {
+            $(defaults.waitingId).addClass('hidden');
+            $(defaults.resultId).removeClass('hidden');
+            $(defaults.resultId).html(htmlResult);
+            if (htmlResult.indexOf('Oh snap') > -1) {
+                $(defaults.formId).removeClass('hidden');
+            } else {
+                initPlayback();
+                initTracksLink();
+            }
+
+        },
+        error: function (xhr, textStatus, err) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(err);
+        }
+    });
     return;
 }
-
-String.format = function () {
-    var s = arguments[0];
-
-    for (var i = 0; i < arguments.length - 1; i++) {
-        var reg = new RegExp("\\{" + i + "\\}", "gm");
-        s = s.replace(reg, arguments[i + 1]);
-    }
-
-    return s;
-}
-
 
 var initQuery = function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
@@ -64,7 +87,7 @@ var initQuery = function () {
                     response.artist = '';
                 }
                 var q = String.format("{0} {1}", response.track, response.artist);
-                showIframe(q);
+                searchQuery(q);
             } else {
                 $(defaults.resultId).addClass('hidden');
                 $(defaults.formId).removeClass('hidden');
@@ -72,5 +95,20 @@ var initQuery = function () {
 
             }
         });
+    });
+}
+
+var initTracksLink = function () {
+    $(".trackId[trackId]").each(function () {
+        var trackId = $(this).attr("trackId");
+        if (trackId != undefined && trackId != '') {
+            $(this).click(function () {
+                var url = String.format("{0}{1}?q={2}&t={3}", defaults.url, defaults.searchPath, window.q, trackId);
+                setTimeout(function(){
+                    chrome.tabs.create({url: url});
+                }, 100);
+
+            });
+        }
     });
 }

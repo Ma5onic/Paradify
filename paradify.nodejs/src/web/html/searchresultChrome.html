@@ -1,0 +1,33 @@
+<div class="main">
+    {% if err != undefined %}
+    <p class="text-primary text-center"><strong>Oh snap!</strong> {{err.message}}</p>
+    {% endif %}
+
+    {% if err == undefined && dataTracks == undefined || dataTracks.tracks.items.length ==0 %}
+    <p class="text-primary text-center"><strong>Oh snap!</strong> No tracks found</p>
+    {% endif %}
+
+    {% if dataTracks != undefined && dataTracks.tracks.items.length>0 %}
+    <div class="list-group">
+        {% for item in dataTracks.tracks.items %}
+<div class="tracks" playback="{{item.preview_url}}">
+    {% if item.preview_url!=null %}
+        <span class="player">            <span class="play-pause"></span>                </span>
+    {% endif %}
+        <a href="javascript:void(0)" trackId="{{item.id}}" class="trackId list-group-item">
+            {% if item.album.images.length > 0 %}
+                <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>
+            {% endif %}
+
+            <div class="track-title">{{item.artists[0].name }} - {{item.name }}</div>
+            <div style="clear: both;"></div>
+        </a>
+      </div>
+        {% endfor %}
+
+    </div>
+
+
+
+    {% endif %}
+</div>

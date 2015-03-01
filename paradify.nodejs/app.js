@@ -28,10 +28,32 @@ app.get('/', function (req, res, next) {
         res.send(output);
     });
 });
+app.get('/searchJson', function (req, res) {
+    var q = req.query.q;
+
+    if (q == null || q == undefined || q == "") {
+       return res.json({});
+    }
+
+    var service = new paradifyService();
+    service.search(q, function (data, err) {
+        var re =  data;
+        swig.renderFile('src/web/html/searchresultChrome.html', {
+            dataTracks: data.dataTracks,
+            err: err,
+            q: q,
+            url: config.virtualUrl
+        }, function (err, output) {
+            res.send(output);
+        });
+    });
+});
 
 app.get('/search', function (req, res) {
     var q = req.query.q;
+    var t = req.query.t;
     setQuery(req, q);
+    setTrackId(req, t);
     setReturnUrl(req);
 
     var token = getToken(req);
@@ -99,10 +121,10 @@ function search(req, res, q, accessToken, again) {
     var service = new paradifyService(accessToken);
     service.search(q, function (data, err) {
         if (err != undefined) {
-            showSearchResult(res, {}, err, q);
+            showSearchResult(req,res, {}, err, q);
         }
         else {
-            showSearchResult(res, data, undefined, q);
+            showSearchResult(req,res, data, undefined, q);
         }
 
     });
@@ -124,20 +146,20 @@ function getUrl(req) {
     return req.protocol + '://' + req.get('host') + req.originalUrl;
 }
 
-function showSearchResult(res, model, err, q) {
+function showSearchResult(req, res, model, err, q) {
     swig.renderFile('src/web/html/searchresult.html', {
         dataMe: model.dataMe,
         dataTracks: model.dataTracks,
         dataPlaylist: model.dataPlaylist,
         err: err,
         q: q,
+        t:req.session.t,
+        url: config.virtualUrl,
         newCreatedPlaylist: model.newCreatedPlaylist
     }, function (err, output) {
         res.send(output);
     });
 }
-
-
 
 function setReturnUrl(req) {
     req.session.returnUrl = getUrl(req);
@@ -145,6 +167,9 @@ function setReturnUrl(req) {
 
 function setQuery(req, query) {
     req.session.q = query;
+}
+function setTrackId(req, trackId) {
+    req.session.t = trackId;
 }
 
 function refreshToken(req, res, callback) {
@@ -161,7 +186,7 @@ function addUser(req) {
     service = new paradifyService(token.accessToken);
     service.addUser();
 }
-porNumber  = porNumber || 80;
+porNumber = porNumber || 80;
 
-console.log('Listening on ' +porNumber );
+console.log('Listening on ' + porNumber);
 app.listen(porNumber);

@@ -5,10 +5,14 @@
     <title>Paradify - Songs to Spotify</title>
     <script src="{{url}}/src/web/js/jquery.min.js"></script>
     <script src="{{url}}/src/web/js/playback.js"></script>
+    <script src="{{url}}/src/web/js/toastr.js"></script>
     <link rel='stylesheet' href='{{url}}/src/web/css/bootstrap.min.css' type='text/css'/>
     <link rel='stylesheet' href='{{url}}/src/web/css/searchresult.css' type='text/css'/>
     <link rel='stylesheet' href='{{url}}/src/web/css/playback.css' type='text/css'/>
-
+    <link rel='stylesheet' href='{{url}}/src/web/css/toastr.css' type='text/css'/>
+<script type="text/javascript">
+    toastr.options.timeOut = 2000;
+</script>
 </head>
 <body>
 <div class="navbar navbar-default">
@@ -45,22 +49,20 @@
             Select a track
         </a>
         {% for item in dataTracks.tracks.items %}
-<div class="tracks" playback="{{item.preview_url}}">
-    {% if item.preview_url!=null %}
-        <span class="player">            <span class="play-pause"></span>                </span>
-    {% endif %}
-        <a href="javascript:void(0)" onclick="select('{{item.id}}','track');" class="list-group-item">
-            <input type="radio" name="trackRadio" id="{{item.id}}" value="{{item.uri}}" class="track"/>
-
-
-
-            {% if item.album.images.length > 0 %}
-                <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>
+        <div class="tracks" playback="{{item.preview_url}}">
+            {% if item.preview_url!=null %}
+            <span class="player">            <span class="play-pause"></span>                </span>
             {% endif %}
+            <a href="javascript:void(0)" onclick="select('{{item.id}}','track');" class="list-group-item">
+                <input type="radio" name="trackRadio" id="{{item.id}}" value="{{item.uri}}" class="track"/>
 
-            {{item.artists[0].name }} - {{item.name }}
-        </a>
-      </div>
+                {% if item.album.images.length > 0 %}
+                <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>
+                {% endif %}
+
+                {{item.artists[0].name }} - {{item.name }}
+            </a>
+        </div>
         {% endfor %}
 
     </div>
@@ -71,20 +73,22 @@
             Select a playlist
         </a>
         {% if dataPlaylist != undefined %}
-            {% for itemPlaylist in dataPlaylist.items %}
-                {% if itemPlaylist.owner.id == dataMe.id%}
-                <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
-                    <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
-                           value="{{itemPlaylist.id}}"/>
-                    {{itemPlaylist.name }}
-                </a>
-                {% endif %}
-            {% endfor %}
+        {% for itemPlaylist in dataPlaylist.items %}
+        {% if itemPlaylist.owner.id == dataMe.id%}
+        <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
+            <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
+                   value="{{itemPlaylist.id}}"/>
+            {{itemPlaylist.name }}
+        </a>
+        {% endif %}
+        {% endfor %}
         {% endif %}
         {% if dataPlaylist == undefined %}
-            <br/>
-            <p class="text-center">you are not login.</p>
-            <p class="text-center"><a href="/authorize">click here</a> to login Spotify to select your playlist</p>
+        <br/>
+
+        <p class="text-center">you are not login.</p>
+
+        <p class="text-center"><a href="/authorize">login</a> to add the song to your Spotify playlist</p>
         {% endif %}
 
     </div>
@@ -103,16 +107,17 @@
 
             if (listName == 'track') {
                 $(".track").prop("checked", false);
+                showMessage('track was selected');
             } else if (listName == 'playlist') {
                 $(".playlist").prop("checked", false);
+                showMessage('playlist was selected');
             }
 
             $("#" + _this).prop("checked", true);
             $('html, body').animate({
-                scrollTop: $(".add-to-playlist-button").offset().top
+                scrollTop: "0"
             }, 500);
         }
-
 
         $(".add-to-playlist-button").click(function () {
             $("#loading").show();
@@ -141,35 +146,44 @@
                 });
 
             } else {
-                showError("select a track and a playlist");
+                showError('please select a track and a playlist')
                 $("#loading").hide();
             }
 
         });
         function showError(msg) {
+            toastr.error(msg);
             $(".resultError").show();
             $(".resultSuccess").hide();
-            $(".resultError").html(msg);
         }
 
         function showMessage(msg) {
             $(".resultError").hide();
             $(".resultSuccess").show();
-            $(".resultSuccess").html(msg);
+            toastr.success(msg);
         }
 
-
-
+        var trackId = '{{t}}';
+        if (trackId != undefined) {
+            select(trackId,'track');
+        }
     </script>
 
     {% endif %}
 </div>
 
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-3218083-14', 'auto');
     ga('send', 'pageview');

@@ -1,0 +1,36 @@
+.track-image{
+    width: 80px;
+    height: 80px;
+    margin-right:2px;
+    float: left;
+}
+.track-title{
+    float: left;
+    width: 195px;
+}
+
+.site-name{text-align: center;}
+.list-group{
+    margin: 0.5%;
+}
+.list-group-item{
+    padding: 5px 5px;
+}
+.list-group-button{
+    width: 10% !important;
+}
+
+
+.image-player{
+    position: relative;
+}
+.player-play{
+    position: absolute;
+}
+.player-pause{
+    position: absolute;
+    display: none;
+}
+.tracks{
+    margin:1px 0 0 0;
+}
