@@ -39,6 +39,7 @@ $(document).ready(function () {
 
 
 function searchQuery(query) {
+    showLoading();
     window.q = encodeURIComponent(query);
     window.fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, encodeURIComponent(query));
 
@@ -49,20 +50,22 @@ function searchQuery(query) {
             $(defaults.waitingId).addClass('hidden');
             $(defaults.resultId).removeClass('hidden');
             $(defaults.resultId).html(htmlResult);
-            if (htmlResult.indexOf('Oh snap') > -1) {
-                $(defaults.formId).removeClass('hidden');
-            } else {
+            if (htmlResult.indexOf('Oh snap') == -1) {
                 initPlayback();
                 initTracksLink();
             }
-
+            $(defaults.formId).removeClass('hidden');
         },
         error: function (xhr, textStatus, err) {
             console.log(xhr);
             console.log(textStatus);
             console.log(err);
+        },
+        done: function () {
+            hideLoading();
         }
     });
+
     return;
 }
 
@@ -111,4 +114,14 @@ var initTracksLink = function () {
             });
         }
     });
+}
+
+var showLoading = function(){
+    $(defaults.waitingId).removeClass('hidden');
+    $(defaults.resultId).addClass('hidden');
+    //$(defaults.formId).addClass('hidden');
+}
+
+var hideLoading = function(){
+    $(defaults.waitingId).addClass('hidden');
 }
