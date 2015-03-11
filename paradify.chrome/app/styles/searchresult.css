@@ -1,12 +1,7 @@
 .track-image{
     width: 45px;
     height: 45px;
-    margin-right:2px;
-    float: left;
-}
-.track-title{
-    float: left;
-    width: 195px;
+
 }
 
 .site-name{text-align: center;}
@@ -33,4 +28,32 @@
 }
 .tracks{
     margin:1px 0 0 0;
+}
+.plus-image{
+
+    margin-top: 13px;
+}
+
+
+.th-plus{
+    width:2%;
+}
+.th-img{
+    width:5%;
+}
+.th-song{
+    width: 30%;
+}
+.th-artist{
+    width: 30%;
+}
+.th-album{
+    width:30%;
+}
+.th-duration{
+    width:3%;
+}
+
+.tracks a, .tracks a:active{
+    text-decoration: none;
 }

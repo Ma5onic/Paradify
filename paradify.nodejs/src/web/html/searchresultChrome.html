@@ -1,33 +1,38 @@
 {% if err != undefined %}
-<p class="text-primary text-center"><strong>Oh snap!</strong> {{err.message}}</p>
+<p class="text-success text-center"><strong>Oh snap!</strong> {{err.message}}</p>
 {% endif %}
 
 {% if err == undefined && dataTracks == undefined || dataTracks.tracks.items.length ==0 %}
-<p class="text-primary text-center"><strong>Oh snap!</strong> No tracks found</p>
+<p class="text-success text-center"><strong>Oh snap!</strong> No tracks found</p>
 {% endif %}
 
 {% if dataTracks != undefined && dataTracks.tracks.items.length>0 %}
 <table class="table table-striped table-hover list-table">
     <thead>
     <tr>
-        <th></th>
-        <th></th>
-        <th>Song</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th></th>
+        <th class="th-plus"></th>
+        <th class="th-img"></th>
+        <th class="th-song">Song</th>
+        <th class="th-artist">Artist</th>
+        <th class="th-album">Album</th>
+        <th class="th-duration"></th>
     </tr>
     </thead>
     <tbody>
     {% for item in dataTracks.tracks.items %}
-    <tr trackId="{{item.id}}">
-        <td>{% if item.preview_url!=null %}<span class="player">            <span class="play-pause"></span>                </span>{%            endif %}</td>
-        <td>            {% if item.album.images.length > 0 %}            <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>            {% endif %}
+    <tr class="tracks" playback="{{item.preview_url}}">
+        <td>
+            <a class="btn btn-success btn-xs trackId plus-image" trackId="{{item.id}}">add</a>
+       
+        </td>
+        <td>{% if item.preview_url!=null %}<span class="player"><span class="play-pause"></span>                </span>
+            {%            endif %}
+            {% if item.album.images.length > 0 %}<img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}"/>{% endif %}
         </td>
         <td>{{item.name }}</td>
         <td>{{item.artists[0].name }}</td>
         <td>{{item.album.name}}</td>
-        <td class="duraion">{{item.duration_ms}}</script></td>
+        <td class="duraion">{{item.duration_ms}}</td>
     </tr>
     {% endfor %}
     </tbody>

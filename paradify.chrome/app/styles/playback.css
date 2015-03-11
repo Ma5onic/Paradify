@@ -11,17 +11,17 @@
 }
 
 .player {
-    width: 80px;
-    height: 80px;
+    width: 45px;
+    height: 45px;
     position: relative;
     z-index: 8;
-    top: 6px;
-    left: 6px;
+    top: 0px;
+    left: 0px;
 }
 
 .player .play-pause {
-    width: 80px;
-    height: 80px;
+    width: 45px;
+    height: 45px;
     position: absolute;
     z-index: 9;
 }
