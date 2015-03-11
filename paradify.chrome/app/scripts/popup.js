@@ -10,7 +10,7 @@ String.format = function () {
 }
 
 var defaults = {
-    url: "http://search.paradify.com/",
+    url: "http://localhost/",
     searchJsonPath: "searchJson",
     searchPath: "search",
     searchBoxClass: ".searchBox",
@@ -55,6 +55,7 @@ function searchQuery(query) {
                 initTracksLink();
             }
             $(defaults.formId).removeClass('hidden');
+            initDuration();
         },
         error: function (xhr, textStatus, err) {
             console.log(xhr);
@@ -124,4 +125,16 @@ var showLoading = function(){
 
 var hideLoading = function(){
     $(defaults.waitingId).addClass('hidden');
+}
+
+var initDuration = function(){
+    $('.duraion').each(function(index,val){
+        $(this).html(millisToMinutesAndSeconds($(this).html()));
+    });
+}
+function millisToMinutesAndSeconds(millis) {
+
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
