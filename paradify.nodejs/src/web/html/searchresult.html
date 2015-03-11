@@ -10,9 +10,9 @@
     <link rel='stylesheet' href='{{url}}/src/web/css/searchresult.css' type='text/css'/>
     <link rel='stylesheet' href='{{url}}/src/web/css/playback.css' type='text/css'/>
     <link rel='stylesheet' href='{{url}}/src/web/css/toastr.css' type='text/css'/>
-<script type="text/javascript">
-    toastr.options.timeOut = 2000;
-</script>
+    <script type="text/javascript">
+        toastr.options.timeOut = 2000;
+    </script>
 </head>
 <body>
 <div class="navbar navbar-default">
@@ -86,9 +86,20 @@
         {% if dataPlaylist == undefined %}
         <br/>
 
-        <p class="text-center">you are not login.</p>
 
-        <p class="text-center"><a href="/authorize">login</a> to add the song to your Spotify playlist</p>
+        <h4 class="text-center">
+            You are not login to Spotify.
+            <br/>
+            Please <a href="/authorize">login</a> with Spotify account and add the song to your Spotify playlist
+
+            <br/>
+            <a href="/authorize" class="btn btn-primary">login</a>
+            <br/>
+        </h4>
+        <h5 class="text-center">You will be redirecting to Spotify page. After you login, you will came back this
+            page </h5>
+
+
         {% endif %}
 
     </div>
@@ -165,7 +176,7 @@
 
         var trackId = '{{t}}';
         if (trackId != undefined) {
-            select(trackId,'track');
+            select(trackId, 'track');
         }
     </script>
 

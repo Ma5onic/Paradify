@@ -320,7 +320,7 @@ function SpotifyWebApi(credentials) {
     var request = WebApiRequest.builder()
       .withPath('/v1/search/')
       .withQueryParameters({
-        type : 'artist,track',
+        type : 'artist,track,album',
         q : query
       })
       .build();
