@@ -10,7 +10,7 @@ String.format = function () {
 }
 
 var defaults = {
-    url: "http://localhost/",
+    url: "http://search.paradify.com/",
     searchJsonPath: "searchJson",
     searchPath: "search",
     searchBoxClass: ".searchBox",
@@ -42,6 +42,7 @@ function searchQuery(query) {
     showLoading();
     window.q = encodeURIComponent(query);
     window.fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, encodeURIComponent(query));
+    $(defaults.query).val(decodeURIComponent(window.q));
 
     $.ajax({
         type: "GET",
@@ -83,6 +84,14 @@ var initQuery = function () {
             message.pageName = 'karnaval';
         } else if (message.url.indexOf('soundcloud.com') > -1) {
             message.pageName = 'soundcloud';
+        } else if (message.url.indexOf('vimeo.com') > -1) {
+            message.pageName = 'vimeo';
+        } else if (message.url.indexOf('dailymotion.com') > -1) {
+            message.pageName = 'dailymotion';
+        } else if (message.url.indexOf('kralmuzik.com.tr') > -1) {
+            message.pageName = 'kralmuzik';
+        } else if (message.url.indexOf('tunein.com') > -1) {
+            message.pageName = 'tunein';
         }
         chrome.tabs.sendMessage(tabs[0].id, message, function (response) {
             if (response != undefined && response.success) {
@@ -108,7 +117,7 @@ var initTracksLink = function () {
         if (trackId != undefined && trackId != '') {
             $(this).click(function () {
                 var url = String.format("{0}{1}?q={2}&t={3}", defaults.url, defaults.searchPath, window.q, trackId);
-                setTimeout(function(){
+                setTimeout(function () {
                     chrome.tabs.create({url: url});
                 }, 100);
 
@@ -117,18 +126,18 @@ var initTracksLink = function () {
     });
 }
 
-var showLoading = function(){
+var showLoading = function () {
     $(defaults.waitingId).removeClass('hidden');
     $(defaults.resultId).addClass('hidden');
     //$(defaults.formId).addClass('hidden');
 }
 
-var hideLoading = function(){
+var hideLoading = function () {
     $(defaults.waitingId).addClass('hidden');
 }
 
-var initDuration = function(){
-    $('.duraion').each(function(index,val){
+var initDuration = function () {
+    $('.duraion').each(function (index, val) {
         $(this).html(millisToMinutesAndSeconds($(this).html()));
     });
 }
