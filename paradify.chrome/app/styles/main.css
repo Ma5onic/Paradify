@@ -1,11 +1,12 @@
 body, html {
-    margin: 5px 0 0 0;
-    width: 750px;
+    margin: 5px 2px 0 2px;
     height: 200px;
+
 }
 
 .list-table {
     font-size: 13px !important;
+    width: 750px;
 }
 
 .searchBox {

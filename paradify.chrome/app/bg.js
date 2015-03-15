@@ -44,6 +44,14 @@ function readNowPlayingText(message) {
     }
     else if (message.pageName == 'soundcloud') {
         return readsoundCloud();
+    } else if (message.pageName == 'vimeo') {
+        return readVimeo();
+    } else if (message.pageName == 'dailymotion') {
+        return readDailyMotion();
+    } else if (message.pageName == 'kralmuzik') {
+        return readKralmuzik();
+    } else if (message.pageName == 'tunein') {
+        return readTunein();
     } else {
         return null;
     }
@@ -99,3 +107,37 @@ function readsoundCloud() {
     return result;
 }
 
+function readVimeo() {
+    var track = document.getElementsByClassName('js-clip_title')[0].innerHTML.trim();
+    var result;
+    if (track != '') {
+        result = {track: track, artist: ''};
+    }
+    return result;
+}
+function readDailyMotion() {
+    var track = document.getElementById('video_title').innerHTML.trim();
+    var result;
+    if (track != '') {
+        result = {track: track, artist: ''};
+    }
+    return result;
+}
+
+function readKralmuzik() {
+    var currentSongDiv = document.getElementsByClassName('live-info')[0];
+    var track = currentSongDiv.getElementsByTagName('h2')[0].innerText;
+
+    var artist = currentSongDiv.getElementsByTagName('h1')[0].innerText;
+
+    var result = {track: track, artist: artist};
+
+    return result;
+}
+function readTunein() {
+    var track = document.getElementsByClassName('_navigateNowPlaying')[1].innerHTML;
+
+    var result = {track: track};
+
+    return result;
+}
