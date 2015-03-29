@@ -1,5 +1,5 @@
 var config = {
-    virtualUrl : "http://search.paradify.com"
+    virtualUrl : process.env.ParadifySitePath
 };
 
 module.exports = config;
