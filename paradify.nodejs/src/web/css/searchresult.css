@@ -26,3 +26,15 @@
     position: absolute;
     display: none;
 }
+.tracks{
+    float: left;
+    width: 92%;
+}
+.tracksL{
+    float: left;
+    width: 8%;
+}
+
+.tracksL img{
+    margin :3px 0;
+}
