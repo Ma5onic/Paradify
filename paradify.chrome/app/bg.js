@@ -1,4 +1,4 @@
-﻿chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+﻿chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
     var response = {action: "getResult"};
     if (message != null && message.action == "get") {
         try {
