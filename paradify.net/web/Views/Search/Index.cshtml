@@ -1,0 +1,144 @@
+﻿@model SpotifyAPI.Web.Models.SearchItem
+
+
+@if (Model!=null && Model.Tracks.)
+    {% if dataTracks != undefined && dataTracks.tracks.items.length>0 %}
+<div class="list-group">
+    <a href="#" class="list-group-item active">
+        Select a track
+    </a>
+    {% for item in dataTracks.tracks.items %}
+    <div class="tracks" playback="{{item.preview_url}}">
+        {% if item.preview_url!=null %}
+        <span class="player">            <span class="play-pause"></span>                </span>
+        {% endif %}
+        <a href="javascript:void(0)" onclick="select('{{item.id}}','track');" class="list-group-item">
+            <input type="radio" name="trackRadio" id="{{item.id}}" value="{{item.uri}}" class="track" />
+
+            {% if item.album.images.length > 0 %}
+            <img class="track-image" src="{{ item.album.images[0].url }}" preview-url="{{item.preview_url}}" />
+            {% endif %}
+
+            {{item.artists[0].name }} - {{item.name }}
+        </a>
+    </div>
+    {% endfor %}
+
+</div>
+
+
+<div class="list-group">
+    <a href="#" class="list-group-item active">
+        Select a playlist
+    </a>
+    {% if dataPlaylist != undefined %}
+    {% for itemPlaylist in dataPlaylist.items %}
+    {% if itemPlaylist.owner.id == dataMe.id%}
+    <a href="javascript:void(0);" onclick="select('{{itemPlaylist.id}}','playlist');" class="list-group-item">
+        <input type="radio" name="playlistRadio" id="{{itemPlaylist.id}}" class="playlist"
+               value="{{itemPlaylist.id}}" />
+        {{itemPlaylist.name }}
+    </a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% if dataPlaylist == undefined %}
+    <br />
+
+
+    <h4 class="text-center">
+        You are not login to Spotify.
+        <br />
+        Please <a href="/authorize">login</a> with Spotify account and add the song to your Spotify playlist
+
+        <br />
+        <a href="/authorize" class="btn btn-primary">login</a>
+        <br />
+    </h4>
+    <h5 class="text-center">
+        You will be redirecting to Spotify page. After you login, you will came back this
+        page
+    </h5>
+
+
+    {% endif %}
+
+</div>
+
+<div class="list-group list-group-button">
+    <a href="javascript:void(0);" class="btn btn-success add-to-playlist-button">Add to playlist</a>
+    <span id="loading" style="display: none;"><img src="/src/web/images/loading.gif" width="25" height="25" /></span>
+
+    <div class="resultError text-primary"></div>
+    <div class="resultSuccess text-success"></div>
+
+</div>
+<script type="text/javascript">
+
+    function select(_this, listName) {
+
+        if (listName == 'track') {
+            $(".track").prop("checked", false);
+            showMessage('track was selected');
+        } else if (listName == 'playlist') {
+            $(".playlist").prop("checked", false);
+            showMessage('playlist was selected');
+        }
+
+        $("#" + _this).prop("checked", true);
+        $('html, body').animate({
+            scrollTop: "0"
+        }, 500);
+    }
+
+    $(".add-to-playlist-button").click(function () {
+        $("#loading").show();
+
+        if ($("input[name=trackRadio]:checked").length > 0 && $("input[name=playlistRadio]:checked").length > 0) {
+
+            var dataJson = {};
+            dataJson.playlistId = $("input[name=playlistRadio]:checked").val();
+            dataJson.track = $("input[name=trackRadio]:checked").val();
+            $.ajax({
+                type: "POST",
+                url: "/playlist",
+                data: dataJson,
+                success: function (result) {
+                    if (result.snapshot_id != undefined) {
+                        showMessage("added successfully!");
+                        // $(".add-to-playlist-button").hide();
+                    } else {
+                        showError("can not added : " + result.errorMessage);
+                    }
+                    $("#loading").hide();
+                },
+                error: function (xhr, textStatus, err) {
+                    $("#loading").hide();
+                }
+            });
+
+        } else {
+            showError('please select a track and a playlist')
+            $("#loading").hide();
+        }
+
+    });
+    function showError(msg) {
+        toastr.error(msg);
+        $(".resultError").show();
+        $(".resultSuccess").hide();
+    }
+
+    function showMessage(msg) {
+        $(".resultError").hide();
+        $(".resultSuccess").show();
+        toastr.success(msg);
+    }
+
+    var trackId = '{{t}}';
+    if (trackId != undefined) {
+        select(trackId, 'track');
+    }
+</script>
+
+    {% endif %}
