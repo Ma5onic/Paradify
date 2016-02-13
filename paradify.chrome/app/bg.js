@@ -99,7 +99,7 @@ function readKarnaval() {
 }
 
 function readsoundCloud() {
-    var track = document.getElementsByClassName('playbackTitle__link')[0].innerHTML.trim();
+    var track = document.getElementsByClassName('playbackSoundBadge__title sc-truncate')[0].getAttribute("title");
     var result;
     if (track != '') {
         result = {track: track, artist: ''};
