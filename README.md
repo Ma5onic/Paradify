@@ -1,4 +1,7 @@
 #Songs to Spotify
+
+![](https://ci.appveyor.com/api/projects/status/29hx49caxvqb2b44?svg=true)
+
 ###### a chrome extensions application for Spotify users.
 ###### when you listen a song on the below web sites, you can easly add the song to your Spotify playlist by clicking Paradify extension icon. (this is only work on chrome browser)
 
