@@ -19,22 +19,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
 });
 
 function setBadgeText(text) {
-    var i = 0;
     chrome.browserAction.setBadgeText ( { text: text } );
-    var first = setTimeout(function () {
-        if (i <= 5) {
-            chrome.browserAction.setBadgeBackgroundColor({ color: "#FF0000" });
-
-            var second = setTimeout(function () {
-                chrome.browserAction.setBadgeBackgroundColor({ color: "#0000ff" });
-            },500);
-
-            clearInterval(second);
-
-        }
-        clearInterval(first);
-    }, 1000);
-
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#FF0000" });
 }
 
 
