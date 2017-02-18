@@ -12,19 +12,24 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
         case 'setBadgeText':
             setBadgeText(message.text);
             break;
-        case 'clearBadget':
-            clearBadget();
+        case 'clearBadge':
+            clearBadge();
             break;
     }
 });
 
 function setBadgeText(text) {
-    chrome.browserAction.setBadgeText ( { text: text } );
-    chrome.browserAction.setBadgeBackgroundColor({ color: "#FF0000" });
+    chrome.browserAction.setBadgeText ( { text: 'Hey' } );
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#FF55A9" });
+
+    var intervalID = setInterval(function () {
+        chrome.browserAction.setBadgeText ( { text: text } );
+        window.clearInterval(intervalID);
+    }, 2000);
 }
 
 
-function clearBadget() {
+function clearBadge() {
     chrome.browserAction.setBadgeText ( { text: '' } );
 }
 

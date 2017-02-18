@@ -11,18 +11,13 @@
 
 var paradify = {
     pageLoad : function() {
+        chrome.runtime.sendMessage({type: 'clearBadge'});
         var url = window.location.href.toLowerCase();
         var pageName = getPageName(url);
         if (pageName != undefined) {
-            var trackInfo = paradify    .getTrackInfo(pageName);
+            var trackInfo = paradify.getTrackInfo(pageName);
             if (trackInfo != undefined && trackInfo.success) {
-
-                if (trackInfo.artist == undefined) {
-                    trackInfo.artist = '';
-                }
-
-                var q = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-                chrome.runtime.sendMessage({type: 'setBadgeText', text: '1'});
+                chrome.runtime.sendMessage({type: 'setBadgeText', text: ' 1 '});
             }
         }
     },

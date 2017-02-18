@@ -1,4 +1,4 @@
-chrome.runtime.sendMessage({type: 'clearBadget'});
+chrome.runtime.sendMessage({type: 'clearBadge'});
 
 function searchQueryResult(htmlResult) {
         $(defaults.waitingId).addClass('hidden');
