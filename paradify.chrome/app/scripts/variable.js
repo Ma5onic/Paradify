@@ -1,69 +1,94 @@
-﻿chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
-    var response = {action: "getResult"};
-    if (message != null && message.action == "get") {
-        try {
-            var playingResult = readNowPlayingText(message);
+var defaults = {
+    url: "http://search.paradify.com/",
+    searchJsonPath: "searchJson",
+    searchPath: "search",
+    searchBoxClass: ".searchBox",
+    clickButtonClass: ".clickButton",
+    query: "#q",
+    result: "result",
+    resultId: "#result",
+    formId: "#form",
+    waitingId: "#waiting",
+    events: {ENTER: 13}
+}
 
-            if (playingResult != null) {
-                response.track = playingResult.track;
-                response.artist = playingResult.artist;
-                response.success = true;
-            } else {
-                response.success = false;
-                response.errMessage = "There is no playing song on this page";
-            }
-        } catch (err) {
-            response.success = false;
-            response.errMessage = err.message;
-        } finally {
-        }
-    } else {
-        response.success = false;
-        response.errMessage = "Request is null";
+String.format = function () {
+    var s = arguments[0];
+
+    for (var i = 0; i < arguments.length - 1; i++) {
+        var reg = new RegExp("\\{" + i + "\\}", "gm");
+        s = s.replace(reg, arguments[i + 1]);
     }
-    sendResponse(response);
 
-});
+    return s;
+}
 
-function readNowPlayingText(message) {
-    if (message.pageName == 'radioparadise' && window.getSelection().toString().trim() != "") {
+
+function getPageName(url) {
+    var pageName;
+    if (url.indexOf('radioparadise') > -1) {
+        pageName = 'radioparadise';
+    } else if (url.indexOf('powerapp') > -1) {
+        pageName = 'powerapp';
+    } else if (url.indexOf('youtube.com') > -1) {
+        pageName = 'youtube';
+    } else if (url.indexOf('karnaval.com') > -1) {
+        pageName = 'karnaval';
+    } else if (url.indexOf('soundcloud.com') > -1) {
+        pageName = 'soundcloud';
+    } else if (url.indexOf('vimeo.com') > -1) {
+        pageName = 'vimeo';
+    } else if (url.indexOf('dailymotion.com') > -1) {
+        pageName = 'dailymotion';
+    } else if (url.indexOf('kralmuzik.com.tr') > -1) {
+        pageName = 'kralmuzik';
+    } else if (url.indexOf('tunein.com') > -1) {
+        pageName = 'tunein';
+    }
+    return pageName;
+}
+
+
+
+
+function readNowPlayingText(pageName) {
+    if (pageName == 'radioparadise' && window.getSelection().toString().trim() != "") {
         var result = {track: window.getSelection().toString().trim(), artist: ""};
         return result;
     }
-    else if (message.pageName == 'radioparadise') {
+    else if (pageName == 'radioparadise') {
         return readRadioParadise();
     }
-    else if (message.pageName == 'powerapp') {
+    else if (pageName == 'powerapp') {
         return readPowerfm();
     }
-    else if (message.pageName == 'youtube') {
+    else if (pageName == 'youtube') {
         return readYoutube();
     }
-    else if (message.pageName == 'karnaval') {
+    else if (pageName == 'karnaval') {
         return readKarnaval();
     }
-    else if (message.pageName == 'soundcloud') {
+    else if (pageName == 'soundcloud') {
         return readsoundCloud();
-    } else if (message.pageName == 'vimeo') {
+    } else if (pageName == 'vimeo') {
         return readVimeo();
-    } else if (message.pageName == 'dailymotion') {
+    } else if (pageName == 'dailymotion') {
         return readDailyMotion();
-    } else if (message.pageName == 'kralmuzik') {
+    } else if (pageName == 'kralmuzik') {
         return readKralmuzik();
-    } else if (message.pageName == 'tunein') {
+    } else if (pageName == 'tunein') {
         return readTunein();
     } else {
         return null;
     }
-
-
 }
 
 function readRadioParadise() {
     var iframe = document.getElementById('content');
     if (iframe != undefined) {
         var innerDoc = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
-        var data = innerDoc.getElementById("nowplaying_title").innerText;
+        var c = innerDoc.getElementsByClassName("song_title");
+        var data = c[3].innerText;
         var arr = data.split('—');
         var result = {track: arr[0].replace(/^\s*|\s*$/g, ''), artist: arr[1].replace(/^\s*|\s*$/g, '')};
         return result;
