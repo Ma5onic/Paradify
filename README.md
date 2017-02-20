@@ -2,8 +2,8 @@
 
 ![](https://ci.appveyor.com/api/projects/status/29hx49caxvqb2b44?svg=true)
 
-###### a chrome extensions application for Spotify users.
-###### when you listen a song on the below web sites, you can easly add the song to your Spotify playlist by clicking Paradify extension icon. (this is only work on chrome browser)
+###### a chrome extension for Spotify users.
+###### when you listen a song on web sites which is supported by below, you can easly add the song to your Spotify playlist by clicking Paradify icon
 
 * [youtube.com](http://www.youtube.com)
 * [tunein.com](http://www.tunein.com)
@@ -14,12 +14,12 @@
 * [powerfm.com.tr](http://www.powerfm.com.tr)
 * [karnaval.com](http://www.karnaval.com)
 * [kralmuzik.com.tr](http://www.kralmuzik.com.tr)
-* or you can search manually
+* or you also can search manually
 
 ### Projects ###
 
 * Chrome Extensions (client-side)
-* Nodejs, MongoDb (server-side)
+* Nodejs or .net, MongoDb or mssql (server-side)
 
 ### Links ###
 ###### [Web Site](http://www.paradify.com/)
