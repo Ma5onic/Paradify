@@ -5,9 +5,14 @@
         } else if (message.type == 'getTrackInfo') {
             var trackInfo = paradify.getTrackInfo(message.pageName);
             sendResponse(trackInfo);
+        } else if (message.type == 'contextMenuClicked') {
+            var returnUrl = paradify.contextMenuClicked(message.details.selectionText);
+            sendResponse(returnUrl);
         }
     }
 });
+
+
 
 var paradify = {
     pageLoad : function() {
@@ -20,6 +25,8 @@ var paradify = {
                 chrome.runtime.sendMessage({type: 'setBadgeText', text: ' 1 '});
             }
         }
+
+
     },
 
     getTrackInfo : function(pageName) {
@@ -43,8 +50,13 @@ var paradify = {
         }
 
         return response;
+    },
+
+    contextMenuClicked : function (text) {
+
+        var url = String.format("{0}{1}?q={2}", defaults.url, defaults.searchPath, text);
+
+        return url;
+
     }
-
 }
-
-
