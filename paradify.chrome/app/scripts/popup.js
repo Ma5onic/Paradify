@@ -99,6 +99,7 @@ var initQuery = function () {
                     }
 
                     var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+					$('#q').val(query);
                     searchQuery(query, searchQueryResult);
                 } else {
                     $(defaults.resultId).addClass('hidden');
