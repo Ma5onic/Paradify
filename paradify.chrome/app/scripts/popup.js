@@ -1,12 +1,12 @@
 chrome.runtime.sendMessage({type: 'clearBadge'});
 
-function searchQueryResult(htmlResult) {
+function searchQueryResult(htmlResult, query) {
         $(defaults.waitingId).addClass('hidden');
         $(defaults.resultId).removeClass('hidden');
         $(defaults.resultId).html(htmlResult);
         if (htmlResult.indexOf('Oh snap') == -1) {
             initPlayback();
-            initTracksLink();
+            initTracksLink(query);
         }
         $(defaults.formId).removeClass('hidden');
         initDuration();
@@ -19,7 +19,7 @@ function searchQuery(query, searchResult) {
         type: "GET",
         url: fullJsonUrl,
         success: function (htmlResult) {
-            return searchResult(htmlResult);
+            return searchResult(htmlResult, query);
         },
         error: function (xhr, textStatus, err) {
             console.log(xhr);
@@ -34,12 +34,12 @@ function searchQuery(query, searchResult) {
 
 }
 
-var initTracksLink = function () {
+var initTracksLink = function (query) {
     $(".trackId[trackId]").each(function () {
         var trackId = $(this).attr("trackId");
         if (trackId != undefined && trackId != '') {
             $(this).click(function () {
-                var url = String.format("{0}{1}?q={2}&t={3}", defaults.url, defaults.searchPath, window.q, trackId);
+                var url = String.format("{0}{1}?q={2}&t={3}", defaults.url, defaults.searchPath, encodeURIComponent(query), trackId);
                 setTimeout(function () {
                     chrome.tabs.create({url: url});
                 }, 100);
