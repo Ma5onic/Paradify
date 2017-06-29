@@ -17,7 +17,7 @@ namespace web.Controllers
         public string _search { get; set; }
         public string _trackId { get; set; }
 
-        public SearchController(IParadifyService paradifyService, ITokenService tokenService, 
+        public SearchController(IParadifyService paradifyService, ITokenService tokenService,
             IHistoryService historyService, IUserService userService)
         {
             _paradifyService = paradifyService;
@@ -46,9 +46,13 @@ namespace web.Controllers
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
                 token.RefreshToken = oldRefreshToken;
                 _tokenService.SetToken(token);
+            } else if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+            {
+                Session["returnUrl"] = "/Search?q=" + q + "&t=" + t;
+                return RedirectToAction("Index", "Authorize");
             }
 
-            SearchItem searchItem = Search(_search);
+            SearchItem searchItem = Search(_search, token);
 
             PrivateProfile profile = GetMe(token);
 
@@ -119,9 +123,9 @@ namespace web.Controllers
             return profile;
         }
      
-        private SearchItem Search(string query)
+        private SearchItem Search(string query, Token token)
         {
-            return _paradifyService.SearchResult(query, 100);
+            return _paradifyService.SearchResult(query,token, 100);
         }
     }
 }

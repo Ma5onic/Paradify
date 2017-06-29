@@ -13,7 +13,7 @@ namespace web.Services.Implementations
                 return 0;
             try
             {
-                Context context = new Context();
+                Repositories.Context context = new Repositories.Context();
 
                 var image = profile.Images.FirstOrDefault();
 

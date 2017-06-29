@@ -11,7 +11,8 @@ namespace web.Services.Implementations
             Token token = new Token
             {
                 AccessToken = CookieManager.GetCookieValue("access_token"),
-                RefreshToken = CookieManager.GetCookieValue("refresh_token")
+                RefreshToken = CookieManager.GetCookieValue("refresh_token"),
+                TokenType = "Bearer"
             };
             return token;
         }
