@@ -14,6 +14,13 @@ function searchQueryResult(htmlResult, query) {
 
 function searchQuery(query, searchResult) {
     var fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, encodeURIComponent(query));
+
+    var url = String.format("{0}{1}?q={2}", defaults.url, defaults.searchPath, encodeURIComponent(query));
+
+    setTimeout(function () {
+        chrome.tabs.create({url: url});
+    }, 100);
+
     showLoading();
     $.ajax({
         type: "GET",
@@ -99,6 +106,7 @@ var initQuery = function () {
                     }
 
                     var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+
 					$('#q').val(query);
                     searchQuery(query, searchQueryResult);
                 } else {

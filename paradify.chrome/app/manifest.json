@@ -4,7 +4,7 @@
   "short_name": "Paradify",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "3.2",
+  "version": "3.3",
   "permissions": [
     "http://*/*",
     "https://*/*",
