@@ -97,11 +97,11 @@ function readRadioParadise() {
 }
 
 function readPowerfm() {
-    var currentSongDiv = document.getElementById('currentSong');
-    var track = currentSongDiv.getElementsByTagName('a')[0].innerText;
+    var currentSongDiv = document.getElementsByClassName('artistSongTitle')[0].innerText;
+    var track = currentSongDiv;
 
-    var currentSongDiv = document.getElementById('currentArtist');
-    var artist = currentSongDiv.getElementsByTagName('a')[0].innerText;
+    var currentSongDiv = document.getElementsByClassName('artistTitle')[0].innerText;
+    var artist = currentSongDiv;
 
     var result = {track: track, artist: artist};
     return result;
@@ -114,17 +114,17 @@ function readYoutube() {
 }
 
 function readKarnaval() {
-    var track = document.getElementsByClassName('nowplaying')[0].getElementsByClassName('name')[0].innerHTML;
-    var position = track.lastIndexOf(' -');
-    track = track.substr(0, position);
-    var artist = document.getElementById('current-artist').innerHTML;
+    var track = document.getElementsByClassName('song_title')[0].innerText;
+
+    var artist = document.getElementsByClassName('artist_name')[0].innerText;
 
     var result = {track: track, artist: artist};
+
     return result;
 }
 
 function readsoundCloud() {
-    var track = document.getElementsByClassName('playbackSoundBadge__title sc-truncate')[0].getAttribute("title");
+    var track = document.getElementsByClassName('playbackSoundBadge__titleLink sc-truncate')[0].getAttribute("title");
     var result;
     if (track != '') {
         result = {track: track, artist: ''};
@@ -133,7 +133,7 @@ function readsoundCloud() {
 }
 
 function readVimeo() {
-    var track = document.getElementsByClassName('js-clip_title')[0].innerHTML.trim();
+    var track = document.getElementsByClassName('clip_info-title')[0].innerHTML.trim();
     var result;
     if (track != '') {
         result = {track: track, artist: ''};
