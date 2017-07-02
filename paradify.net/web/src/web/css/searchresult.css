@@ -5,7 +5,7 @@
 .site-name{text-align: center;}
 .list-group{
     float: left;
-    width: 48%;
+    width: 400px;
     margin: 1%;
 }
 .list-group-create-playlist {
