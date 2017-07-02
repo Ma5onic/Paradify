@@ -40,7 +40,7 @@ namespace web.Controllers
 
             Token token = _tokenService.GetToken();
 
-            if (token.AccessToken == null && token.RefreshToken != null)
+            if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
             {
                 string oldRefreshToken = token.RefreshToken;
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
