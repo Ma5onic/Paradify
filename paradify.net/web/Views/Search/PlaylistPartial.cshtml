@@ -1,0 +1,19 @@
+﻿@using SpotifyAPI.Web.Models
+@model List<SimplePlaylist>
+
+<div>
+    @foreach (SimplePlaylist playlist in Model)
+    {
+        <div style="float:left;">
+            <div style="width:120px; height:120px;">
+                @if (playlist.Images != null && playlist.Images.Count > 0)
+                {
+                    <img src="@playlist.Images[0].Url">
+                }
+            </div>
+            
+            @playlist.Name
+
+        </div>
+    }
+</div>

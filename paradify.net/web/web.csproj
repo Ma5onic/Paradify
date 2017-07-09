@@ -115,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="src\web\css\back.css" />
     <Content Include="src\web\css\bootstrap.min.css" />
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
@@ -140,6 +141,7 @@
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="IoC\BusinessLogicInstaller.cs" />
     <Compile Include="IoC\ControllersInstaller.cs" />
@@ -157,9 +159,11 @@
     <Compile Include="Services\Implementations\HistoryService.cs" />
     <Compile Include="Services\Implementations\ParadifyService.cs" />
     <Compile Include="Services\Implementations\TokenService.cs" />
+    <Compile Include="Services\Implementations\SessionService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
     <Compile Include="Services\IParadifyService.cs" />
     <Compile Include="Services\ITokenService.cs" />
+    <Compile Include="Services\ISessionService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -174,13 +178,17 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\SearchJson\Index.cshtml" />
     <None Include="Properties\PublishProfiles\paradify web.pubxml" />
+    <Content Include="Views\Search\Index2.cshtml" />
+    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Views\Search\PlaylistPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,93 @@
+﻿@using SpotifyAPI.Web.Models
+@model web.Controllers.SearchResult
+
+<div id="search-result-container">
+    @if (Model != null && !Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+    {
+        foreach (FullTrack track in Model.SearchItem.Tracks.Items)
+        {
+            <div id="track-row">
+                <div class="track-number">
+                    <div class="number-playback-pic" playback="@track.PreviewUrl">
+                        @if (track.PreviewUrl != null)
+                        {
+                            <span class="player">
+                                <span class="play-pause"></span>
+                            </span>
+                        }
+
+                        @if (track.Album.Images.Count > 0)
+                        {
+                            <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
+                        }
+                        else
+                        {
+                            <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
+                        }
+                    </div>
+                </div>
+                <div class="track-info">
+                    <div class="track-cont">
+                        <span class="track-name">
+                            @track.Name
+                        </span>
+                        <span class="track-album-artist">
+                            @track.Artists[0].Name - @track.Album.Name
+                        </span>
+                    </div>
+                </div>
+                <div class="track-time">
+                    <div class="time">
+                        @{
+                        TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                        string time = string.Format("{0:D2}:{1:D2}",
+                                    t.Minutes,
+                                    t.Seconds
+                                    );
+                        }
+                        @time
+                    </div>
+                </div>
+            </div>
+        }
+
+        <script type="text/javascript">
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetPlaylists", "Search", null)',
+                contentType: 'application/html; charset=utf-8',
+                dataType: 'html',
+                success: function (response) {
+                    $("#dialog").html(response);
+                    modal.style.display = "block";
+                },
+                error: function (xhr, textStatus, err) {
+                }
+            });
+        </script>
+    }
+    else
+    {
+        <p class="no-track-found">
+            <strong>No track found</strong>
+        </p>
+    }
+</div>
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Modal Header</h2>
+        </div>
+        <div class="modal-body">
+            <p>Some text in the Modal Body</p>
+            <p>Some other text...</p>
+        </div>
+        <div class="modal-footer">
+            <h3>Modal Footer</h3>
+        </div>
+    </div>
+
+</div>

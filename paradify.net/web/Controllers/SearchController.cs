@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
-using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
-using web.Enums;
 using web.Services;
+using web.Enums;
+using SpotifyAPI.Web;
 
 namespace web.Controllers
 {
@@ -13,23 +13,27 @@ namespace web.Controllers
         private readonly ITokenService _tokenService;
         private readonly IHistoryService _historyService;
         private readonly IUserService _userService;
+        private readonly ISessionService _sessionService;
+
 
         public string _search { get; set; }
         public string _trackId { get; set; }
 
         public SearchController(IParadifyService paradifyService, ITokenService tokenService,
-            IHistoryService historyService, IUserService userService)
+            IHistoryService historyService, IUserService userService, ISessionService sessionService)
         {
             _paradifyService = paradifyService;
             _tokenService = tokenService;
             _historyService = historyService;
             _userService = userService;
+            _sessionService = sessionService;
         }
 
-        public ActionResult Index(string q, string t)
+        
+        public ActionResult Index(string q)
         {
             _search = q;
-            _trackId = t;
+            _trackId = "";
 
             SetReturnUrl(_search, _trackId);
 
@@ -37,62 +41,54 @@ namespace web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            
+            Token token = _tokenService.Get();
 
-            Token token = _tokenService.GetToken();
-
-            if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
+            if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
             {
-                string oldRefreshToken = token.RefreshToken;
-                token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
-                token.RefreshToken = oldRefreshToken;
-                _tokenService.SetToken(token);
-            } else if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
-            {
-                Session["returnUrl"] = "/Search?q=" + q + "&t=" + t;
+                _sessionService.SetReturnUrl(_search);
+                
                 return RedirectToAction("Index", "Authorize");
             }
 
             SearchItem searchItem = Search(_search, token);
 
-            PrivateProfile profile = GetMe(token);
-
-            if (profile.Id == null && token.RefreshToken != null)
-            {
-                string oldRefreshToken = token.RefreshToken;
-                token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
-                token.RefreshToken = oldRefreshToken;
-                _tokenService.SetToken(token);
-                profile = GetMe(token);
-            }
             SearchResult result = new SearchResult()
             {
                 SearchItem = searchItem,
                 query = _search,
                 track = _trackId,
-                Profile = profile,
-
             };
+
+            PrivateProfile profile = _userService.GetMe(token);
 
             if (profile.Id != null)
             {
-                result.Playlists = GetPlaylists(token, profile.Id);
-                if (result.Playlists.Items.Count == 0)
-                {
-                    FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profile.Id, "Paradify Playlist", token);
+                _historyService.AddSearchHistory(_search, _trackId, profile.Id, AppSource.WebSite);
+            }
+            
+            return View("Index2", result);
+        }
 
-                    if (!string.IsNullOrEmpty(fullPlaylist.Id))
-                    {
-                        result.Playlists = GetPlaylists(token, profile.Id);
-                    }
+        public ActionResult GetPlaylists()
+        {
+            Token token = _tokenService.Get();
+
+            PrivateProfile profile = _userService.GetMe(token);
+
+            var playlist = GetPlaylists(token, profile.Id);
+
+            if (playlist != null && playlist.Items.Count == 0)
+            {
+                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profile.Id, "Paradify Playlist", token);
+
+                if (!string.IsNullOrEmpty(fullPlaylist.Id))
+                {
+                    playlist = GetPlaylists(token, profile.Id);
                 }
             }
 
-            
-            _userService.AddUser(profile);
-
-            _historyService.AddSearchHistory(_search, _trackId, profile.Id, AppSource.WebSite);
-
-            return View(result);
+            return PartialView("~/Views/Search/PlaylistPartial.cshtml", playlist.Items);
         }
 
         private void SetReturnUrl(string search, string trackId)
@@ -107,25 +103,15 @@ namespace web.Controllers
             return auth.RefreshToken(refreshToken, clientSecret);
         }
 
+        private SearchItem Search(string query, Token token)
+        {
+            return _paradifyService.SearchResult(query, token, 100);
+        }
         private Paging<SimplePlaylist> GetPlaylists(Token token, string userId)
         {
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
             Paging<SimplePlaylist> userPlaylists = api.GetUserPlaylists(userId, 50);
             return userPlaylists;
-        }
-
-        private PrivateProfile GetMe(Token token)
-        {
-
-            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
-
-            PrivateProfile profile = api.GetPrivateProfile();
-            return profile;
-        }
-     
-        private SearchItem Search(string query, Token token)
-        {
-            return _paradifyService.SearchResult(query,token, 100);
         }
     }
 }

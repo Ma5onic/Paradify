@@ -7,7 +7,6 @@ namespace web.Controllers
         public SearchItem SearchItem { get; set; }
         public string query { get; set; }
         public string track { get; set; }
-        public PrivateProfile Profile { get; set; }
         public Paging<SimplePlaylist> Playlists { get; set; }
     }
 }
