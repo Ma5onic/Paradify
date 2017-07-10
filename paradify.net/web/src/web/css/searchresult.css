@@ -23,105 +23,107 @@ body, a {
     width: 100%;
 }
 
-    #main .main-top {
+    #main #main-top {
         clear: both;
     }
 
-    #main #main-top #left-bar-container {
-        width: 15%;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        z-index: 100;
-        overflow: auto;
-        min-height: 0 !important;
-        will-change: transform;
-        float: left;
-    }
-
-
-
-        #main #main-top #left-bar-container #logo-menu {
-            padding: 24px 24px 95px;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            flex-direction: column;
-            user-select: none;
+        #main #main-top #left-bar-container {
+            width: 15%;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 100;
+            overflow: auto;
+            min-height: 0 !important;
+            will-change: transform;
+            float: left;
         }
 
-#left-bar-container #profile {
-    padding: 24px 24px 95px;
-}
-
-    #left-bar-container #profile #profile_container {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    #left-bar-container #profile #profile_id {
-        margin-left: 8px;
-    }
-
-    #left-bar-container #profile #signout {
-        text-align: right;
-        display: none;
-    }
-
-    #left-bar-container #profile #profile_container #profile_pic {
-        border-radius: 50%;
-        background-size: cover;
-        overflow: hidden;
-        position: relative;
-        width: 30px;
-        height: 30px;
-        display: none;
-    }
 
 
-
-#main #main-top #right-bar-container {
-    float: left;
-    min-height: 0 !important;
-    width: 85%;
-}
-
-    #main #main-top #right-bar-container #header .searchBox {
-        position: relative;
-        background-color: #ff6b6b;
-        padding: 1.5em 2em;
-    }
-
-        #main #main-top #right-bar-container #header .searchBox .searchBox-content {
-            padding: 0 2em;
-            margin: 0 auto;
-            max-width: 100%;
-        }
-
-            #main #main-top #right-bar-container #header .searchBox .searchBox-content .desc {
-                font-size: 14px;
-                letter-spacing: 1px;
-                margin-bottom: .5em;
-                color: white;
+            #main #main-top #left-bar-container #logo-menu {
+                padding: 24px 24px 95px;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+                user-select: none;
             }
 
-            #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input {
-                box-sizing: border-box;
-                width: 100%;
-                background-color: transparent;
-                border: none;
-                color: white;
-                font-weight: 700;
-                font-size: 62px;
-                line-height: 1.2;
-                text-shadow: 0 0 0 #fff;
-                /*-webkit-text-fill-color: transparent;*/
+            #main #main-top #left-bar-container #profile {
+                padding: 24px 24px 95px;
             }
 
-
-                #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input::-webkit-input-placeholder {
-                    color: aliceblue;
-                    opacity: 0.2;
+                #main #main-top #left-bar-container #profile #profile_container {
+                    display: inline-block;
+                    vertical-align: middle;
                 }
+
+                    #main #main-top #left-bar-container #profile #profile_container #profile_pic {
+                        border-radius: 50%;
+                        background-size: cover;
+                        overflow: hidden;
+                        position: relative;
+                        width: 30px;
+                        height: 30px;
+                        display: none;
+                    }
+
+                #main #main-top #left-bar-container #profile #profile_id {
+                    margin-left: 8px;
+                }
+
+                #main #main-top #left-bar-container #profile #signout {
+                    text-align: right;
+                    display: none;
+                }
+
+
+
+
+
+        #main #main-top #right-bar-container {
+            float: left;
+            min-height: 0 !important;
+            width: 85%;
+        }
+
+            #main #main-top #right-bar-container #header .searchBox {
+                position: relative;
+                background-color: #ff6b6b;
+                padding: 1.5em 2em;
+            }
+
+                #main #main-top #right-bar-container #header .searchBox .searchBox-content {
+                    padding: 0 2em;
+                    margin: 0 auto;
+                    max-width: 100%;
+                }
+
+                    #main #main-top #right-bar-container #header .searchBox .searchBox-content .desc {
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        margin-bottom: .5em;
+                        color: white;
+                    }
+
+                    #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input {
+                        box-sizing: border-box;
+                        width: 100%;
+                        background-color: transparent;
+                        border: none;
+                        color: white;
+                        font-weight: 700;
+                        font-size: 62px;
+                        line-height: 1.2;
+                        text-shadow: 0 0 0 #fff;
+                        /*-webkit-text-fill-color: transparent;*/
+                    }
+
+
+                        #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input::-webkit-input-placeholder {
+                            color: aliceblue;
+                            opacity: 0.2;
+                        }
 
 #search-result-container {
     padding: 2em;
