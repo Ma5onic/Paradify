@@ -3,10 +3,10 @@
 
 <div class="navbar navbar-default">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#"><img src="/src/web/images/logo.png" /></a>
+        <a class="navbar-brand" href="#"><img src="~/src/web/images/logo.png" /></a>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
-        <form action="/Search" method="GET" class="navbar-form navbar-left">
+        <form action="~/search" method="GET" class="navbar-form navbar-left">
             <input type="text" id="q" name="q" placeholder="Search Track, Artist" class="form-control col-lg-8"
                    value="@Model.query">
         </form>
@@ -50,7 +50,7 @@
                                 }
                                 else
                                 {
-                                    <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
+                                    <img class="track-image" src="~/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
                                 }
                                 @track.Artists[0].Name  - @track.Name
                             </a>
@@ -115,7 +115,7 @@
 
                                     $.ajax({
                                         type: "POST",
-                                        url: "/api/createplaylist",
+                                        url: "api/createplaylist",
                                         data: dataJson,
                                         success: function (fullPlaylist) {
                                             if (fullPlaylist.error == null) {
@@ -186,7 +186,7 @@
                             dataJson.track = $("input[name=trackRadio]:checked").val();
                             $.ajax({
                                 type: "POST",
-                                url: "/api/playlist",
+                                url: "api/playlist",
                                 data: dataJson,
                                 success: function (errorResponse) {
                                     if (errorResponse.error == null) {

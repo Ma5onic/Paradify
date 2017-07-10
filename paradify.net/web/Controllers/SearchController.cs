@@ -48,7 +48,7 @@ namespace web.Controllers
                 _tokenService.SetToken(token);
             } else if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
             {
-                Session["returnUrl"] = "/Search?q=" + q + "&t=" + t;
+                Session["returnUrl"] = "~/Search?q=" + q + "&t=" + t;
                 return RedirectToAction("Index", "Authorize");
             }
 
