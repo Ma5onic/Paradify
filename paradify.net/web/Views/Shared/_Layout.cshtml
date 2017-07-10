@@ -17,7 +17,8 @@
         <div id="main-top">
             <div id="left-bar-container">
                 <div id="logo-menu">
-                    <img src="/src/web/images/logo.png">
+
+                    <img src="~/src/web/images/logo.png">
                 </div>
                 <div id="profile">
                     <div id="profile_container">
@@ -27,7 +28,8 @@
                     </div>
                     <div id="profile_id">
                     </div>
-                    <div id="signout">sign-out
+                    <div id="signout">
+                        sign-out
                     </div>
                 </div>
             </div>
@@ -39,13 +41,16 @@
                                 Search...
                             </div>
                             <div class="searchBox-input">
-                                <input type="text" id="q" name="q" placeholder="Search songs" class="searchBox-input">
+                                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get))
+                                {
+                                    <input type="text" id="q" name="q" placeholder="Search songs" class="searchBox-input">
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
 
 

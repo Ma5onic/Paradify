@@ -14,7 +14,7 @@ namespace web.Services.Implementations
 
         public void SetReturnUrl(string q)
         {
-            HttpContext.Current.Session["returnUrl"] = "/Search/" + q;
+            HttpContext.Current.Session["returnUrl"] = "~/Search/" + q;
         }
 
         public string GetReturnUrl()

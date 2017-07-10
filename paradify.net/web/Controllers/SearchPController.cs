@@ -7,7 +7,7 @@ using web.Models;
 
 namespace web.Controllers
 {
-    public class SearchController : Controller
+    public class SearchPController : Controller
     {
         private readonly IParadifyService _paradifyService;
         private readonly ITokenService _tokenService;
@@ -19,7 +19,7 @@ namespace web.Controllers
         public string _search { get; set; }
         public string _trackId { get; set; }
 
-        public SearchController(IParadifyService paradifyService, ITokenService tokenService,
+        public SearchPController(IParadifyService paradifyService, ITokenService tokenService,
             IHistoryService historyService, IUserService userService, ISessionService sessionService)
         {
             _paradifyService = paradifyService;
