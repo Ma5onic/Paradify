@@ -136,6 +136,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_LocalResources\SpotifyVariables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpotifyVariables.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
@@ -152,6 +157,7 @@
     <Compile Include="IoC\WindsorDependencyScope.cs" />
     <Compile Include="Models\CreatePlaylistModel.cs" />
     <Compile Include="Models\PlaylistModel.cs" />
+    <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Repositories\Context.cs" />
     <Compile Include="Repositories\HistoryRepository.cs" />
     <Compile Include="Repositories\IHistoryRepository.cs" />
@@ -168,7 +174,6 @@
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -198,6 +203,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\SpotifyVariables.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SpotifyVariables.Designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

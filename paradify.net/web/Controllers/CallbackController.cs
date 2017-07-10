@@ -20,31 +20,26 @@ namespace web.Controllers
 
         public ActionResult Index(string code = null)
         {
-            var client_id = Constants.ClientId;
-            var client_secret = Constants.ClientSecret;
-            var redirect_uri = Constants.RedirectUri;
-            var stateKey = Constants.StateKey;
-
             AutorizationCodeAuth auth = new AutorizationCodeAuth
             {
-                ClientId = client_id,
-                RedirectUri = redirect_uri,
-                State = stateKey
+                ClientId = Constants.ClientId,
+                RedirectUri = Constants.RedirectUri,
+                State = Constants.StateKey
             };
 
-            Token token = auth.ExchangeAuthCode(code, client_secret);
+            Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
 
             var returnUrl = _sessionService.GetReturnUrl();
 
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
 
-            PrivateProfile profile =_userService.GetMe(token);
+            PrivateProfile profile = _userService.GetMe(token);
 
             _userService.AddUser(profile);
 
-            if (returnUrl != null && !string.IsNullOrEmpty(returnUrl.ToString()))
+            if (returnUrl != null && !string.IsNullOrEmpty(returnUrl))
             {
-                return Redirect(returnUrl.ToString());
+                return Redirect(returnUrl);
             }
 
             return Redirect("/");

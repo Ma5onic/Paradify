@@ -12,14 +12,10 @@ namespace web.Controllers
     public class PlaylistController : ApiController
     {
         private readonly ITokenService _tokenService;
-        private readonly IParadifyService _paradifyService;
-        private readonly IUserService _userService;
 
-        public PlaylistController(ITokenService tokenService, IParadifyService paradifyService, IUserService userService)
+        public PlaylistController(ITokenService tokenService)
         {
             _tokenService = tokenService;
-            _userService = userService;
-            _paradifyService = paradifyService;
         }
 
         [HttpPost]
@@ -63,7 +59,7 @@ namespace web.Controllers
             }
 
             SpotifyAPI.Web.SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
-            FullPlaylist fullPlaylist = api.CreatePlaylist(profile.Id, model.name);
+            FullPlaylist fullPlaylist = api.CreatePlaylist(profile.Id, model.Name);
             if (fullPlaylist.HasError())
             {
                 throw new Exception("Playlist can not be created");

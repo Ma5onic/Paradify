@@ -1,9 +1,9 @@
 ﻿using System.Web.Mvc;
-using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
 using web.Services;
 using web.Enums;
 using SpotifyAPI.Web;
+using web.Models;
 
 namespace web.Controllers
 {
@@ -28,14 +28,11 @@ namespace web.Controllers
             _userService = userService;
             _sessionService = sessionService;
         }
-
         
         public ActionResult Index(string q)
         {
             _search = q;
             _trackId = "";
-
-            SetReturnUrl(_search, _trackId);
 
             if (string.IsNullOrEmpty(_search))
             {
@@ -91,22 +88,11 @@ namespace web.Controllers
             return PartialView("~/Views/Search/PlaylistPartial.cshtml", playlist.Items);
         }
 
-        private void SetReturnUrl(string search, string trackId)
-        {
-            //TODO: Create Cookie
-        }
-
-        private Token RefreshToken(string refreshToken, string clientSecret)
-        {
-            AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
-
-            return auth.RefreshToken(refreshToken, clientSecret);
-        }
-
         private SearchItem Search(string query, Token token)
         {
             return _paradifyService.SearchResult(query, token, 100);
         }
+
         private Paging<SimplePlaylist> GetPlaylists(Token token, string userId)
         {
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };

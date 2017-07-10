@@ -1,6 +1,6 @@
-﻿using SpotifyAPI.Web.Models;
+using SpotifyAPI.Web.Models;
 
-namespace web.Controllers
+namespace web.Models
 {
     public class SearchResult
     {

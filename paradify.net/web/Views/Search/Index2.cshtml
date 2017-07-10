@@ -1,5 +1,5 @@
 ﻿@using SpotifyAPI.Web.Models
-@model web.Controllers.SearchResult
+@model web.Models.SearchResult
 
 <div id="search-result-container">
     @if (Model != null && !Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
