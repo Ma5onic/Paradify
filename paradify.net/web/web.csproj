@@ -116,7 +116,6 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="src\web\css\back.css" />
-    <Content Include="src\web\css\bootstrap.min.css" />
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
     <Content Include="src\web\css\toastr.css" />

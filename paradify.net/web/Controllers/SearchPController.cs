@@ -28,7 +28,7 @@ namespace web.Controllers
             _userService = userService;
             _sessionService = sessionService;
         }
-        
+
         public ActionResult Index(string q)
         {
             _search = q;
@@ -38,13 +38,13 @@ namespace web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
+
             Token token = _tokenService.Get();
 
             if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
             {
-                _sessionService.SetReturnUrl(_search);
-                
+                _sessionService.SetReturnUrl("~/" + RouteData.Values["controller"] + "?q=" + _search);
+
                 return RedirectToAction("Index", "Authorize");
             }
 
@@ -63,7 +63,7 @@ namespace web.Controllers
             {
                 _historyService.AddSearchHistory(_search, _trackId, profile.Id, AppSource.WebSite);
             }
-            
+
             return View("Index2", result);
         }
 
@@ -85,7 +85,7 @@ namespace web.Controllers
                 }
             }
 
-            return PartialView("~/Views/Search/PlaylistPartial.cshtml", playlist.Items);
+            return PartialView("~/Views/SearchP/PlaylistPartial.cshtml", playlist.Items);
         }
 
         private SearchItem Search(string query, Token token)

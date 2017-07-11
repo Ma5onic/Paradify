@@ -1,11 +1,11 @@
 .play {
-    background-image: url("/src/web/images/play-white.png");
+    background-image: url("~/src/web/images/play-white.png");
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .pause {
-    background-image: url("/src/web/images/pause-white.png");
+    background-image: url("~/src/web/images/pause-white.png");
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -25,10 +25,6 @@
         position: absolute;
         z-index: 9;
     }
-
-
-
-
 
 .modal {
     display: none; /* Hidden by default */

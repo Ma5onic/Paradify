@@ -17,19 +17,16 @@
         <div id="main-top">
             <div id="left-bar-container">
                 <div id="logo-menu">
-
-                    <img src="~/src/web/images/logo.png">
+                    <a href="~/"><img src="~/src/web/images/logo.png"/></a>
                 </div>
                 <div id="profile">
                     <div id="profile_container">
-                        <div id="profile_pic">
-
+                        <img id="profile_pic"/>
+                        <div id="profile_id">
                         </div>
                     </div>
-                    <div id="profile_id">
-                    </div>
                     <div id="signout">
-                        sign-out
+                        <a href="javascript:signout()">sign-out</a>
                     </div>
                 </div>
             </div>
@@ -38,33 +35,57 @@
                     <div class="searchBox">
                         <div class="searchBox-content">
                             <div class="desc">
-                                Search...
+                                Search for an Artist, Song, Album
                             </div>
                             <div class="searchBox-input">
                                 @using (Html.BeginForm("Index", "SearchP", FormMethod.Get))
                                 {
-                                    <input type="text" id="q" name="q" placeholder="Search songs" class="searchBox-input">
+                                    <input type="text" id="q" name="q" placeholder="Search..." class="searchBox-input">
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
+                @RenderBody()
             </div>
+
         </div>
-
-
-
-
-
-        <div id="main">
-        </div>
-        <div id="main">
-        </div><div id="main">
-        </div>
-        @RenderBody()
 
     </div>
     <script>
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("Me","Users")',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response.images != null && response.images.length > 0) {
+                    $('#profile_pic').attr('src', response.images[0].url);
+                    $('#profile_pic').show();
+                    $('#signout').show();
+                }
+                    
+                $('#profile_id').html(response.id);
+            },
+            error: function (xhr, textStatus, err) {
+            }
+        });
+
+        function signout() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Signout", "Users")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    $('#profile').hide();
+                },
+                error: function (xhr, textStatus, err) {
+                }
+            });
+        } 
+
+
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {

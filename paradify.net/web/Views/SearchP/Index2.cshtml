@@ -52,18 +52,18 @@
         }
 
         <script type="text/javascript">
-            $.ajax({
+            @*$.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetPlaylists", "Search", null)',
+                url: '@Url.Action("GetPlaylists", "SearchP", null)',
                 contentType: 'application/html; charset=utf-8',
                 dataType: 'html',
                 success: function (response) {
-                    $("#dialog").html(response);
-                    modal.style.display = "block";
+                    $("#playlistModal").html(response);
+                    $(".modal").css({ 'display': "block" });
                 },
                 error: function (xhr, textStatus, err) {
                 }
-            });
+            });*@
         </script>
     }
     else
@@ -73,7 +73,7 @@
         </p>
     }
 </div>
-<div id="myModal" class="modal">
+<div id="playlistModal" class="modal">
 
     <!-- Modal content -->
     <div class="modal-content">

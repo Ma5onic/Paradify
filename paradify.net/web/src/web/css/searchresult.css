@@ -49,6 +49,10 @@ body, a {
                 user-select: none;
             }
 
+            #main #main-top #left-bar-container #logo-menu {
+                border: none;
+            }
+
             #main #main-top #left-bar-container #profile {
                 padding: 24px 24px 95px;
             }
@@ -66,11 +70,13 @@ body, a {
                         width: 30px;
                         height: 30px;
                         display: none;
+                        float: left;
                     }
 
-                #main #main-top #left-bar-container #profile #profile_id {
-                    margin-left: 8px;
-                }
+                    #main #main-top #left-bar-container #profile #profile_container #profile_id {
+                        margin: 8px 0 0 8px;
+                        float: left;
+                    }
 
                 #main #main-top #left-bar-container #profile #signout {
                     text-align: right;

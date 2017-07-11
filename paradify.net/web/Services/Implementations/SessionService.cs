@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using SpotifyAPI.Web.Models;
-using SpotifyAPI.Web;
-using System.Web;
+﻿using System.Web;
 
 namespace web.Services.Implementations
 {
@@ -12,9 +8,9 @@ namespace web.Services.Implementations
         {
         }
 
-        public void SetReturnUrl(string q)
+        public void SetReturnUrl(string url)
         {
-            HttpContext.Current.Session["returnUrl"] = "~/Search/" + q;
+            HttpContext.Current.Session["returnUrl"] = url;
         }
 
         public string GetReturnUrl()

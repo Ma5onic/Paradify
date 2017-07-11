@@ -4,7 +4,7 @@ namespace web.Services
 {
     public interface ISessionService
     {
-        void SetReturnUrl(string q);
+        void SetReturnUrl(string url);
         string GetReturnUrl();
     }
 }
