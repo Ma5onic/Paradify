@@ -19,7 +19,6 @@ body, a {
 }
 
 #main {
-    /*background-color: rgba(0,0,0,.5);*/
     width: 100%;
 }
 
@@ -83,10 +82,6 @@ body, a {
                     display: none;
                 }
 
-
-
-
-
         #main #main-top #right-bar-container {
             float: left;
             min-height: 0 !important;
@@ -122,9 +117,7 @@ body, a {
                         font-size: 62px;
                         line-height: 1.2;
                         text-shadow: 0 0 0 #fff;
-                        /*-webkit-text-fill-color: transparent;*/
                     }
-
 
                         #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input::-webkit-input-placeholder {
                             color: aliceblue;
@@ -149,11 +142,10 @@ body, a {
         }
 
 #track-row .track-number {
-    /*font-feature-settings: "tnum";*/
     text-align: right;
     padding-right: 1em;
-    /*width: 3em;*/
     float: left;
+    position: relative;
 }
 
     #track-row .track-number div {
@@ -173,7 +165,22 @@ body, a {
     height: 4.56em;
     float: left;
     width: 87%;
+    position: relative;
 }
+
+   
+
+    #track-row .track-info .addToPlaylist {
+        position: absolute;
+        color: black;
+        right: 29px;
+        top: 19px;
+        display: none;
+        background-color: black;
+        color: white;
+        padding: 5px 10px;
+        font-size: 18px;
+    }
 
 #track-row .track-time {
     font-feature-settings: "tnum";

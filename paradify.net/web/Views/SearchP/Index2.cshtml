@@ -26,67 +26,83 @@
                         }
                     </div>
                 </div>
-                <div class="track-info">
-                    <div class="track-cont">
-                        <span class="track-name">
-                            @track.Name
-                        </span>
-                        <span class="track-album-artist">
-                            @track.Artists[0].Name - @track.Album.Name
-                        </span>
+                <a href="javascript:select('@track.Id');">
+                    <div class="track-info" onmouseover="mouseOver('@track.Id')" onmouseout="mouseOut('@track.Id')">
+                        <div class="track-cont">
+                            <span class="track-name">
+                                @track.Name
+                            </span>
+                            <span class="track-album-artist">
+                                @track.Artists[0].Name - @track.Album.Name
+                            </span>
+                        </div>
+                        <div class="addToPlaylist" id="addToPlaylist@(track.Id)">+</div>
                     </div>
-                </div>
+                </a>
                 <div class="track-time">
                     <div class="time">
                         @{
-                        TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
-                        string time = string.Format("{0:D2}:{1:D2}",
-                                    t.Minutes,
-                                    t.Seconds
-                                    );
+                            TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                            string time = string.Format("{0:D2}:{1:D2}",
+                                        t.Minutes,
+                                        t.Seconds
+                                        );
                         }
                         @time
                     </div>
                 </div>
             </div>
-        }
+                            }
 
-        <script type="text/javascript">
-            @*$.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetPlaylists", "SearchP", null)',
-                contentType: 'application/html; charset=utf-8',
-                dataType: 'html',
-                success: function (response) {
-                    $("#playlistModal").html(response);
-                    $(".modal").css({ 'display': "block" });
-                },
-                error: function (xhr, textStatus, err) {
-                }
-            });*@
-        </script>
-    }
-    else
-    {
-        <p class="no-track-found">
-            <strong>No track found</strong>
-        </p>
-    }
+                            <script type="text/javascript">
+
+                            function mouseOver(trackId) {
+                                $("#addToPlaylist" + trackId).show();
+                            }
+
+                            function mouseOut(trackId) {
+                                $("#addToPlaylist" + trackId).hide();
+                            }
+
+                            function select(trackId) {
+
+                                $(".modal").css({ 'display': "block" });
+
+                                localStorage.setItem('trackId', trackId);
+
+                            }
+
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("GetPlaylists", "SearchP", null)',
+                                contentType: 'application/html; charset=utf-8',
+                                dataType: 'html',
+                                success: function (response) {
+                                    $("#playlistModalBody").html(response);
+                                },
+                                error: function (xhr, textStatus, err) {
+                                }
+                            });
+                            function closeModal() {
+                                $(".modal").css({ 'display': "none" });
+                            }
+                            </script>
+                            }
+                            else
+                            {
+                                <p class="no-track-found">
+                                    <strong>No track found</strong>
+                                </p>
+                            }
 </div>
-<div id="playlistModal" class="modal">
+<div class="modal">
 
-    <!-- Modal content -->
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2>Modal Header</h2>
+            <span class="close" onclick="closeModal()">&times;</span>
         </div>
-        <div class="modal-body">
-            <p>Some text in the Modal Body</p>
-            <p>Some other text...</p>
-        </div>
-        <div class="modal-footer">
-            <h3>Modal Footer</h3>
+        <div class="modal-body" id="playlistModalBody">
+
         </div>
     </div>
 

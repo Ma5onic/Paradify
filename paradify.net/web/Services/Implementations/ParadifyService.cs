@@ -8,7 +8,7 @@ namespace web.Services.Implementations
         public SearchItem SearchResult(string query, Token token, int limit = 20, int offset = 0, string market = "")
         {
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
-            SearchItem searchItems = api.SearchItems(query, SpotifyAPI.Web.Enums.SearchType.Track, 50);
+            SearchItem searchItems = api.SearchItems(query, SpotifyAPI.Web.Enums.SearchType.Track, limit);
             return searchItems;
         }
 

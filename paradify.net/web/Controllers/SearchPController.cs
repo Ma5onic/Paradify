@@ -15,7 +15,6 @@ namespace web.Controllers
         private readonly IUserService _userService;
         private readonly ISessionService _sessionService;
 
-
         public string _search { get; set; }
         public string _trackId { get; set; }
 

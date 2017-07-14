@@ -115,10 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="src\web\css\modal-partial.css" />
+    <Content Include="src\web\css\modal.css" />
     <Content Include="src\web\css\back.css" />
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
-    <Content Include="src\web\css\toastr.css" />
     <Content Include="src\web\images\facebook-share.png" />
     <Content Include="src\web\images\loading.gif" />
     <Content Include="src\web\images\logo.png" />
@@ -129,7 +130,6 @@
     <Content Include="src\web\images\twitter-share.png" />
     <Content Include="src\web\js\jquery.min.js" />
     <Content Include="src\web\js\playback.js" />
-    <Content Include="src\web\js\toastr.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

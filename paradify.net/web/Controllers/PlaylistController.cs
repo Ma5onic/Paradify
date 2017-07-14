@@ -35,7 +35,7 @@ namespace web.Controllers
             }
 
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
-            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.track);
+            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.trackId);
 
             return errorResponse;
 
