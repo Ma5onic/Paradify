@@ -1,27 +1,30 @@
 .play {
-    background-image: url("/src/web/images/play-white.png");
+    background-image: url("../images/play-white.png");
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .pause {
-    background-image: url("/src/web/images/pause-white.png");
+    background-image: url("../images/pause-white.png");
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .player {
-    width: 80px;
-    height: 80px;
-    position: relative;
+    width: 55px;
+    height: 55px;
     z-index: 8;
-    top: 11px;
-    left: 32px;
+    top: 0;
+    left: 0;
+    position: absolute;
 }
 
-.player .play-pause {
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    z-index: 9;
-}
+    .player .play-pause {
+        width: 55px;
+        height: 55px;
+        position: absolute;
+        z-index: 9;
+        left: 0;
+        position: absolute;
+        top: 8px;
+    }

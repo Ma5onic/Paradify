@@ -1,0 +1,109 @@
+﻿@using SpotifyAPI.Web.Models
+@model web.Models.SearchResult
+
+<div id="search-result-container">
+    @if (Model != null && !Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+    {
+        foreach (FullTrack track in Model.SearchItem.Tracks.Items)
+        {
+            <div id="track-row">
+                <div class="track-number">
+                    <div class="number-playback-pic" playback="@track.PreviewUrl">
+                        @if (track.PreviewUrl != null)
+                        {
+                            <span class="player">
+                                <span class="play-pause"></span>
+                            </span>
+                        }
+
+                        @if (track.Album.Images.Count > 0)
+                        {
+                            <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
+                        }
+                        else
+                        {
+                            <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
+                        }
+                    </div>
+                </div>
+                <a href="javascript:select('@track.Id');">
+                    <div class="track-info" onmouseover="mouseOver('@track.Id')" onmouseout="mouseOut('@track.Id')">
+                        <div class="track-cont">
+                            <span class="track-name">
+                                @track.Name
+                            </span>
+                            <span class="track-album-artist">
+                                @track.Artists[0].Name - @track.Album.Name
+                            </span>
+                        </div>
+                        <div class="addToPlaylist" id="addToPlaylist@(track.Id)">+</div>
+                    </div>
+                </a>
+                <div class="track-time">
+                    <div class="time">
+                        @{
+                            TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                            string time = string.Format("{0:D2}:{1:D2}",
+                                        t.Minutes,
+                                        t.Seconds
+                                        );
+                        }
+                        @time
+                    </div>
+                </div>
+            </div>
+                            }
+
+                            <script type="text/javascript">
+
+                            function mouseOver(trackId) {
+                                $("#addToPlaylist" + trackId).show();
+                            }
+
+                            function mouseOut(trackId) {
+                                $("#addToPlaylist" + trackId).hide();
+                            }
+
+                            function select(trackId) {
+
+                                $(".modal").css({ 'display': "block" });
+
+                                localStorage.setItem('trackId', trackId);
+
+                            }
+
+                            $.ajax({
+                                type: 'GET',
+                                url: '@Url.Action("GetPlaylists", "SearchP", null)',
+                                contentType: 'application/html; charset=utf-8',
+                                dataType: 'html',
+                                success: function (response) {
+                                    $("#playlistModalBody").html(response);
+                                },
+                                error: function (xhr, textStatus, err) {
+                                }
+                            });
+                            function closeModal() {
+                                $(".modal").css({ 'display': "none" });
+                            }
+                            </script>
+                            }
+                            else
+                            {
+                                <p class="no-track-found">
+                                    <strong>No track found</strong>
+                                </p>
+                            }
+</div>
+<div class="modal">
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body" id="playlistModalBody">
+
+        </div>
+    </div>
+
+</div>

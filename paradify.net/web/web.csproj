@@ -14,7 +14,7 @@
     <RootNamespace>web</RootNamespace>
     <AssemblyName>web</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -115,10 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="src\web\css\bootstrap.min.css" />
+    <Content Include="src\web\css\modal-partial.css" />
+    <Content Include="src\web\css\modal.css" />
+    <Content Include="src\web\css\back.css" />
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
-    <Content Include="src\web\css\toastr.css" />
     <Content Include="src\web\images\facebook-share.png" />
     <Content Include="src\web\images\loading.gif" />
     <Content Include="src\web\images\logo.png" />
@@ -129,17 +130,22 @@
     <Content Include="src\web\images\twitter-share.png" />
     <Content Include="src\web\js\jquery.min.js" />
     <Content Include="src\web\js\playback.js" />
-    <Content Include="src\web\js\toastr.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_LocalResources\SpotifyVariables.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SpotifyVariables.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="IoC\BusinessLogicInstaller.cs" />
     <Compile Include="IoC\ControllersInstaller.cs" />
@@ -150,6 +156,7 @@
     <Compile Include="IoC\WindsorDependencyScope.cs" />
     <Compile Include="Models\CreatePlaylistModel.cs" />
     <Compile Include="Models\PlaylistModel.cs" />
+    <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Repositories\Context.cs" />
     <Compile Include="Repositories\HistoryRepository.cs" />
     <Compile Include="Repositories\IHistoryRepository.cs" />
@@ -157,14 +164,15 @@
     <Compile Include="Services\Implementations\HistoryService.cs" />
     <Compile Include="Services\Implementations\ParadifyService.cs" />
     <Compile Include="Services\Implementations\TokenService.cs" />
+    <Compile Include="Services\Implementations\SessionService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
     <Compile Include="Services\IParadifyService.cs" />
     <Compile Include="Services\ITokenService.cs" />
+    <Compile Include="Services\ISessionService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
-    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SearchPController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SearchResult.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,13 +182,19 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\SearchJson\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\paradify web.pubxml" />
+    <Content Include="Views\SearchP\Index2.cshtml" />
+    <Content Include="Views\SearchP\PlaylistPartial.cshtml" />
+    <None Include="Properties\PublishProfiles\pr.pubxml" />
+    <None Include="Properties\PublishProfiles\prDeveloper1.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -190,6 +204,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App_LocalResources\SpotifyVariables.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SpotifyVariables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

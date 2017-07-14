@@ -7,5 +7,7 @@ namespace web.Services
         Token GetToken();
         void SetToken(string accessToken, string refreshToken, int expiresIn);
         void SetToken(Token token);
+        Token Get();
+        bool Signout();
     }
 }

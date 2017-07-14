@@ -21,11 +21,11 @@ namespace web.Controllers
         [HttpPost]
         public ErrorResponse Post(PlaylistModel model)
         {
-           
-             Token token = GetToken();
-                 PrivateProfile profile = GetMe(token);
 
-            if (profile.Id==null  && token.RefreshToken != null)
+            Token token = GetToken();
+            PrivateProfile profile = GetMe(token);
+
+            if (profile.Id == null && token.RefreshToken != null)
             {
                 string oldRefreshToken = token.RefreshToken;
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
@@ -34,9 +34,9 @@ namespace web.Controllers
                 profile = GetMe(token);
             }
 
-            SpotifyWebAPI api = new SpotifyWebAPI() {AccessToken =  token.AccessToken,TokenType = token.TokenType};
-            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.track);
-            
+            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
+            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.trackId);
+
             return errorResponse;
 
         }
@@ -59,7 +59,7 @@ namespace web.Controllers
             }
 
             SpotifyAPI.Web.SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
-            FullPlaylist fullPlaylist = api.CreatePlaylist(profile.Id, model.name);
+            FullPlaylist fullPlaylist = api.CreatePlaylist(profile.Id, model.Name);
             if (fullPlaylist.HasError())
             {
                 throw new Exception("Playlist can not be created");

@@ -16,6 +16,7 @@ namespace web.IoC
             container.Register(Component.For<IParadifyService>().ImplementedBy<ParadifyService>());
             container.Register(Component.For<IHistoryService>().ImplementedBy<HistoryService>());
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>());
+            container.Register(Component.For<ISessionService>().ImplementedBy<SessionService>());
         }
     }
 }

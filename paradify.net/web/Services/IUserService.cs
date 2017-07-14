@@ -5,5 +5,7 @@ namespace web.Services
     public interface IUserService
     {
         int AddUser(PrivateProfile profile);
+         
+        PrivateProfile GetMe(Token token);
     }
 }

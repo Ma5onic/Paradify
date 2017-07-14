@@ -1,41 +1,222 @@
-.track-image{
-    width: 80px;
-    height: auto;
-}
-.site-name{text-align: center;}
-.list-group{
-    float: left;
-    width: 400px;
-    margin: 1%;
-}
-.list-group-create-playlist {
-    margin:5px 0 0 0;
+body {
+    font-size: 13px;
+    font-weight: 200;
+    display: flex;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif
 }
 
-.list-group-button{
-    width: 10% !important;
+textarea:focus, input:focus {
+    outline: none;
 }
 
+body, a {
+    color: black;
+}
 
-.image-player{
-    position: relative;
-}
-.player-play{
-    position: absolute;
-}
-.player-pause{
-    position: absolute;
-    display: none;
-}
-.tracks{
-    float: left;
+#main {
     width: 100%;
 }
-.tracksL{
-    float: left;
-    width: 8%;
+
+    #main #main-top {
+        clear: both;
+    }
+
+        #main #main-top #left-bar-container {
+            width: 15%;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 100;
+            overflow: auto;
+            min-height: 0 !important;
+            will-change: transform;
+            float: left;
+        }
+
+
+
+            #main #main-top #left-bar-container #logo-menu {
+                padding: 24px 24px 95px;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+                user-select: none;
+            }
+
+            #main #main-top #left-bar-container #logo-menu {
+                border: none;
+            }
+
+            #main #main-top #left-bar-container #profile {
+                padding: 24px 24px 95px;
+            }
+
+                #main #main-top #left-bar-container #profile #profile_container {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+                    #main #main-top #left-bar-container #profile #profile_container #profile_pic {
+                        border-radius: 50%;
+                        background-size: cover;
+                        overflow: hidden;
+                        position: relative;
+                        width: 30px;
+                        height: 30px;
+                        display: none;
+                        float: left;
+                    }
+
+                    #main #main-top #left-bar-container #profile #profile_container #profile_id {
+                        margin: 8px 0 0 8px;
+                        float: left;
+                    }
+
+                #main #main-top #left-bar-container #profile #signout {
+                    text-align: right;
+                    display: none;
+                }
+
+        #main #main-top #right-bar-container {
+            float: left;
+            min-height: 0 !important;
+            width: 85%;
+        }
+
+            #main #main-top #right-bar-container #header .searchBox {
+                position: relative;
+                background-color: #ff6b6b;
+                padding: 1.5em 2em;
+            }
+
+                #main #main-top #right-bar-container #header .searchBox .searchBox-content {
+                    padding: 0 2em;
+                    margin: 0 auto;
+                    max-width: 100%;
+                }
+
+                    #main #main-top #right-bar-container #header .searchBox .searchBox-content .desc {
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        margin-bottom: .5em;
+                        color: white;
+                    }
+
+                    #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input {
+                        box-sizing: border-box;
+                        width: 100%;
+                        background-color: transparent;
+                        border: none;
+                        color: white;
+                        font-weight: 700;
+                        font-size: 62px;
+                        line-height: 1.2;
+                        text-shadow: 0 0 0 #fff;
+                    }
+
+                        #main #main-top #right-bar-container #header .searchBox .searchBox-content .searchBox-input::-webkit-input-placeholder {
+                            color: aliceblue;
+                            opacity: 0.2;
+                        }
+
+#search-result-container {
+    padding: 2em;
+    margin: 0 auto;
 }
 
-.tracksL img{
-    margin :3px 0;
+
+    #search-result-container #track-row {
+        line-height: 1.3;
+        clear: both;
+        height: 71px;
+        margin: 5px 0;
+    }
+
+        #search-result-container #track-row:hover {
+            background-color: #f9f9f9;
+        }
+
+#track-row .track-number {
+    text-align: right;
+    padding-right: 1em;
+    float: left;
+    position: relative;
+}
+
+    #track-row .track-number div {
+        margin-top: .6em;
+    }
+
+        #track-row .track-number div .track-image {
+            width: 55px;
+        }
+
+#track-row .track-info {
+    text-align: left;
+    -webkit-box-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    display: block;
+    height: 4.56em;
+    float: left;
+    width: 87%;
+    position: relative;
+}
+
+   
+
+    #track-row .track-info .addToPlaylist {
+        position: absolute;
+        color: black;
+        right: 29px;
+        top: 19px;
+        display: none;
+        background-color: black;
+        color: white;
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+
+#track-row .track-time {
+    font-feature-settings: "tnum";
+    text-align: right;
+    padding-right: 1em;
+    width: 3.9em;
+    display: block;
+    height: 4.56em;
+    float: left;
+}
+
+#track-row .track-info .track-cont {
+    margin-top: .8em;
+}
+
+#track-row .track-info .track-name {
+    font-size: 1.7em;
+}
+
+#track-row .track-info .track-album-artist {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #797979;
+    font-size: 1.2em;
+}
+
+
+
+#track-row .track-time .time {
+    margin-top: 1.2em;
+    font-size: 1.2em;
+}
+
+
+.no-track-found {
+    font-size: 1.4em;
+    text-align: center;
 }

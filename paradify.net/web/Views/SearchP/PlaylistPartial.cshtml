@@ -1,0 +1,62 @@
+﻿@using SpotifyAPI.Web.Models
+@model List<SimplePlaylist>
+
+<div class="partial-playlist-items">
+    @foreach (SimplePlaylist playlist in Model)
+    {
+        <a href="javascript:addToPlaylist('@(playlist.Id)')">
+            <div class="partial-playlist-item" onmouseover="playlistMouseOver('@playlist.Id')" onmouseout="playlistMouseOut('@playlist.Id')">
+                <div class="image-container">
+                    @if (playlist.Images != null && playlist.Images.Count > 0)
+                    {
+                        <img src="@playlist.Images[0].Url">
+                    }
+                </div>
+                <div class="name-container">
+                    @playlist.Name
+                </div>
+                <div class="addToPlaylistPopup" id="addToPlaylistPopup@(playlist.Id)">
+                    <h2>+</h2>
+                </div>
+            </div>
+        </a>
+    }
+    <div class="clear"></div>
+</div>
+
+<script type="text/javascript">
+
+    function playlistMouseOver(playlistId) {
+        $("#addToPlaylistPopup" + playlistId).show();
+    }
+
+    function playlistMouseOut(playlistId) {
+        $("#addToPlaylistPopup" + playlistId).hide();
+    }
+
+    
+
+    function addToPlaylist(playlistId) {
+        var trackId = localStorage.getItem('trackId');
+        
+        var dataJson = {};
+        dataJson.playlistId = playlistId;
+        dataJson.trackId = 'spotify:track:' + trackId;
+        $.ajax({
+            type: "POST",
+            url: "api/playlist",
+            data: dataJson,
+            success: function (errorResponse) {
+                if (errorResponse.error == null) {
+                    $('#addToPlaylistPopup' + playlistId + ' h2').html('&#10003');
+                } else {
+
+                }
+            },
+            error: function (xhr, textStatus, err) {
+            }
+        });
+
+    }
+
+</script>

@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Linq;
 using SpotifyAPI.Web.Models;
-using web.Repositories;
+using SpotifyAPI.Web;
 
 namespace web.Services.Implementations
 {
     public class UserService : IUserService
     {
+        private readonly ITokenService _tokenService;
+
+        public UserService(ITokenService tokenService)
+        {
+            _tokenService = tokenService;
+        }
+
         public int AddUser(PrivateProfile profile)
         {
             if (profile == null || string.IsNullOrEmpty(profile.Id))
@@ -19,7 +26,6 @@ namespace web.Services.Implementations
 
                 int exist = context.DbContext.Sql("Select 1 from [User] Where UserId = '" + profile.Id + "'")
                     .QuerySingle<int>();
-
 
                 if (exist > 0)
                 {
@@ -39,15 +45,20 @@ namespace web.Services.Implementations
                     .Column("Uri", profile.Uri)
                     .ExecuteReturnLastId<int>("Id");
 
-
-
             }
             catch (Exception ex)
             {
 
             }
-            return 0;
 
+            return 0;
+        }
+
+        public PrivateProfile GetMe(Token token)
+        {
+            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
+
+            return api.GetPrivateProfile();
         }
     }
 }

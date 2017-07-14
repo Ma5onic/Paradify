@@ -3,7 +3,7 @@
         playPauseClass: '.play-pause'
     }
     $(document).ready(function () {
-        $(".tracks[playback^='http']").each(function () {
+        $(".number-playback-pic[playback^='http']").each(function () {
             var url = $(this).attr("playback");
 
             if (url != undefined && url != '') {

@@ -1,0 +1,60 @@
+﻿.partial-playlist-items {
+    clear: both;
+}
+
+    .partial-playlist-items .partial-playlist-item {
+        float: left;
+        width: 150px;
+        height: 200px;
+        margin: 10px 11px;
+        text-align: center;
+        position: relative;
+    }
+
+        .partial-playlist-items .partial-playlist-item .addToPlaylistPopup {
+            position: absolute;
+            color: black;
+            top: 0;
+            display: none;
+            background-color: rgba(255, 0, 0, 0.3);
+            padding: 0;
+            width: 100%;
+            height: 220px;
+            left: 0;
+        }
+
+            .partial-playlist-items .partial-playlist-item .addToPlaylistPopup h2 {
+                position: absolute;
+                top: -12px;
+                font-size: 5em;
+                color: white;
+                left: 56px;
+            }
+
+        .partial-playlist-items .partial-playlist-item .image-container {
+            width: 150px;
+            height: 150px;
+        }
+
+            .partial-playlist-items .partial-playlist-item .image-container img {
+                width: 150px;
+                height: 150px;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+                -webkit-animation-name: animatetop;
+                -webkit-animation-duration: 0.4s;
+                animation-name: animatetop;
+                animation-duration: 0.4s;
+            }
+
+
+        .partial-playlist-items .partial-playlist-item .name-container {
+            padding: 10px 0;
+            font-size: 1.2em;
+            line-height: 1.6em;
+            color: white;
+        }
+
+
+.clear {
+    clear: both;
+}
