@@ -23,5 +23,5 @@
 
 ### Links ###
 ###### [Web Site](http://www.paradify.com/)
-###### [Demo Page](http://search.paradify.com)
+###### [Demo Page](http://www.paradify.com/Search)
 ###### Click [here](https://chrome.google.com/webstore/detail/paradify/bocdilfmhiggklhdifohjfghbdncgele) to install
