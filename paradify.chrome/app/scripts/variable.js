@@ -1,7 +1,7 @@
 var defaults = {
     url: "http://www.paradify.com/Search/",
     searchJsonPath: "searchJson",
-    searchPath: "search",
+    searchPath: "searchp",
     searchBoxClass: ".searchBox",
     clickButtonClass: ".clickButton",
     query: "#q",
