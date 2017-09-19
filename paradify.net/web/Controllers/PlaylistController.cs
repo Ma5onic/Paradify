@@ -78,17 +78,11 @@ namespace web.Controllers
 
         private Token GetToken()
         {
-            Token token = new Token
-            {
-                AccessToken = CookieManager.GetCookieValue("access_token"),
-                RefreshToken = CookieManager.GetCookieValue("refresh_token")
-            };
-            return token;
+            return _tokenService.Get();
         }
 
         private PrivateProfile GetMe(Token token)
         {
-
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
 
             PrivateProfile profile = api.GetPrivateProfile();

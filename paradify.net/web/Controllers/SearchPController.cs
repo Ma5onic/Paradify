@@ -4,6 +4,7 @@ using web.Services;
 using web.Enums;
 using SpotifyAPI.Web;
 using web.Models;
+using System.Linq;
 
 namespace web.Controllers
 {
@@ -96,6 +97,10 @@ namespace web.Controllers
         {
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
             Paging<SimplePlaylist> userPlaylists = api.GetUserPlaylists(userId, 50);
+            if (userPlaylists != null)
+            {
+                userPlaylists.Items = userPlaylists.Items.Where(x => x.Owner.Id == userId).ToList();
+            }
             return userPlaylists;
         }
     }
