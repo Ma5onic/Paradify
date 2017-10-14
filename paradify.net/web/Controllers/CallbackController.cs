@@ -7,11 +7,11 @@ namespace web.Controllers
 {
     public class CallbackController : Controller
     {
-        private readonly ITokenService _tokenService;
+        private readonly ITokenCookieService _tokenService;
         private readonly IUserService _userService;
         private readonly ISessionService _sessionService;
 
-        public CallbackController(ITokenService tokenService, IUserService userService, ISessionService sessionService)
+        public CallbackController(ITokenCookieService tokenService, IUserService userService, ISessionService sessionService)
         {
             _tokenService = tokenService;
             _userService = userService;
@@ -29,13 +29,13 @@ namespace web.Controllers
 
             Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
 
-            var returnUrl = _sessionService.GetReturnUrl();
-
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
 
-            PrivateProfile profile = _userService.GetMe(token);
+            PrivateProfile profile = _userService.GetMe(_tokenService);
 
             _userService.AddUser(profile);
+
+            var returnUrl = _sessionService.GetReturnUrl();
 
             if (returnUrl != null && !string.IsNullOrEmpty(returnUrl))
             {

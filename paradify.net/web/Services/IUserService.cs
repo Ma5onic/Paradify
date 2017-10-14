@@ -4,8 +4,9 @@ namespace web.Services
 {
     public interface IUserService
     {
-        int AddUser(PrivateProfile profile);
-         
-        PrivateProfile GetMe(Token token);
+        bool AddUser(PrivateProfile profile);
+        PrivateProfile GetMe(ITokenCookieService tokenCookieService);
+        bool Signout(ITokenCookieService tokenCookieService);
+        
     }
 }

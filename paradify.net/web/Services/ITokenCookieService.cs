@@ -2,9 +2,8 @@
 
 namespace web.Services
 {
-    public interface ITokenService
+    public interface ITokenCookieService
     {
-        Token GetToken();
         void SetToken(string accessToken, string refreshToken, int expiresIn);
         void SetToken(Token token);
         Token Get();

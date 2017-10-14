@@ -20,6 +20,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -147,6 +148,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="IoC\BusinessLogicInstaller.cs" />
     <Compile Include="IoC\ControllersInstaller.cs" />
     <Compile Include="IoC\CookieManager.cs" />
@@ -160,15 +162,18 @@
     <Compile Include="Repositories\Context.cs" />
     <Compile Include="Repositories\HistoryRepository.cs" />
     <Compile Include="Repositories\IHistoryRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\IHistoryService.cs" />
     <Compile Include="Services\Implementations\HistoryService.cs" />
     <Compile Include="Services\Implementations\ParadifyService.cs" />
-    <Compile Include="Services\Implementations\TokenService.cs" />
+    <Compile Include="Services\Implementations\TokenCookieService.cs" />
     <Compile Include="Services\Implementations\SessionService.cs" />
     <Compile Include="Services\Implementations\UserService.cs" />
     <Compile Include="Services\IParadifyService.cs" />
-    <Compile Include="Services\ITokenService.cs" />
+    <Compile Include="Services\ITokenCookieService.cs" />
     <Compile Include="Services\ISessionService.cs" />
+    <Compile Include="Services\IPlaylistService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\SearchPController.cs" />
@@ -177,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Implementations\PlaylistService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">

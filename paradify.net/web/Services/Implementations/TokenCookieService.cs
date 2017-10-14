@@ -5,19 +5,8 @@ using SpotifyAPI.Web.Auth;
 
 namespace web.Services.Implementations
 {
-    public class TokenService : ITokenService
+    public class TokenCookieService : ITokenCookieService
     {
-        public Token GetToken()
-        {
-            Token token = new Token
-            {
-                AccessToken = CookieManager.GetCookieValue("access_token"),
-                RefreshToken = CookieManager.GetCookieValue("refresh_token"),
-                TokenType = "Bearer"
-            };
-            return token;
-        }
-
         public void SetToken(string accessToken, string refreshToken, int expiresIn)
         {
             CookieManager.WriteCookie("access_token", accessToken, DateTime.Now.AddSeconds(expiresIn));
@@ -31,13 +20,13 @@ namespace web.Services.Implementations
 
         public Token Get()
         {
-            var token = GetToken();
+            var token = GetTokenFromCookie();
 
             if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
             {
                 string oldRefreshToken = token.RefreshToken;
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
-                token.RefreshToken = token.RefreshToken;
+                token.RefreshToken = oldRefreshToken;
                 SetToken(token);
             }
 
@@ -56,6 +45,17 @@ namespace web.Services.Implementations
             AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
 
             return auth.RefreshToken(refreshToken, clientSecret);
+        }
+
+        private Token GetTokenFromCookie()
+        {
+            Token token = new Token
+            {
+                AccessToken = CookieManager.GetCookieValue("access_token"),
+                RefreshToken = CookieManager.GetCookieValue("refresh_token"),
+                TokenType = "Bearer"
+            };
+            return token;
         }
     }
 }

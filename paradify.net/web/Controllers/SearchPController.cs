@@ -2,31 +2,31 @@
 using SpotifyAPI.Web.Models;
 using web.Services;
 using web.Enums;
-using SpotifyAPI.Web;
 using web.Models;
-using System.Linq;
 
 namespace web.Controllers
 {
     public class SearchPController : Controller
     {
         private readonly IParadifyService _paradifyService;
-        private readonly ITokenService _tokenService;
+        private readonly ITokenCookieService _tokenCookieService;
         private readonly IHistoryService _historyService;
         private readonly IUserService _userService;
         private readonly ISessionService _sessionService;
+        private readonly IPlaylistService _playlistService;
 
         public string _search { get; set; }
         public string _trackId { get; set; }
 
-        public SearchPController(IParadifyService paradifyService, ITokenService tokenService,
-            IHistoryService historyService, IUserService userService, ISessionService sessionService)
+        public SearchPController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
+            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService)
         {
             _paradifyService = paradifyService;
-            _tokenService = tokenService;
+            _tokenCookieService = tokenCookieService;
             _historyService = historyService;
             _userService = userService;
             _sessionService = sessionService;
+            _playlistService = playlistService;
         }
 
         public ActionResult Index(string q)
@@ -39,7 +39,7 @@ namespace web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Token token = _tokenService.Get();
+            Token token = _tokenCookieService.Get();
 
             if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
             {
@@ -57,7 +57,7 @@ namespace web.Controllers
                 track = _trackId,
             };
 
-            PrivateProfile profile = _userService.GetMe(token);
+            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
 
             if (profile.Id != null)
             {
@@ -69,19 +69,17 @@ namespace web.Controllers
 
         public ActionResult GetPlaylists()
         {
-            Token token = _tokenService.Get();
-
-            PrivateProfile profile = _userService.GetMe(token);
-
-            var playlist = GetPlaylists(token, profile.Id);
+            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
+        
+            var playlist = _playlistService.GetPlaylists(_tokenCookieService, profile.Id);
 
             if (playlist != null && playlist.Items.Count == 0)
             {
-                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profile.Id, "Paradify Playlist", token);
+                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profile.Id, "Paradify Playlist", _tokenCookieService.Get());
 
                 if (!string.IsNullOrEmpty(fullPlaylist.Id))
                 {
-                    playlist = GetPlaylists(token, profile.Id);
+                    playlist = _playlistService.GetPlaylists(_tokenCookieService, profile.Id);
                 }
             }
 
@@ -91,17 +89,6 @@ namespace web.Controllers
         private SearchItem Search(string query, Token token)
         {
             return _paradifyService.SearchResult(query, token, 100);
-        }
-
-        private Paging<SimplePlaylist> GetPlaylists(Token token, string userId)
-        {
-            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
-            Paging<SimplePlaylist> userPlaylists = api.GetUserPlaylists(userId, 50);
-            if (userPlaylists != null)
-            {
-                userPlaylists.Items = userPlaylists.Items.Where(x => x.Owner.Id == userId).ToList();
-            }
-            return userPlaylists;
         }
     }
 }

@@ -3,7 +3,6 @@ using System.Web.Http;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
-using web.IoC;
 using web.Models;
 using web.Services;
 
@@ -11,9 +10,9 @@ namespace web.Controllers
 {
     public class PlaylistController : ApiController
     {
-        private readonly ITokenService _tokenService;
+        private readonly ITokenCookieService _tokenService;
 
-        public PlaylistController(ITokenService tokenService)
+        public PlaylistController(ITokenCookieService tokenService)
         {
             _tokenService = tokenService;
         }

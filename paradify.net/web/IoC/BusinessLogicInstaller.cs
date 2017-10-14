@@ -11,12 +11,14 @@ namespace web.IoC
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            container.Register(Component.For<ITokenService>().ImplementedBy<TokenService>().LifestylePerWebRequest());
+            container.Register(Component.For<ITokenCookieService>().ImplementedBy<TokenCookieService>().LifestylePerWebRequest());
             container.Register(Component.For<IHistoryRepository>().ImplementedBy<HistoryRepository>());
+            container.Register(Component.For<IUserRepository>().ImplementedBy<UserRepository>());
             container.Register(Component.For<IParadifyService>().ImplementedBy<ParadifyService>());
             container.Register(Component.For<IHistoryService>().ImplementedBy<HistoryService>());
             container.Register(Component.For<IUserService>().ImplementedBy<UserService>());
             container.Register(Component.For<ISessionService>().ImplementedBy<SessionService>());
+            container.Register(Component.For<IPlaylistService>().ImplementedBy<PlaylistService>());
         }
     }
 }

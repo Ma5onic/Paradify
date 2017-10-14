@@ -6,10 +6,10 @@ namespace web.Controllers
 {
     public class UsersController : ApiController
     {
-        private readonly ITokenService _tokenService;
+        private readonly ITokenCookieService _tokenService;
         private readonly IUserService _userService;
 
-        public UsersController(ITokenService tokenService, IUserService userService)
+        public UsersController(ITokenCookieService tokenService, IUserService userService)
         {
             _tokenService = tokenService;
             _userService = userService;
@@ -19,18 +19,14 @@ namespace web.Controllers
         [Route("users/me")]
         public PrivateProfile Me()
         {
-            Token token = _tokenService.Get();
-
-            PrivateProfile profile = _userService.GetMe(token);
-
-            return profile;
+            return _userService.GetMe(_tokenService);
         }
 
         [HttpGet]
         [Route("users/signout")]
         public bool Signout()
         {
-            return _tokenService.Signout();
+            return _userService.Signout(_tokenService);
         }
     }
 }
