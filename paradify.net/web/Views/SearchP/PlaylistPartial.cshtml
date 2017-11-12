@@ -49,6 +49,7 @@
             success: function (errorResponse) {
                 if (errorResponse.error == null) {
                     $('#addToPlaylistPopup' + playlistId + ' h2').html('&#10003');
+                    gaTrack.addToPlaylistUrl();
                 } else {
 
                 }

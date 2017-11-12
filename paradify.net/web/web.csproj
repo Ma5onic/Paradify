@@ -130,6 +130,7 @@
     <Content Include="src\web\images\plus.png" />
     <Content Include="src\web\images\twitter-share.png" />
     <Content Include="src\web\js\jquery.min.js" />
+    <Content Include="src\web\js\ga-track.js" />
     <Content Include="src\web\js\playback.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -149,7 +150,9 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="IoC\BusinessLogicInstaller.cs" />
+    <Compile Include="IoC\ContainerManager.cs" />
     <Compile Include="IoC\ControllersInstaller.cs" />
     <Compile Include="IoC\CookieManager.cs" />
     <Compile Include="IoC\IocContainer.cs" />

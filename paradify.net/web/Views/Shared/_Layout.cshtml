@@ -5,13 +5,11 @@
     <title>Paradify - Songs to Spotify</title>
     <script src="~/src/web/js/jquery.min.js?v=2"></script>
     <script src="~/src/web/js/playback.js?v=2"></script>
+    <script src="~/src/web/js/ga-track.js?v=2"></script>
     <link rel='stylesheet' href='~/src/web/css/searchresult.css?v=2' type='text/css' />
     <link rel='stylesheet' href='~/src/web/css/playback.css?v=2' type='text/css' />
     <link rel='stylesheet' href='~/src/web/css/modal-partial.css?v=2' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/modal.css?v=2' type='text/css' />
-    <script type="text/javascript">
-
-    </script>
+    <link rel='stylesheet' href='~/src/web/css/modal.css?v=201711v1' type='text/css' />
 </head>
 <body>
     <div id="main">
@@ -56,7 +54,7 @@
                 position: absolute;
                 top: 12px;
                 right: 13px;">
-                    <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL">
+                    <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
                         <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
                     </a>
                 </div>    
@@ -92,12 +90,16 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#profile').hide();
+                    gaTrack.signout($('#profile_id').html());
                 },
                 error: function (xhr, textStatus, err) {
                 }
             });
         }
 
+        function paypal() {
+            gaTrack.paypalClick();
+        }
 
 
 

@@ -14,6 +14,12 @@ namespace web.App_Start
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Authorize",
+                url: "Authorize/Index",
+                defaults: new { controller = "Authorize", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -2,10 +2,13 @@
 using SpotifyAPI.Web.Models;
 using web.Services;
 using web.Enums;
+using web.Filters;
 using web.Models;
 
 namespace web.Controllers
 {
+    [ParadifyAuthorization]
+    
     public class SearchPController : Controller
     {
         private readonly IParadifyService _paradifyService;
@@ -34,12 +37,12 @@ namespace web.Controllers
             _search = q;
             _trackId = "";
 
-            if (string.IsNullOrEmpty(_search))
+            if (_search.NullCheck())
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            Token token = _tokenCookieService.Get();
+            Token token = ViewBag.Token;
 
             if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
             {
@@ -47,6 +50,8 @@ namespace web.Controllers
 
                 return RedirectToAction("Index", "Authorize");
             }
+
+            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
 
             SearchItem searchItem = Search(_search, token);
 
@@ -56,8 +61,6 @@ namespace web.Controllers
                 query = _search,
                 track = _trackId,
             };
-
-            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
 
             if (profile.Id != null)
             {
@@ -70,7 +73,7 @@ namespace web.Controllers
         public ActionResult GetPlaylists()
         {
             PrivateProfile profile = _userService.GetMe(_tokenCookieService);
-        
+
             var playlist = _playlistService.GetPlaylists(_tokenCookieService, profile.Id);
 
             if (playlist != null && playlist.Items.Count == 0)
