@@ -108,15 +108,16 @@ function readPowerfm() {
 }
 
 function readYoutube() {
-    var track = document.getElementById('eow-title').innerHTML.trim();
+    var track = document.getElementsByClassName('title')[0].innerHTML.trim();
     var result = {track: track};
     return result;
 }
 
 function readKarnaval() {
-    var track = document.getElementsByClassName('song_title')[0].innerText;
+    var title = document.getElementsByClassName('title')[0];
+    var track = title.firstChild.firstChild.innerText;
 
-    var artist = document.getElementsByClassName('artist_name')[0].innerText;
+    var artist = document.getElementsByClassName('sub_title')[0].firstChild.firstChild.innerText;
 
     var result = {track: track, artist: artist};
 
@@ -133,7 +134,7 @@ function readsoundCloud() {
 }
 
 function readVimeo() {
-    var track = document.getElementsByClassName('clip_info-title')[0].innerHTML.trim();
+    var track = document.getElementsByClassName('_1fHNK')[0].innerHTML.trim();
     var result;
     if (track != '') {
         result = {track: track, artist: ''};
@@ -141,7 +142,7 @@ function readVimeo() {
     return result;
 }
 function readDailyMotion() {
-    var track = document.getElementById('video_title').innerHTML.trim();
+    var track = document.getElementsByClassName('QueueInfoContent__title___2Gvkw')[0].innerHTML.trim();
     var result;
     if (track != '') {
         result = {track: track, artist: ''};

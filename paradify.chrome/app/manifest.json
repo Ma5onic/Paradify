@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Paradify",
-  "short_name": "Paradify",
+  "name": "Add a song to your Spotify Playlist",
+  "short_name": "Songs to Spotify",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "3.7",
+  "version": "3.9",
   "permissions": [
     "http://*/*",
     "https://*/*",
