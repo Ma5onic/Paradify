@@ -5,11 +5,12 @@
     $(document).ready(function () {
         $(".number-playback-pic[playback^='http']").each(function () {
             var url = $(this).attr("playback");
+            var trackName = $(this).attr("trackName");
 
             if (url != undefined && url != '') {
                 var first = $(this).find(defaults.playPauseClass)[0];
                 setBackgroud(first,'play');
-                initClick(first,url);
+                initClick(first, url, trackName);
                 initHover(first);
             }
         });
@@ -19,7 +20,7 @@
         $(elem).addClass(className);
     }
 
-    var initClick = function(elem, preview_url){
+    var initClick = function(elem, preview_url, trackName){
         $(elem).click(function(){
 
             if($(elem).hasClass('play'))
@@ -27,6 +28,7 @@
                 play(preview_url);
                 $(elem).removeClass('play');
                 $(elem).addClass('pause');
+                gaEvent.track.play(trackName);
             }
             else    {
                 pause(preview_url);
@@ -66,7 +68,6 @@ function play(url) {
     }
 
     p.play();
-
 }
 
 

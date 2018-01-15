@@ -8,7 +8,7 @@
         {
             <div id="track-row">
                 <div class="track-number">
-                    <div class="number-playback-pic" playback="@track.PreviewUrl">
+                    <div class="number-playback-pic" playback="@track.PreviewUrl" trackName="@track.Name">
                         @if (track.PreviewUrl != null)
                         {
                             <span class="player">
@@ -26,7 +26,7 @@
                         }
                     </div>
                 </div>
-                <a href="javascript:select('@track.Id');">
+                <a href="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)');">
                     <div class="track-info" onmouseover="mouseOver('@track.Id')" onmouseout="mouseOut('@track.Id')">
                         <div class="track-cont">
                             <span class="track-name">
@@ -52,48 +52,55 @@
                     </div>
                 </div>
             </div>
-                            }
+        }
 
-                            <script type="text/javascript">
+            <script type="text/javascript">
 
-                            function mouseOver(trackId) {
-                                $("#addToPlaylist" + trackId).show();
-                            }
+                function mouseOver(trackId) {
+                    $("#addToPlaylist" + trackId).show();
+                }
 
-                            function mouseOut(trackId) {
-                                $("#addToPlaylist" + trackId).hide();
-                            }
+                function mouseOut(trackId) {
+                    $("#addToPlaylist" + trackId).hide();
+                }
 
-                            function select(trackId) {
+                function select(trackId, trackName) {
 
-                                $(".modal").css({ 'display': "block" });
+                    $(".modal").css({ 'display': "block" });
 
-                                localStorage.setItem('trackId', trackId);
+                    localStorage.setItem('trackId', trackId);
+                    localStorage.setItem('trackName', trackName);
 
-                            }
+                }
 
-                            $.ajax({
-                                type: 'GET',
-                                url: '@Url.Action("GetPlaylists", "SearchP", null)',
-                                contentType: 'application/html; charset=utf-8',
-                                dataType: 'html',
-                                success: function (response) {
-                                    $("#playlistModalBody").html(response);
-                                },
-                                error: function (xhr, textStatus, err) {
-                                }
-                            });
-                            function closeModal() {
-                                $(".modal").css({ 'display': "none" });
-                            }
-                            </script>
-                            }
-                            else
-                            {
-                                <p class="no-track-found">
-                                    <strong>No track found</strong>
-                                </p>
-                            }
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetPlaylists", "SearchP", null)',
+                    contentType: 'application/html; charset=utf-8',
+                    dataType: 'html',
+                    success: function (response) {
+                        $("#playlistModalBody").html(response);
+                    },
+                    error: function (xhr, textStatus, err) {
+                    }
+                });
+                function closeModal() {
+                    $(".modal").css({ 'display': "none" });
+                }
+
+                gaEvent.track.searched('@HttpUtility.JavaScriptStringEncode(Model.query)');
+
+            </script>
+        }
+        else
+        {
+            <p class="no-track-found">
+                <strong>No tracks found</strong>
+            </p>
+            <script type="text/javascript">
+                gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
+            </script>
+        }
 </div>
 <div class="modal">
 

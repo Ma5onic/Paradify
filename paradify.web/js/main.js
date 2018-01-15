@@ -42,7 +42,7 @@ var installButton = {
         $(defaults.installButton).html("thank you!");
     },
     installNow: function () {
-        $(defaults.installButton).html("Install extension now");
+        $(defaults.installButton).html("Install extension");
     }
 }
 

@@ -9,7 +9,7 @@ var gaTrack = {
 
     signout: function (userNane) {
         if (ga != undefined) {
-            ga('set', 'page', '/signout/' + userNane);
+            ga('set', 'page', '/signout/' + userNane);  
             ga('send', 'pageview');
         }
     },
@@ -20,5 +20,29 @@ var gaTrack = {
             ga('set', 'page', '/paypal');
                 ga('send', 'pageview');
         }
+    }
+}
+
+var gaEvent = {
+    track: {
+        
+        searched: function (search) {
+            ga('send', 'event', 'Track', 'Searched', decodeURIComponent(search));
+        },
+
+        notFound: function (search) {
+            ga('send', 'event', 'Track', 'NotFound', decodeURIComponent(search));
+        },
+
+        play: function (trackName) {
+            ga('send', 'event', 'Track', 'Play', decodeURIComponent(trackName));
+        },
+
+        addToPlaylist: function (trackName) {
+            ga('send', 'event', 'Track', 'AddToPlaylist', decodeURIComponent(trackName));
+        },
+
+        
+      
     }
 }

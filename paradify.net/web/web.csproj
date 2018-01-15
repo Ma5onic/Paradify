@@ -129,6 +129,7 @@
     <Content Include="src\web\images\play-white.png" />
     <Content Include="src\web\images\plus.png" />
     <Content Include="src\web\images\twitter-share.png" />
+    <Content Include="src\web\js\ga.js" />
     <Content Include="src\web\js\jquery.min.js" />
     <Content Include="src\web\js\ga-track.js" />
     <Content Include="src\web\js\playback.js" />

@@ -3,13 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Paradify - Songs to Spotify</title>
-    <script src="~/src/web/js/jquery.min.js?v=2"></script>
-    <script src="~/src/web/js/playback.js?v=2"></script>
-    <script src="~/src/web/js/ga-track.js?v=2"></script>
-    <link rel='stylesheet' href='~/src/web/css/searchresult.css?v=2' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/playback.css?v=2' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/modal-partial.css?v=2' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/modal.css?v=201711v1' type='text/css' />
+    <script src="~/src/web/js/ga.js"></script>
+    <script src="~/src/web/js/jquery.min.js?v=3"></script>
+    <script src="~/src/web/js/playback.js?v=3"></script>
+    <script src="~/src/web/js/ga-track.js?v=3"></script>
+    <link rel='stylesheet' href='~/src/web/css/searchresult.css?v=3' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/css/playback.css?v=3' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/css/modal-partial.css?v=3' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/css/modal.css?v=3' type='text/css' />
 </head>
 <body>
     <div id="main">
@@ -101,21 +102,6 @@
             gaTrack.paypalClick();
         }
 
-
-
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-3218083-14', 'auto');
         ga('send', 'pageview');
 
     </script>

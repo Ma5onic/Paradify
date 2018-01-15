@@ -38,6 +38,7 @@
 
     function addToPlaylist(playlistId) {
         var trackId = localStorage.getItem('trackId');
+        var trackName = localStorage.getItem('trackName');
         
         var dataJson = {};
         dataJson.playlistId = playlistId;
@@ -50,6 +51,7 @@
                 if (errorResponse.error == null) {
                     $('#addToPlaylistPopup' + playlistId + ' h2').html('&#10003');
                     gaTrack.addToPlaylistUrl();
+                    gaEvent.track.addToPlaylist(trackName);
                 } else {
 
                 }
