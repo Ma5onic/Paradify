@@ -1,5 +1,5 @@
 var defaults = {
-    url: "http://www.paradify.com/Search/",
+    url: "http://www.spotifydiscovery.com/Search/",
     searchJsonPath: "searchJson",
     searchPath: "searchp",
     searchBoxClass: ".searchBox",

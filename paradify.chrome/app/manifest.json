@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Add a song to your Spotify Playlist",
+  "name": "Youtube, Vimeo, DailyMotion to Spotify",
   "short_name": "Songs to Spotify",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
-  "version": "3.9",
+  "version": "4.1",
   "permissions": [
     "http://*/*",
     "https://*/*",
