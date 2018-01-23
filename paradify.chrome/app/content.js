@@ -23,6 +23,7 @@ var paradify = {
             var trackInfo = paradify.getTrackInfo(pageName);
             if (trackInfo != undefined && trackInfo.success) {
                 chrome.runtime.sendMessage({type: 'setBadgeText', text: ' 1 '});
+                chrome.runtime.sendMessage({type: 'saveTrackToStorage', foundTrack: trackInfo});
             }
         }
 

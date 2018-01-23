@@ -1,7 +1,12 @@
 body, html {
-    margin: 5px 2px 0 2px;
+    margin: 0;
+    padding: 5px;
     height: 200px;
+    width: 400px;
 
+}
+#main {
+    margin-bottom: 5px;
 }
 
 .list-table {

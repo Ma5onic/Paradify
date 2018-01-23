@@ -13,30 +13,30 @@ function searchQueryResult(htmlResult, query) {
 }
 
 function searchQuery(query, searchResult) {
-    var fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, encodeURIComponent(query));
+    var fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, query);
 
-    var url = String.format("{0}{1}?q={2}", defaults.url, defaults.searchPath, encodeURIComponent(query));
+    var url = String.format("{0}{1}?q={2}", defaults.url, defaults.searchPath, query);
 
     setTimeout(function () {
         chrome.tabs.create({url: url});
     }, 100);
 
-    showLoading();
-    $.ajax({
-        type: "GET",
-        url: fullJsonUrl,
-        success: function (htmlResult) {
-            return searchResult(htmlResult, query);
-        },
-        error: function (xhr, textStatus, err) {
-            console.log(xhr);
-            console.log(textStatus);
-            console.log(err);
-        },
-        done: function () {
-            hideLoading();
-        }
-    });
+    // showLoading();
+    // $.ajax({
+    //     type: "GET",
+    //     url: fullJsonUrl,
+    //     success: function (htmlResult) {
+    //         return searchResult(htmlResult, query);
+    //     },
+    //     error: function (xhr, textStatus, err) {
+    //         console.log(xhr);
+    //         console.log(textStatus);
+    //         console.log(err);
+    //     },
+    //     done: function () {
+    //         hideLoading();
+    //     }
+    // });
 
 
 }
@@ -82,12 +82,12 @@ $(document).ready(function () {
     initQuery();
 
     $(defaults.clickButtonClass).click(function () {
-        searchQuery($(defaults.searchBoxClass).val(),searchQueryResult);
+        searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()),searchQueryResult);
     });
 
     $(defaults.query).keypress(function (event) {
         if (event.which == defaults.events.ENTER) {
-            searchQuery($(defaults.searchBoxClass).val(), searchQueryResult);
+            searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()), searchQueryResult);
         }
     });
 });
@@ -96,25 +96,75 @@ var initQuery = function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
 
         var url = tabs[0].url.toLowerCase();
-        var pageName = getPageName(url);
-        if (pageName != undefined) {
-            chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
-                if (trackInfo != undefined && trackInfo.success) {
+                var pageName = getPageName(url);
+                if (pageName != undefined) {
+                    chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
+        
+                        if (trackInfo != undefined && trackInfo.success) {
 
-                    if (trackInfo.artist == undefined) {
-                        trackInfo.artist = '';
-                    }
-
-                    var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-
-					$('#q').val(query);
-                    searchQuery(query, searchQueryResult);
-                } else {
-                    $(defaults.resultId).addClass('hidden');
-                    $(defaults.formId).removeClass('hidden');
-                    $(defaults.waitingId).addClass('hidden');
+                            if (trackInfo.artist == undefined) {
+                                trackInfo.artist = '';
+                            }
+                            var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+                            $('#q').val(query);
+                            searchQuery(encodeURIComponent(query), searchQueryResult);
+                            
+                        } else {
+                            $(defaults.resultId).addClass('hidden');
+                            $(defaults.formId).removeClass('hidden');
+                            $(defaults.waitingId).addClass('hidden');
+                        }
+                        
+                    });
                 }
-            });
-        }
+        return;        
+        chrome.storage.sync.get({
+            foundTracks: 'foundTracks'
+            }, function(responseGet) {
+
+            if (responseGet.foundTracks != 'foundTracks') {
+
+                var htmlFoundHistory = '';
+                for (i = 0; i < responseGet.foundTracks.length; i++) { 
+                    var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist);
+                    htmlFoundHistory += 
+                    String.format("<button class=\"searchButton\" searchValue=\"{0}\">add</button>",  encodeURIComponent(query))
+                    + query
+                    + "<br>";
+                }
+
+                document.getElementById('foundHistory').innerHTML = htmlFoundHistory;
+                $('.found-history').show();
+                
+                $(".searchButton").click(function () {
+                    searchQuery($(this).attr("searchValue"));
+                });
+
+            } else {
+
+                var url = tabs[0].url.toLowerCase();
+                var pageName = getPageName(url);
+                if (pageName != undefined) {
+                    chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
+        
+                        if (trackInfo != undefined && trackInfo.success) {
+
+                            if (trackInfo.artist == undefined) {
+                                trackInfo.artist = '';
+                            }
+                            var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+                            $('#q').val(query);
+                            searchQuery(encodeURIComponent(query), searchQueryResult);
+                            
+                        } else {
+                            $(defaults.resultId).addClass('hidden');
+                            $(defaults.formId).removeClass('hidden');
+                            $(defaults.waitingId).addClass('hidden');
+                        }
+                        
+                    });
+                }
+            }
+        });
     });
 }

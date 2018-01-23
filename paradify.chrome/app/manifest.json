@@ -10,7 +10,8 @@
     "https://*/*",
     "tabs",
     "webNavigation",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "content_scripts": [
     {
