@@ -12,8 +12,6 @@
     }
 });
 
-
-
 var paradify = {
     pageLoad : function() {
         chrome.runtime.sendMessage({type: 'clearBadge'});
@@ -26,8 +24,6 @@ var paradify = {
                 chrome.runtime.sendMessage({type: 'saveTrackToStorage', foundTrack: trackInfo});
             }
         }
-
-
     },
 
     getTrackInfo : function(pageName) {

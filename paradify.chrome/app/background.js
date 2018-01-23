@@ -51,8 +51,7 @@ function saveTrackToStorage(foundTrack) {
 
             chrome.storage.sync.set({
                 foundTracks: tempfoundTracks
-            }, function(responseSet) {
-               
+                }, function(responseSet) {
             });
     });
 }
@@ -63,7 +62,11 @@ function clearBadge() {
 
 chrome.webNavigation.onCompleted.addListener(function(details) {
     
+
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        if (tabs.length == 0)
+        return;
+
         chrome.tabs.sendMessage(tabs[0].id, {type: 'backgroundStarts', details: details}, function (response) {
             
         });
