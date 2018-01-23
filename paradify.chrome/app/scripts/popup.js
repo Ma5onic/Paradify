@@ -20,25 +20,6 @@ function searchQuery(query, searchResult) {
     setTimeout(function () {
         chrome.tabs.create({url: url});
     }, 100);
-
-    // showLoading();
-    // $.ajax({
-    //     type: "GET",
-    //     url: fullJsonUrl,
-    //     success: function (htmlResult) {
-    //         return searchResult(htmlResult, query);
-    //     },
-    //     error: function (xhr, textStatus, err) {
-    //         console.log(xhr);
-    //         console.log(textStatus);
-    //         console.log(err);
-    //     },
-    //     done: function () {
-    //         hideLoading();
-    //     }
-    // });
-
-
 }
 
 var initTracksLink = function (query) {
@@ -95,29 +76,6 @@ $(document).ready(function () {
 var initQuery = function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
 
-        var url = tabs[0].url.toLowerCase();
-                var pageName = getPageName(url);
-                if (pageName != undefined) {
-                    chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
-        
-                        if (trackInfo != undefined && trackInfo.success) {
-
-                            if (trackInfo.artist == undefined) {
-                                trackInfo.artist = '';
-                            }
-                            var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-                            $('#q').val(query);
-                            searchQuery(encodeURIComponent(query), searchQueryResult);
-                            
-                        } else {
-                            $(defaults.resultId).addClass('hidden');
-                            $(defaults.formId).removeClass('hidden');
-                            $(defaults.waitingId).addClass('hidden');
-                        }
-                        
-                    });
-                }
-        return;        
         chrome.storage.sync.get({
             foundTracks: 'foundTracks'
             }, function(responseGet) {
