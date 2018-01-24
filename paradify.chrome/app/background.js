@@ -15,10 +15,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
         case 'clearBadge':
             clearBadge();
             break;
-        case 'saveTrackToStorage':
-            saveTrackToStorage(message.foundTrack);
-            break;    
     }
+    
+    
 });
 
 function setBadgeText(text) {
@@ -29,31 +28,6 @@ function setBadgeText(text) {
         chrome.browserAction.setBadgeText ( { text: text } );
         window.clearInterval(intervalID);
     }, 2000);
-}
-
-function saveTrackToStorage(foundTrack) {
-    var tempfoundTracks;
-
-    chrome.storage.sync.get({
-        foundTracks: 'foundTracks'
-        }, function(responseGet) {
-            if (responseGet.foundTracks == 'foundTracks') {
-                tempfoundTracks = [];
-            } else {
-                tempfoundTracks = responseGet.foundTracks;
-            }
-            
-            tempfoundTracks.unshift(foundTrack);
-            
-            if (tempfoundTracks.length > 50) {
-                tempfoundTracks = tempfoundTracks.splice(0, 50);
-            }
-
-            chrome.storage.sync.set({
-                foundTracks: tempfoundTracks
-                }, function(responseSet) {
-            });
-    });
 }
 
 function clearBadge() {

@@ -76,31 +76,7 @@ $(document).ready(function () {
 var initQuery = function () {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
 
-        chrome.storage.sync.get({
-            foundTracks: 'foundTracks'
-            }, function(responseGet) {
-
-            if (responseGet.foundTracks != 'foundTracks') {
-
-                var htmlFoundHistory = '';
-                for (i = 0; i < responseGet.foundTracks.length; i++) { 
-                    var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist);
-                    htmlFoundHistory += 
-                    String.format("<button class=\"searchButton\" searchValue=\"{0}\">add</button>",  encodeURIComponent(query))
-                    + query
-                    + "<br>";
-                }
-
-                document.getElementById('foundHistory').innerHTML = htmlFoundHistory;
-                $('.found-history').show();
-                
-                $(".searchButton").click(function () {
-                    searchQuery($(this).attr("searchValue"));
-                });
-
-            } else {
-
-                var url = tabs[0].url.toLowerCase();
+        var url = tabs[0].url.toLowerCase();
                 var pageName = getPageName(url);
                 if (pageName != undefined) {
                     chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
@@ -110,9 +86,16 @@ var initQuery = function () {
                             if (trackInfo.artist == undefined) {
                                 trackInfo.artist = '';
                             }
-                            var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-                            $('#q').val(query);
-                            searchQuery(encodeURIComponent(query), searchQueryResult);
+
+                            try{
+                                saveTrackToStorage(trackInfo, function() {
+                                    getTrackFromStorageAndShowHtml();
+                                });
+                            } catch (err){
+                             var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+                             $('#q').val(query);
+                             searchQuery(encodeURIComponent(query), searchQueryResult);
+                            }
                             
                         } else {
                             $(defaults.resultId).addClass('hidden');
@@ -122,7 +105,74 @@ var initQuery = function () {
                         
                     });
                 }
+
+        
+    });
+}
+function getTrackFromStorageAndShowHtml() {
+    chrome.storage.sync.get({
+        foundTracks: 'foundTracks'
+        }, function(responseGet) {
+
+        if (responseGet.foundTracks != 'foundTracks') {
+
+
+            var htmlFoundHistory = '';
+            htmlFoundHistory += "<ul class='history-ul'>";
+            for (i = 0; i < responseGet.foundTracks.length; i++) { 
+                var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist);
+                htmlFoundHistory += 
+                "<li>"
+                + String.format("<button class=\"searchButton btn btn-warning\" searchValue=\"{0}\">add</button>",  encodeURIComponent(query))
+                + query
+                + "</li>";
             }
-        });
+            htmlFoundHistory += "</ul>";
+
+            document.getElementById('foundHistory').innerHTML = htmlFoundHistory;
+            $('.found-history').show();
+            
+            $(".searchButton").click(function () {
+                searchQuery($(this).attr("searchValue"));
+            });
+
+        } else {
+        }
+    });
+}
+
+function saveTrackToStorage(foundTrack, callback) {
+    var tempfoundTracks;
+    
+    chrome.storage.sync.get({
+        foundTracks: 'foundTracks'
+        }, function(responseGet) {
+            if (responseGet.foundTracks == 'foundTracks') {
+                tempfoundTracks = [];
+            } else {
+                tempfoundTracks = responseGet.foundTracks;
+            }
+            
+            var found = false;
+            for(var i = 0; i < tempfoundTracks.length; i++) {
+                if (tempfoundTracks[i].track == foundTrack.track) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                tempfoundTracks.unshift(foundTrack);
+            }
+            
+            if (tempfoundTracks.length > 50) {
+                tempfoundTracks = tempfoundTracks.splice(0, 50);
+            }
+
+            chrome.storage.sync.set({
+                foundTracks: tempfoundTracks
+                }, function(responseSet) {
+                    callback();
+            });
     });
 }

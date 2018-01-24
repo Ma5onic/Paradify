@@ -56,3 +56,15 @@ body, html {
 #result{
     margin:25px 0 0 0 ;
 }
+.searchButton {
+    margin-right: 6px;
+}
+.history-ul {
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.history-ul li{
+    margin: 2px 0;
+}
