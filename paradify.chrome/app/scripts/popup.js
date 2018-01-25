@@ -104,6 +104,8 @@ var initQuery = function () {
                         }
                         
                     });
+                } else {
+                    getTrackFromStorageAndShowHtml();
                 }
 
         
