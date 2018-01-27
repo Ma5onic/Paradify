@@ -81,7 +81,7 @@ var initQuery = function () {
                 if (pageName != undefined) {
                     chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
         
-                        if (trackInfo != undefined && trackInfo.success) {
+                        if (trackInfo != undefined && trackInfo.success && trackInfo.track != '') {
 
                             if (trackInfo.artist == undefined) {
                                 trackInfo.artist = '';
@@ -101,6 +101,7 @@ var initQuery = function () {
                             $(defaults.resultId).addClass('hidden');
                             $(defaults.formId).removeClass('hidden');
                             $(defaults.waitingId).addClass('hidden');
+                            getTrackFromStorageAndShowHtml();
                         }
                         
                     });
@@ -116,10 +117,11 @@ function getTrackFromStorageAndShowHtml() {
 
         if (responseGet.foundTracks != 'foundTracks') {
 
-
             var htmlFoundHistory = '';
             htmlFoundHistory += "<ul class='history-ul'>";
             for (i = 0; i < responseGet.foundTracks.length; i++) { 
+                if (responseGet.foundTracks[i].track == undefined || responseGet.foundTracks[i].track == '')
+                    continue;
                 var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist);
                 htmlFoundHistory += 
                 "<li>"
