@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Paradify</title>
+    <title>Spotify Discovery</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <script src="jquery-1.11.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="scripts/variable.js?v=3" type="text/javascript" charset="utf-8"></script>
@@ -33,12 +33,30 @@
         <img src="images/loading-big.GIF" width="124"/>
     </div>
 
-    <div class="found-history" style="display:none;">
-        <h6 style="text-align: center">Search History</h6>
+    <div class="found-history">
+        <h6 class="center">Search History</h6>
         <div id="foundHistory"></div>
+        <div id="notFoundHistory">
+            <div class="alert alert-dismissible alert-danger desc">
+                    Haven't you started yet? Don't worry! Just visit one of the web site below, find a song and then click here up again.
+            </div>
+        </div>
     </div>
     
-
+    <div class="supported-links">
+        <h6 class="center">Supported web sites</h6>
+        <div class="center">
+            <button class="btn btn-info" url="http://www.youtube.com">YouTube</button>
+            <button class="btn btn-primary" url ="http://www.vimeo.com">Vimeo</button>
+            <button class="btn btn-warning" url="https://www.dailymotion.com">Daily Motion</button>
+            <button class="btn btn-success" url="https://soundcloud.com">Sound Cloud</button>
+            <button class="btn btn-danger" url="http://www.radioparadise.com">Radio Paradise</button>
+            <button class="btn btn-warning" url="http://www.karnaval.com">Karnaval</button>
+            <button class="btn btn-primary" url="http://www.powerapp.com.tr/radio/powerFM">Power Fm</button>
+            <button class="btn btn-light" url="http://www.kralmuzik.com.tr/radyo/kral-fm">Kral Fm</button>
+            <button class="btn btn-info" url="http://spotifydiscovery.com/more-sites.html">More? Tell us which one...</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

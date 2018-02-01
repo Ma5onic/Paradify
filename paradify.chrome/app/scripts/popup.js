@@ -71,6 +71,8 @@ $(document).ready(function () {
             searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()), searchQueryResult);
         }
     });
+
+    initButtonsLink();
 });
 
 var initQuery = function () {
@@ -120,25 +122,36 @@ function getTrackFromStorageAndShowHtml() {
         if (responseGet.foundTracks != 'foundTracks') {
 
             var htmlFoundHistory = '';
-            htmlFoundHistory += "<ul class='history-ul'>";
-            for (i = 0; i < responseGet.foundTracks.length; i++) { 
-                if (responseGet.foundTracks[i].track == undefined || responseGet.foundTracks[i].track == '')
-                    continue;
-                var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist);
-                htmlFoundHistory += 
-                "<li>"
-                + String.format("<button class=\"searchButton btn btn-warning\" searchValue=\"{0}\">add</button>",  encodeURIComponent(query))
-                + query
-                + "</li>";
-            }
-            htmlFoundHistory += "</ul>";
+            if (responseGet.foundTracks.length > 0) {
+                htmlFoundHistory += "<ul class='history-ul'>";
 
-            document.getElementById('foundHistory').innerHTML = htmlFoundHistory;
-            $('.found-history').show();
+                for (i = 0; i < responseGet.foundTracks.length; i++) { 
+                    if (responseGet.foundTracks[i].track == undefined || responseGet.foundTracks[i].track == '')
+                        continue;
+                    var query = String.format("{0} {1}", responseGet.foundTracks[i].track, responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist);
+                    htmlFoundHistory += 
+                    "<li>"
+                    + String.format("<button class=\"searchButton btn btn-success\" searchValue=\"{0}\"> + </button>",  encodeURIComponent(query))
+                    + query
+                    + "</li>";
+                }
+                htmlFoundHistory += "</ul>";
+
+                document.getElementById('foundHistory').innerHTML = htmlFoundHistory;
+
+                $("#foundHistory").show();
+                $("#notFoundHistory").hide();
+
+                $(".searchButton").click(function () {
+                    searchQuery($(this).attr("searchValue"));
+                });
+
+            } else {
+                $("#foundHistory").hide();
+                $("#notFoundHistory").show();
+            }
+
             
-            $(".searchButton").click(function () {
-                searchQuery($(this).attr("searchValue"));
-            });
 
         } else {
         }
@@ -178,5 +191,12 @@ function saveTrackToStorage(foundTrack, callback) {
                 }, function(responseSet) {
                     callback();
             });
+    });
+}
+
+function initButtonsLink() {
+    $('.supported-links .btn').click(function () {
+        var url = $(this).attr('url');
+        chrome.tabs.create({url: url});        
     });
 }
