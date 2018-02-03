@@ -45,6 +45,8 @@ var paradify = {
             response.errMessage = err.message;
         }
 
+        response.pageName = pageName;
+
         return response;
     },
 
