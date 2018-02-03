@@ -96,3 +96,13 @@ body, html {
     margin: 2px 0 2px 0;
     font-size: 11px !important;
 }
+
+.paypal {
+    text-align: right;
+    margin: 10px 0;
+    padding:0 10px 0 0;
+}
+
+.paypal a img {
+    width: 75px;
+}

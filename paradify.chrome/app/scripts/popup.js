@@ -199,4 +199,9 @@ function initButtonsLink() {
         var url = $(this).attr('url');
         chrome.tabs.create({url: url});        
     });
+
+    
+    $('.paypal a').click(function () {
+        chrome.tabs.create({url: 'https://www.paypal.com/paypalme/volkanakinpasa/5'});        
+    });
 }
