@@ -129,15 +129,18 @@ function getTrackFromStorageAndShowHtml() {
                     if (responseGet.foundTracks[i].track == undefined || responseGet.foundTracks[i].track == '')
                         continue;
 
-                    var query = String.format("{0} {1} {2}", 
+                    var query = String.format("{0} {1}", 
                     responseGet.foundTracks[i].track, 
-                    responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist,
-                    responseGet.foundTracks[i].pageName == undefined ? "" : "- " + responseGet.foundTracks[i].pageName);
+                    responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist
+                    );
+
+                    var queryForPopup = query + 
+                    (responseGet.foundTracks[i].pageName == undefined ? "" : "- " + responseGet.foundTracks[i].pageName);
 
                     htmlFoundHistory += 
                     "<li>"
                     + String.format("<button class=\"searchButton btn btn-success\" searchValue=\"{0}\"> + </button>",  encodeURIComponent(query))
-                    + query
+                    + queryForPopup
                     + "</li>";
                 }
                 htmlFoundHistory += "</ul>";

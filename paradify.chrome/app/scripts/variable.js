@@ -108,8 +108,8 @@ function readPowerfm() {
 }
 
 function readYoutube() {
-    var track = document.getElementsByClassName('title')[0].innerHTML.trim();
-    var result = {track: track};
+    var track = document.title.trim().replace(' - YouTube', '');
+    var result = { track: track };
     return result;
 }
 
@@ -134,7 +134,7 @@ function readsoundCloud() {
 }
 
 function readVimeo() {
-    var track = document.getElementsByClassName('_1fHNK')[0].innerHTML.trim();
+    var track = document.title.trim().replace('on Vimeo', '');
     var result;
     if (track != '') {
         result = {track: track, artist: ''};
@@ -142,10 +142,10 @@ function readVimeo() {
     return result;
 }
 function readDailyMotion() {
-    var track = document.getElementsByClassName('QueueInfoContent__title___2Gvkw')[0].innerHTML.trim();
+    var track = document.title.trim().replace(' - Video Dailymotion', '');
     var result;
     if (track != '') {
-        result = {track: track, artist: ''};
+        result = { track: track, artist: '' };
     }
     return result;
 }
