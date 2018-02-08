@@ -95,7 +95,14 @@
         else
         {
             <p class="no-track-found">
-                <strong>No tracks found</strong>
+                    Your search "@(Model.query)" did not match any tracks in Spotify.<br/><br />
+                    Try something like<br /><br />
+                    <ul>
+                        <li>Using 'Song name Artist name' example: 'Hello Adele'
+                    </li>
+                        <li>Checking your spelling, Clean some special chars in search</li>
+                        </ul>
+                    If you believe the song should be there, remove the cookies on your browser and research...
             </p>
             <script type="text/javascript">
                 gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
