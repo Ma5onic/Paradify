@@ -13,5 +13,10 @@ namespace web
         {
             return (profile == null || string.IsNullOrEmpty(profile.Id));
         }
+
+        public static bool IsNotAuthorized(this BasicModel model)
+        {
+            return (model != null && model.Error != null && model.Error.Status == 401);
+        }
     }
 }

@@ -53,8 +53,16 @@ namespace web.Controllers
 
             PrivateProfile profile = _userService.GetMe(_tokenCookieService);
 
-            SearchItem searchItem = Search(_search, token);
+            if (profile.IsNotAuthorized())
+            {
+                return RedirectToAction("Index", "Authorize");
+            }
 
+            SearchItem searchItem = Search(_search, token);
+            if (searchItem.IsNotAuthorized())
+            {
+                return RedirectToAction("Index", "Authorize");
+            }
             SearchResult result = new SearchResult()
             {
                 SearchItem = searchItem,

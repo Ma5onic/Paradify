@@ -24,5 +24,14 @@ namespace web.Controllers
                     Constants.ClientId, Server.UrlEncode(Constants.RedirectUri), Constants.Scope, Constants.StateKey)
                     );
         }
+
+        //public ActionResult LoginWithChromeExtension(string q, string t)
+        //{
+        //    return
+        //        Redirect(
+        //            string.Format(SpotifyVariables.authorizeUrlFormat,
+        //            Constants.ClientId, Server.UrlEncode(Constants.RedirectUri), Constants.Scope, Constants.StateKey)
+        //            );
+        //}
     }
 }
