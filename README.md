@@ -1,9 +1,9 @@
-#Songs to Spotify
+# Paradify(Spotify Discovery) - Songs to Spotify
 
 ![](https://ci.appveyor.com/api/projects/status/29hx49caxvqb2b44?svg=true)
 
 ###### a chrome extension for Spotify users.
-###### when you listen a song on web sites which is supported by below, you can easly add the song to your Spotify playlist by clicking Paradify icon
+###### when you listen a song on web sites which is supported below, you can easly add the song to your Spotify playlist by clicking Paradify icon
 
 * [youtube.com](http://www.youtube.com)
 * [tunein.com](http://www.tunein.com)
@@ -22,6 +22,6 @@
 * Nodejs or .net, MongoDb or mssql (server-side)
 
 ### Links ###
-###### [Web Site](http://www.paradify.com/)
-###### [Demo Page](http://www.paradify.com/Search)
+###### [Web Site](https://www.spotifydiscovery.com/)
+###### [Demo Page](https://www.spotifydiscovery.com/Search)
 ###### Click [here](https://chrome.google.com/webstore/detail/paradify/bocdilfmhiggklhdifohjfghbdncgele) to install
