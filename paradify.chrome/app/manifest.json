@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "Youtube, Vimeo, DailyMotion, Radio to Spotify",
+  "name": "Youtube, Vimeo, DailyMotion, Radio to Spotify by Paradify",
   "short_name": "Paradify",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
