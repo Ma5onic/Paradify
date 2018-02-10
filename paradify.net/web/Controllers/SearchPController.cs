@@ -4,13 +4,18 @@ using web.Services;
 using web.Enums;
 using web.Filters;
 using web.Models;
+using System.Threading.Tasks;
+using log4net;
+using System;
 
 namespace web.Controllers
 {
     [ParadifyAuthorization]
-    
-    public class SearchPController : Controller
+
+    public class SearchPController : BaseController
     {
+
+
         private readonly IParadifyService _paradifyService;
         private readonly ITokenCookieService _tokenCookieService;
         private readonly IHistoryService _historyService;
@@ -37,69 +42,97 @@ namespace web.Controllers
             _search = q;
             _trackId = "";
 
-            if (_search.NullCheck())
+            SearchResult searchResult = new SearchResult();
+
+            if (!_search.NullCheck())
             {
-                return RedirectToAction("Index", "Home");
+
+                Token token = ViewBag.Token;
+
+                if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+                {
+                    SetSearchReturnUrl(_search);
+
+                    return RedirectToAuthorization();
+                }
+
+                PrivateProfile profile = GetMe(token);
+
+                if (profile.IsNotAuthorized())
+                {
+                    return RedirectToAuthorization();
+                }
+
+                SearchItem searchItem = Search(_search, token);
+
+                if (searchItem.IsNotAuthorized())
+                {
+                    return RedirectToAuthorization();
+                }
+
+                searchResult.SearchItem = searchItem;
+                searchResult.query = _search;
+                searchResult.track = _trackId;
+
+                searchResult.Playlists = GetPlaylists(token, profile.Id);
+
+                Task task = new Task(() =>
+                {
+                    AddSearchHistory(token, profile.Id);
+                });
+
+                task.Start();
             }
 
-            Token token = ViewBag.Token;
-
-            if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
-            {
-                _sessionService.SetReturnUrl("~/" + RouteData.Values["controller"] + "?q=" + _search);
-
-                return RedirectToAction("Index", "Authorize");
-            }
-
-            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
-
-            if (profile.IsNotAuthorized())
-            {
-                return RedirectToAction("Index", "Authorize");
-            }
-
-            SearchItem searchItem = Search(_search, token);
-            if (searchItem.IsNotAuthorized())
-            {
-                return RedirectToAction("Index", "Authorize");
-            }
-            SearchResult result = new SearchResult()
-            {
-                SearchItem = searchItem,
-                query = _search,
-                track = _trackId,
-            };
-
-            if (profile.Id != null)
-            {
-                _historyService.AddSearchHistory(_search, _trackId, profile.Id, AppSource.WebSite);
-            }
-
-            return View("Index2", result);
+            return View("Index", searchResult);
         }
 
-        public ActionResult GetPlaylists()
+        private PrivateProfile GetMe(Token token)
         {
-            PrivateProfile profile = _userService.GetMe(_tokenCookieService);
+            return _userService.GetMe(token);
+        }
 
-            var playlist = _playlistService.GetPlaylists(_tokenCookieService, profile.Id);
+
+
+        private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
+        {
+            var playlist = _playlistService.GetPlaylists(token, profileId);
 
             if (playlist != null && playlist.Items.Count == 0)
             {
-                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profile.Id, "Paradify Playlist", _tokenCookieService.Get());
+                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
 
                 if (!string.IsNullOrEmpty(fullPlaylist.Id))
                 {
-                    playlist = _playlistService.GetPlaylists(_tokenCookieService, profile.Id);
+                    playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
                 }
             }
 
-            return PartialView("~/Views/SearchP/PlaylistPartial.cshtml", playlist.Items);
+            return playlist;
+        }
+
+        private void AddSearchHistory(Token token, string profileId)
+        {
+            if (profileId != null)
+            {
+                _historyService.AddSearchHistory(_search, _trackId, profileId, AppSource.WebSite);
+            }
         }
 
         private SearchItem Search(string query, Token token)
         {
-            return _paradifyService.SearchResult(query, token, 100);
+            return _paradifyService.SearchResult(query, token);
+
+
+
+
+        }
+
+        private void SetSearchReturnUrl(string search)
+        {
+            var returnUrl = Helper.SetSearchReturnUrl(RouteData.Values["controller"].ToString(), search);
+
+            _sessionService.SetReturnUrl(returnUrl);
         }
     }
 }

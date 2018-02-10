@@ -42,6 +42,13 @@ namespace web.Services.Implementations
             return api.GetPrivateProfile();
         }
 
+        public PrivateProfile GetMe(Token token)
+        {
+            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
+
+            return api.GetPrivateProfile();
+        }
+
         public bool Signout(ITokenCookieService tokenCookieService)
         {
             return tokenCookieService.Signout();

@@ -1,0 +1,34 @@
+.track-image {
+    width: 75px;
+    border-radius: 100%;
+}
+
+.trackName {
+}
+
+.custom-list-group-item {
+    margin: 1px 0;
+    /*font-size: 11px;*/
+}
+
+.custom-list-group-item-playlist img {
+    width: 75px;
+}
+
+.custom-tab-content {
+    margin-top: -15px !important;
+}
+
+.custom-add-to-playlist-link {
+    text-decoration: none;
+}
+
+    .custom-add-to-playlist-link:hover {
+        text-decoration: none;
+    }
+
+
+.span-selected-song {
+    margin: 9px 0 0 13px;
+    color: #EB6864;
+}

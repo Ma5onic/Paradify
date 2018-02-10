@@ -52,10 +52,16 @@
       <HintPath>..\packages\FluentData.3.0.1.0\lib\FluentData.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Xdt.2.1.1\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -116,6 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="src\web\cssChrome\bootstrapCustom.css" />
+    <Content Include="src\web\cssChrome\searchresult.css" />
     <Content Include="src\web\css\modal-partial.css" />
     <Content Include="src\web\css\modal.css" />
     <Content Include="src\web\css\back.css" />
@@ -129,6 +137,9 @@
     <Content Include="src\web\images\play-white.png" />
     <Content Include="src\web\images\plus.png" />
     <Content Include="src\web\images\twitter-share.png" />
+    <Content Include="src\web\cssChrome\bootstrap.min.css" />
+    <Content Include="src\web\js\bootstraptCustom.js" />
+    <Content Include="src\web\js\bootstrap.min.js" />
     <Content Include="src\web\js\ga.js" />
     <Content Include="src\web\js\jquery.min.js" />
     <Content Include="src\web\js\ga-track.js" />
@@ -145,13 +156,18 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\SearchPController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
+    <Compile Include="ControllerHelper.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="IoC\BusinessLogicInstaller.cs" />
     <Compile Include="IoC\ContainerManager.cs" />
     <Compile Include="IoC\ControllersInstaller.cs" />
@@ -180,7 +196,6 @@
     <Compile Include="Services\IPlaylistService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Controllers\PlaylistController.cs" />
-    <Compile Include="Controllers\SearchPController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -195,16 +210,17 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SearchJson\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\paradify web.pubxml" />
-    <Content Include="Views\SearchP\Index2.cshtml" />
-    <Content Include="Views\SearchP\PlaylistPartial.cshtml" />
+    <Content Include="Views\SearchPOld\Index2.cshtml" />
+    <Content Include="Views\SearchPOld\PlaylistPartial.cshtml" />
     <None Include="Properties\PublishProfiles\pr.pubxml" />
     <None Include="Properties\PublishProfiles\prDeveloper1.pubxml" />
+    <Content Include="Views\Shared\_LayoutChrome.cshtml" />
+    <Content Include="Views\SearchP\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -214,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App_LocalResources\SpotifyVariables.resx">

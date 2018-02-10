@@ -7,6 +7,7 @@ using Castle.Windsor;
 using Castle.Windsor.Installer;
 using web.App_Start;
 using web.IoC;
+using web.Filters;
 
 namespace web
 {
@@ -21,6 +22,8 @@ namespace web
             GlobalConfiguration.Configure(configuration => WebApiConfig.Register(configuration, _container));
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             IocContainer.Setup();
+            log4net.Config.XmlConfigurator.Configure();
+            GlobalFilters.Filters.Add(new CustomHandleError());
         }
 
         public static void ConfigureWindsor(HttpConfiguration configuration)

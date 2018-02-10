@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Paradify - Spotify Discovery - Songs to Spotify</title>
+    <script src="~/src/web/js/ga.js?v=10"></script>
+    <script src="~/src/web/js/jquery.min.js?v=10"></script>
+    <script src="~/src/web/js/bootstrap.min.js?v=10"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=10"></script>
+    <script src="~/src/web/js/bootstraptCustom.js?v=10"></script>
+    <script src="~/src/web/js/ga-track.js?v=3"></script>
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=10' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=10' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=10' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=10' type='text/css' />
+</head>
+<body>
+  
+        <div class="top-bar">
+            <div style="float:left"><a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
+            Paradify <span style="font-size: 11px;    margin-left: 5px;">Songs to Spotify</span>
+            </div>
+          
+            <div style="float:right;padding: 13px 0 0 0; width:42%;">
+                
+                    @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class="form-inline my-2 my-lg-0"}))
+                    {
+                        <input style="width:80%" id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
+                        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                    }
+
+             
+            </div>
+
+        </div>
+    <div class="body">
+        @RenderBody()
+    </div>
+</body>
+</html>

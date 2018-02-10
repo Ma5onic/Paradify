@@ -1,0 +1,25 @@
+﻿body {
+    background-color: white !important;
+}
+
+
+/*.jumbotron {
+    padding: 5px;
+   
+}*/
+
+
+
+.trackName {
+    /*color: black !important;*/
+}
+
+
+.top-bar  {
+  padding:7px;
+  height:100px;
+}
+
+.body {
+    padding: 7px;
+}
