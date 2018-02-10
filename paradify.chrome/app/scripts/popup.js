@@ -1,21 +1,23 @@
 chrome.runtime.sendMessage({type: 'clearBadge'});
 
 function searchQueryResult(htmlResult, query) {
-        $(defaults.waitingId).addClass('hidden');
-        $(defaults.resultId).removeClass('hidden');
-        $(defaults.resultId).html(htmlResult);
-        if (htmlResult.indexOf('Oh snap') == -1) {
-            initPlayback();
-            initTracksLink(query);
-        }
-        $(defaults.formId).removeClass('hidden');
-        initDuration();
+    $(defaults.waitingId).addClass('hidden');
+    $(defaults.resultId).removeClass('hidden');
+    $(defaults.resultId).html(htmlResult);
+    if (htmlResult.indexOf('Oh snap') == -1) {
+        initPlayback();
+        initTracksLink(query);
+    }
+    $(defaults.formId).removeClass('hidden');
+    initDuration();
 }
 
-function searchQuery(query, searchResult) {
-    var fullJsonUrl = String.format("{0}{1}?q={2}", defaults.url, defaults.searchJsonPath, query);
+function searchQuery(query, pageName) {
+    if (pageName == null || pageName == undefined) {
+        pageName = '';
+    }
 
-    var url = String.format("{0}{1}?q={2}", defaults.url, defaults.searchPath, query);
+    var url = String.format("{0}{1}?q={2}&p={3}", defaults.url, defaults.searchPath, query, pageName);
 
     setTimeout(function () {
         chrome.tabs.create({url: url});
@@ -31,7 +33,6 @@ var initTracksLink = function (query) {
                 setTimeout(function () {
                     chrome.tabs.create({url: url});
                 }, 100);
-
             });
         }
     });
@@ -96,7 +97,7 @@ var initQuery = function () {
                             } catch (err){
                              var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
                              $('#q').val(query);
-                             searchQuery(encodeURIComponent(query), searchQueryResult);
+                             searchQuery(encodeURIComponent(query), searchQueryResult, pageName);
                             }
                             
                         } else {
@@ -139,7 +140,7 @@ function getTrackFromStorageAndShowHtml() {
 
                     htmlFoundHistory += 
                     "<li>"
-                    + String.format("<button class=\"searchButton btn btn-success\" searchValue=\"{0}\"> + </button>",  encodeURIComponent(query))
+                    + String.format("<button class=\"searchButton btn btn-success\" searchValue=\"{0}\" pageName=\"{1}\"> + </button>",  encodeURIComponent(query), responseGet.foundTracks[i].pageName)
                     + queryForPopup
                     + "</li>";
                 }
@@ -151,7 +152,7 @@ function getTrackFromStorageAndShowHtml() {
                 $("#notFoundHistory").hide();
 
                 $(".searchButton").click(function () {
-                    searchQuery($(this).attr("searchValue"));
+                    searchQuery($(this).attr("searchValue"), $(this).attr("pageName"));
                 });
 
             } else {
