@@ -23,7 +23,7 @@ namespace web.Services.Implementations
             {
                 userPlaylists.Items = userPlaylists.Items.Where(x => x.Owner.Id == profileId).ToList();
             }
-
+            
             return userPlaylists;
         }
 

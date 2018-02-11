@@ -5,8 +5,6 @@ using web.Enums;
 using web.Filters;
 using web.Models;
 using System.Threading.Tasks;
-using log4net;
-using System;
 
 namespace web.Controllers
 {
@@ -14,8 +12,6 @@ namespace web.Controllers
 
     public class SearchPController : BaseController
     {
-
-
         private readonly IParadifyService _paradifyService;
         private readonly ITokenCookieService _tokenCookieService;
         private readonly IHistoryService _historyService;

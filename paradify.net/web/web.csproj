@@ -160,6 +160,7 @@
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\RecommendationController.cs" />
     <Compile Include="Controllers\SearchPController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
@@ -221,6 +222,7 @@
     <None Include="Properties\PublishProfiles\prDeveloper1.pubxml" />
     <Content Include="Views\Shared\_LayoutChrome.cshtml" />
     <Content Include="Views\SearchP\Index.cshtml" />
+    <Content Include="Views\Recommendation\Playlist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

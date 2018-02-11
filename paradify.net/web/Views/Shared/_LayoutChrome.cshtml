@@ -15,25 +15,55 @@
     <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=10' type='text/css' />
 </head>
 <body>
-  
-        <div class="top-bar">
-            <div style="float:left"><a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
-            Paradify <span style="font-size: 11px;    margin-left: 5px;">Songs to Spotify</span>
+   
+    @*<div class="top-bar">
+            <div style="float:left">
+                <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
+                 <span style="font-size: 11px;    margin-left: 5px;">Songs to Spotify</span>
             </div>
-          
+
             <div style="float:right;padding: 13px 0 0 0; width:42%;">
-                
-                    @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class="form-inline my-2 my-lg-0"}))
-                    {
-                        <input style="width:80%" id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
-                        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                    }
 
-             
+                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+                {
+                    <input style="width:80%" id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                }
+
+
             </div>
 
-        </div>
-    <div class="body">
+        </div>*@
+    @*<div class="body">
+
+        </div>*@
+
+    <div class="jumbotron">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
+            <a class="nav-link" href="~/">Paradify<span class="sr-only">(current)</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav mr-auto">
+
+
+                    @*<li class="nav-item active">
+                        <a class="nav-link" href="@(Url.RouteUrl("PlaylistRecommendation"))">Lyrics</a>
+                    </li>*@
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@(Url.Action("Playlist", "Recommendation"))">Playlist Recommendation<span class="sr-only">(current)</span></a>
+                    </li>
+
+                </ul>
+                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+                {
+                    <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
+                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                }
+            </div>
+        </nav>
         @RenderBody()
     </div>
 </body>
