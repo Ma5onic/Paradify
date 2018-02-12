@@ -1,1 +1,7 @@
-﻿
+﻿@model SpotifyAPI.Web.Models.Recommendations
+
+
+@foreach (var item in Model.Tracks)
+{
+    <p>@item.Name</p>
+}

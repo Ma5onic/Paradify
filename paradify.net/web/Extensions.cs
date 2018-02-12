@@ -6,7 +6,8 @@ namespace web
     {
         public static bool NullCheck<T>(this T obj)
         {
-            return obj == null;
+            
+            return obj == null || (obj.GetType() == typeof(string) && string.IsNullOrEmpty(obj as string));
         }
 
         public static bool NullOrEmptyCheck(this PrivateProfile profile)

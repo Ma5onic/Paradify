@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -67,7 +68,7 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SpotifyAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpotifyAPI-NET.2.14.2\lib\SpotifyAPI.dll</HintPath>
+      <HintPath>..\packages\SpotifyAPI-NET.2.17.1\lib\SpotifyAPI.dll</HintPath>
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Net.Http" />
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="src\web\cssChrome\animate.css" />
     <Content Include="src\web\cssChrome\bootstrapCustom.css" />
     <Content Include="src\web\cssChrome\searchresult.css" />
     <Content Include="src\web\css\modal-partial.css" />
@@ -130,6 +132,7 @@
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
     <Content Include="src\web\images\facebook-share.png" />
+    <Content Include="src\web\images\head-logo.png" />
     <Content Include="src\web\images\loading.gif" />
     <Content Include="src\web\images\logo.png" />
     <Content Include="src\web\images\noimage.png" />
@@ -138,9 +141,11 @@
     <Content Include="src\web\images\plus.png" />
     <Content Include="src\web\images\twitter-share.png" />
     <Content Include="src\web\cssChrome\bootstrap.min.css" />
-    <Content Include="src\web\js\bootstraptCustom.js" />
+    <Content Include="src\web\js\bootstrap-notify.min.js" />
+    <Content Include="src\web\js\bootstrapCustom.js" />
     <Content Include="src\web\js\bootstrap.min.js" />
     <Content Include="src\web\js\ga.js" />
+    <Content Include="src\web\js\jquery-3.3.1.min.js" />
     <Content Include="src\web\js\jquery.min.js" />
     <Content Include="src\web\js\ga-track.js" />
     <Content Include="src\web\js\playback.js" />
@@ -223,6 +228,9 @@
     <Content Include="Views\Shared\_LayoutChrome.cshtml" />
     <Content Include="Views\SearchP\Index.cshtml" />
     <Content Include="Views\Recommendation\Playlist.cshtml" />
+    <Content Include="Views\SearchP\_SongList.cshtml" />
+    <Content Include="Views\SearchP\_RecommendedSongList.cshtml" />
+    <Content Include="Views\SearchP\_PlaylistList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

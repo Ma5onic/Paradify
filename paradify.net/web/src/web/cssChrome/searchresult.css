@@ -1,34 +1,46 @@
 .track-image {
-    width: 75px;
+    width: 35px;
     border-radius: 100%;
 }
 
 .trackName {
 }
 
-.custom-list-group-item {
-    margin: 1px 0;
-    /*font-size: 11px;*/
-}
+ 
+
 
 .custom-list-group-item-playlist img {
     width: 75px;
 }
-
 .custom-tab-content {
     margin-top: -15px !important;
 }
 
-.custom-add-to-playlist-link {
+/*.custom-add-to-playlist-link {
     text-decoration: none;
+    font-weight:bold;
 }
 
     .custom-add-to-playlist-link:hover {
         text-decoration: none;
-    }
+    }*/
 
 
 .span-selected-song {
     margin: 9px 0 0 13px;
     color: #EB6864;
+}
+
+
+/*.custom-li-recommendedSongs {
+    display:none;
+}*/
+
+.custom-playlistList {
+    display: none;
+}
+
+.table th, .table td {
+    vertical-align: inherit !important;
+    padding: 0.40em;
 }

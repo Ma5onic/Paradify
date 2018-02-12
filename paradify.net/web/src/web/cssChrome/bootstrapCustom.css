@@ -3,21 +3,19 @@
 }
 
 
+
 .jumbotron {
     padding: 1rem 2rem;
     background-color: white !important;
 }
 
-
-
 .trackName {
     /*color: black !important;*/
 }
 
-
-.top-bar  {
-  padding:7px;
-  height:100px;
+.top-bar {
+    padding: 7px;
+    height: 100px;
 }
 
 .body {
@@ -28,4 +26,7 @@
     padding: 0 0 2rem 0;
 }
 
-.
+.profile_pic {
+    width: 43px;
+    border-radius: 100%;
+}

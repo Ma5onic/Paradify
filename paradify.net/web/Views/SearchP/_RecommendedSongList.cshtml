@@ -1,0 +1,23 @@
+﻿@using SpotifyAPI.Web.Models
+@model List<SimpleTrack>
+
+@foreach (SimpleTrack track in Model)
+{
+    <a href="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id');" class="custom-add-to-playlist-link">
+        <li class="list-group-item d-flex justify-content-between align-items-center custom-list-group-item">
+            <span>
+                <span class="trackName">@track.Name - @track.Artists[0].Name</span>
+            </span>
+            <span class="badge badge-primary badge-pill">
+                @{
+                    TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                    string time = string.Format("{0:D2}:{1:D2}",
+                    t.Minutes,
+                    t.Seconds
+                    );
+                }
+                @time
+            </span>
+        </li>
+    </a>
+                    }

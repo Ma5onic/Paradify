@@ -3,68 +3,92 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Paradify - Spotify Discovery - Songs to Spotify</title>
-    <script src="~/src/web/js/ga.js?v=10"></script>
-    <script src="~/src/web/js/jquery.min.js?v=10"></script>
-    <script src="~/src/web/js/bootstrap.min.js?v=10"></script>
-    <script src="~/src/web/js/bootstrap-notify.min.js?v=10"></script>
-    <script src="~/src/web/js/bootstraptCustom.js?v=10"></script>
+    <script src="~/src/web/js/ga.js?v=11"></script>
+    <script src="~/src/web/js/jquery-3.3.1.min.js?v=11"></script>
+    
+    <script src="~/src/web/js/bootstrap.min.js?v=11"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=11"></script>
+    <script src="~/src/web/js/bootstrapCustom.js?v=11"></script>
     <script src="~/src/web/js/ga-track.js?v=3"></script>
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=10' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=10' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=10' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=10' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=11' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=11' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=11' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=11' type='text/css' />
 </head>
 <body>
-   
-    @*<div class="top-bar">
-            <div style="float:left">
-                <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
-                 <span style="font-size: 11px;    margin-left: 5px;">Songs to Spotify</span>
-            </div>
-
-            <div style="float:right;padding: 13px 0 0 0; width:42%;">
-
-                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
-                {
-                    <input style="width:80%" id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                }
-
-
-            </div>
-
-        </div>*@
-    @*<div class="body">
-
-        </div>*@
 
     <div class="jumbotron">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
             <a class="nav-link" href="~/">Paradify<span class="sr-only">(current)</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor03">
-                <ul class="navbar-nav mr-auto">
+            
+            <ul class="navbar-nav mr-auto">
 
 
-                    @*<li class="nav-item active">
-                        <a class="nav-link" href="@(Url.RouteUrl("PlaylistRecommendation"))">Lyrics</a>
-                    </li>*@
-                    <li class="nav-item active">
-                        <a class="nav-link" href="@(Url.Action("Playlist", "Recommendation"))">Playlist Recommendation<span class="sr-only">(current)</span></a>
-                    </li>
 
-                </ul>
-                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
-                {
-                    <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search artist, song, album" value="@(Model != null ? Model.query : "")">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                }
-            </div>
+                <li class="nav-item active custom-li-me">
+                    <img id="profile_pic" class="profile_pic" />
+                    <span id="profile_id"></span>
+                </li>
+
+            </ul>
+            @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+            {
+                <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            }
+          
         </nav>
         @RenderBody()
+    </div>
+    <script>
+        $(document).ready(function () {
+            getMe();
+        });
+
+        function getMe() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Me", "Users")',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.images != null && response.images.length > 0) {
+                        $('#profile_pic').attr('src', response.images[0].url);
+                        $('#profile_pic').show();
+                        $('.custom-li-me').show();
+                        $('#profile_id').html(response.id);
+
+                    }
+
+
+                },
+                error: function (xhr, textStatus, err) {
+                }
+            });
+        }
+    </script>
+
+    <div class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="custom-modal-body-p">
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

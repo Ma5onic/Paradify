@@ -5,105 +5,35 @@
 {
     if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
     {
-        <ul class="nav nav-tabs">
-            
 
-            <li class="nav-item">
-                <a class="nav-link active custom-link-result" data-toggle="tab" href="#result">Songs</a>
-               
-            </li>
-            <li class="nav-item">
-                <a class="nav-link custom-link-playlist" data-toggle="tab" href="#playlist">Playlists</a>
-            </li>
-            <li class="span-selected-song"><span class="text-danger" id="span-selected-song"></span></li>
-        </ul>
-        <div id="myTabContent" class="tab-content custom-tab-content">
-            <div class="tab-pane fade show active" id="result">
-                <p>
-                    <ul class="list-group">
+        @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
+        <span class="custom-playlistList" style="display:none;">@Html.Partial("_PlaylistList", Model.Playlists.Items)</span>
+       
 
-                        @foreach (FullTrack track in Model.SearchItem.Tracks.Items)
-                        {
-                            <a href="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)');" class="custom-add-to-playlist-link">
-                                <li class="list-group-item d-flex justify-content-between align-items-center custom-list-group-item">
-                                    <span>
-                                        @if (track.Album.Images.Count > 0)
-                                        {
-                                            <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
-                                        }
-                                        else
-                                        {
-                                            <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
-                                        }
-                                        <span class="trackName">@track.Name - @track.Artists[0].Name</span>
-                                        <span style="font-size:11px">@track.Album.Name</span>
-
-                                    </span>
-                                    <span class="badge badge-primary badge-pill">
-                                        @{
-                                            TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
-                                            string time = string.Format("{0:D2}:{1:D2}",
-                                            t.Minutes,
-                                            t.Seconds
-                                            );
-                                        }
-                                        @time
-                                    </span>
-                                </li>
-                            </a>
-                                            }
-
-                    </ul>
-                </p>
-            </div>
-           
-            <div class="tab-pane fade" id="playlist">
-               
-                <p>
-
-                    <div class="list-group">
-                        @foreach (SimplePlaylist playlist in Model.Playlists.Items)
-                        {
-                            <a href="javascript:addToPlaylist('@(playlist.Id)')" class="list-group-item list-group-item-action custom-list-group-item-playlist" 
-                               data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top"
-                               >
-                                @if (playlist.Images != null && playlist.Images.Count > 0)
-                                {
-                                    <img src="@playlist.Images[0].Url">
-                                }
-                                @playlist.Name
-                            </a>
-                        }
-                    </div>
-                </p>
-            </div>
-        </div>
-            
- 
     }
     else
     {
-    <div class="alert alert-dismissible alert-primary">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Ooops!</strong>
-        Your search <strong>"@(Model.query)"</strong> did not match any tracks in Spotify.<br />
-        Try something like<br />
-        <ul>
-            <li>
-                Using 'Song name Artist name' example: 'Hello Adele'
-            </li>
-            <li>Checking your spelling, Clean some special chars in search</li>
-        </ul>
-        If you believe the song should be there, remove the cookies on your browser and research...
-    </div>
-    <script type="text/javascript">
+        <div class="alert alert-dismissible alert-primary">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Ooops!</strong>
+            Your search <strong>"@(Model.query)"</strong> did not match any tracks in Spotify.<br />
+            Try something like<br />
+            <ul>
+                <li>
+                    Using 'Song name Artist name' example: 'Hello Adele'
+                </li>
+                <li>Checking your spelling, Clean some special chars in search</li>
+            </ul>
+            If you believe the song should be there, remove the cookies on your browser and research...
+        </div>
+        <script type="text/javascript">
         gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
-    </script>
+        </script>
     }
- <script type="text/javascript">
+    <script type="text/javascript">
         gaEvent.track.searched('@HttpUtility.JavaScriptStringEncode(Model.query)');
- </script>
+    </script>
 
 }
-<input type="hidden" id="input_trackId"  />
+<input type="hidden" id="input_trackId" />
 <input type="hidden" id="input_trackName" />

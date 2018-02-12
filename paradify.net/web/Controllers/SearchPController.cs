@@ -23,7 +23,7 @@ namespace web.Controllers
         public string _trackId { get; set; }
 
         public SearchPController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
-            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService)
+            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(sessionService)
         {
             _paradifyService = paradifyService;
             _tokenCookieService = tokenCookieService;
@@ -118,10 +118,6 @@ namespace web.Controllers
         private SearchItem Search(string query, Token token)
         {
             return _paradifyService.SearchResult(query, token);
-
-
-
-
         }
 
         private void SetSearchReturnUrl(string search)
