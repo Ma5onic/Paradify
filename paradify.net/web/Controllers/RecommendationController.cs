@@ -38,12 +38,18 @@ namespace web.Controllers
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
 
             var recommendations = api.GetRecommendations(
-                new List<string>() { artistId },null
+                new List<string>() { artistId }, null
                 , new List<string>() { trackId }
                 );
 
-            return PartialView("~/Views/SearchP/_RecommendedSongList.cshtml",
-                recommendations.Tracks);
+            if (recommendations.Tracks.Count > 0)
+            {
+                return PartialView("~/Views/SearchP/_RecommendedSongList.cshtml",
+               recommendations.Tracks);
+            }
+
+            return null;
+
         }
 
         private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)

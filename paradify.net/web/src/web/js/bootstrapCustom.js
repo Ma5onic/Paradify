@@ -75,7 +75,7 @@ function loadRecommendedSongs(trackId, trackName, artistId, artistName) {
 
         },
         success: function (response) {
-            if (response != null) {
+            if (response != null && response != '') {
                 $('.custom-recommendedSongs').html(response);
                 $('.custom-recommendedSongs').show();
                 $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName + ' - ' + artistName);
@@ -85,7 +85,7 @@ function loadRecommendedSongs(trackId, trackName, artistId, artistName) {
             }
         },
         error: function (xhr, textStatus, err) {
-            console.log(err);
+           
         }
     });
 }
