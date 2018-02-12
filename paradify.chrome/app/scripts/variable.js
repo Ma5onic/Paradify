@@ -45,6 +45,12 @@ function getPageName(url) {
     } else if (url.indexOf('tunein.com') > -1) {
         pageName = 'tunein';
     }
+    else if (url.indexOf('jango.com') > -1) {
+        pageName = 'jango';
+    }
+    else if (url.indexOf('qmusic.nl') > -1) {
+        pageName = 'qmusic';
+    }
     return pageName;
 }
 
@@ -78,6 +84,10 @@ function readNowPlayingText(pageName) {
         return readKralmuzik();
     } else if (pageName == 'tunein') {
         return readTunein();
+    } else if (pageName == 'jango') {
+        return readJango();
+    } else if (pageName == 'qmusic') {
+        return readQMusic();
     } else {
         return null;
     }
@@ -160,10 +170,28 @@ function readKralmuzik() {
 
     return result;
 }
+
 function readTunein() {
     var track = document.getElementsByClassName('_navigateNowPlaying')[1].innerHTML;
 
     var result = {track: track};
+
+    return result;
+}
+
+function readJango() {
+    var track = document.getElementById('current-song').innerHTML;
+    var artist = document.getElementById('player_current_artist').getElementsByTagName('a')[0].innerText;
+    var result = {track: track, artist: artist};
+    return result;
+}
+
+function readQMusic() {
+    var track = document.getElementsByClassName('current-track')[0].getElementsByClassName('title')[0].innerHTML;
+    
+    var artist = document.getElementsByClassName('current-track')[0].getElementsByClassName('artist')[0].innerHTML;
+
+    var result = {track: track, artist: artist};
 
     return result;
 }
