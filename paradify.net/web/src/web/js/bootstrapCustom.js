@@ -1,4 +1,4 @@
-﻿function select(trackId, trackName, artistId, mustGetRecommendedSongs) {
+﻿function select(trackId, trackName, artistId, artistName, mustGetRecommendedSongs) {
 
     $("#input_trackId").val(trackId);
     $("#input_trackName").val(trackName);
@@ -27,8 +27,8 @@
             },
             allow_dismiss: false,
         });
-    //if (mustGetRecommendedSongs == true)
-    //    loadRecommendedSongs(trackId, trackName, artistId);
+    if (mustGetRecommendedSongs == true)
+        loadRecommendedSongs(trackId, trackName, artistId, artistName);
 }
 
 
@@ -64,18 +64,23 @@ function addToPlaylist(playlistId) {
 }
 
 
-function loadRecommendedSongs(trackId, trackName, artistId) {
+function loadRecommendedSongs(trackId, trackName, artistId, artistName) {
     $.ajax({
         type: "GET",
         url: "Recommendation/Playlist",
         dataJson: { trackId: trackId, artistId: artistId },
+        data: {
+            "trackId": trackId,
+            "artistId": artistId
+
+        },
         success: function (response) {
             if (response != null) {
-                $('.custom-p-recommendedSongs').html(response);
-                //$('.custom-li-recommendedSongs').show();
-                //$('.custom-link-recommendedSongs').html('Recommended Songs' + trackName);
-
-                $('#recommendedSongs').show();
+                $('.custom-recommendedSongs').html(response);
+                $('.custom-recommendedSongs').show();
+                $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName + ' - ' + artistName);
+                $('.custom-title-recommendedSongs').show();
+                 
 
             }
         },

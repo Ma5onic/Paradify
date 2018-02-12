@@ -8,32 +8,33 @@
 
         @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
         <span class="custom-playlistList" style="display:none;">@Html.Partial("_PlaylistList", Model.Playlists.Items)</span>
-       
+        <h3 class="custom-title-recommendedSongs" style="display:none;margin-top: 60px;"></h3>
+        <span class="custom-recommendedSongs" style="display:none;"></span>
 
-    }
-    else
-    {
-        <div class="alert alert-dismissible alert-primary">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Ooops!</strong>
-            Your search <strong>"@(Model.query)"</strong> did not match any tracks in Spotify.<br />
-            Try something like<br />
-            <ul>
-                <li>
-                    Using 'Song name Artist name' example: 'Hello Adele'
-                </li>
-                <li>Checking your spelling, Clean some special chars in search</li>
-            </ul>
-            If you believe the song should be there, remove the cookies on your browser and research...
-        </div>
-        <script type="text/javascript">
+            }
+            else
+            {
+            <div class="alert alert-dismissible alert-primary">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Ooops!</strong>
+                Your search <strong>"@(Model.query)"</strong> did not match any tracks in Spotify.<br />
+                Try something like<br />
+                <ul>
+                    <li>
+                        Using 'Song name Artist name' example: 'Hello Adele'
+                    </li>
+                    <li>Checking your spelling, Clean some special chars in search</li>
+                </ul>
+                If you believe the song should be there, remove the cookies on your browser and research...
+            </div>
+            <script type="text/javascript">
         gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
-        </script>
-    }
-    <script type="text/javascript">
+            </script>
+            }
+            <script type="text/javascript">
         gaEvent.track.searched('@HttpUtility.JavaScriptStringEncode(Model.query)');
-    </script>
+            </script>
 
-}
-<input type="hidden" id="input_trackId" />
-<input type="hidden" id="input_trackName" />
+            }
+            <input type="hidden" id="input_trackId" />
+            <input type="hidden" id="input_trackName" />
