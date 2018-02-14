@@ -50,7 +50,13 @@ function getPageName(url) {
     }
     else if (url.indexOf('qmusic.nl') > -1) {
         pageName = 'qmusic';
+    } else if (url.indexOf('deezer') > -1) {
+        pageName = 'deezer'
     }
+    else if (url.indexOf('radioswissjazz') > -1) {
+        pageName = 'radioswissjazz'
+    }
+    
     return pageName;
 }
 
@@ -88,7 +94,14 @@ function readNowPlayingText(pageName) {
         return readJango();
     } else if (pageName == 'qmusic') {
         return readQMusic();
-    } else {
+    } else if (pageName == 'deezer') {
+        return readDeezer();
+    }
+    else if (pageName == 'radioswissjazz') {
+        return readRadioswissjazz();
+    }
+    
+    else {
         return null;
     }
 }
@@ -190,6 +203,25 @@ function readQMusic() {
     var track = document.getElementsByClassName('current-track')[0].getElementsByClassName('title')[0].innerHTML;
     
     var artist = document.getElementsByClassName('current-track')[0].getElementsByClassName('artist')[0].innerHTML;
+
+    var result = {track: track, artist: artist};
+
+    return result;
+}
+function readDeezer() {
+    var track = document.getElementsByClassName('player-track-title')[0].getElementsByClassName('player-track-link')[0].innerHTML;
+    
+    var artist = document.getElementsByClassName('player-track-artist')[0].getElementsByClassName('player-track-link')[0].innerHTML;
+
+    var result = {track: track, artist: artist};
+
+    return result;
+}
+
+function readRadioswissjazz() {
+    var track = document.getElementsByClassName('title')[0].getElementsByClassName('titletag')[0].innerHTML;
+    
+    var artist = document.getElementsByClassName('artist')[0].innerHTML;
 
     var result = {track: track, artist: artist};
 
