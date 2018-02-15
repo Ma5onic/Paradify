@@ -17,17 +17,22 @@
         {
             
                 <tr>
-                    <td scope="row">
-                        @if (track.Album.Images.Count > 0)
-                        {
-                            <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
-                        }
-                        else
-                        {
-                            <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
-                        }
+                    <td scope="row" style="width:47px;">
+                        <div class="number-playback-pic" playback="@track.PreviewUrl">
+                            <span class="player">
+                                <span class="play-pause"></span>
+                            </span>
+                            @if (track.Album.Images.Count > 0)
+                            {
+                                <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
+                            }
+                            else
+                            {
+                                <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
+                            }
+                        </div>
                     </td>
-                    <td>
+                    <td style="width:54px;">
                         <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', true);"> + </button>
                          
                     </td>

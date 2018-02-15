@@ -3,55 +3,65 @@
         playPauseClass: '.play-pause'
     }
     $(document).ready(function () {
+        initPlayback();
+    });
+
+    this.initPlayback = function () {
         $(".number-playback-pic[playback^='http']").each(function () {
             var url = $(this).attr("playback");
             var trackName = $(this).attr("trackName");
 
             if (url != undefined && url != '') {
                 var first = $(this).find(defaults.playPauseClass)[0];
-                setBackgroud(first,'play');
+                //setBackgroud(first,'play');
                 initClick(first, url, trackName);
                 initHover(first);
             }
         });
-    });
+    }
 
     var setBackgroud = function (elem, className) {
         $(elem).addClass(className);
     }
 
-    var initClick = function(elem, preview_url, trackName){
-        $(elem).click(function(){
+    var initClick = function (elem, preview_url, trackName) {
+        $(elem).click(function () {
 
-            if($(elem).hasClass('play'))
-            {
+            if ($(elem).hasClass('pause')) {
+                pause(preview_url);
+                $(elem).removeClass('pause');
+                $(elem).addClass('play');
+            }
+            else {
                 play(preview_url);
                 $(elem).removeClass('play');
                 $(elem).addClass('pause');
                 gaEvent.track.play(trackName);
             }
-            else    {
-                pause(preview_url);
-                $(elem).removeClass('pause');
+        });
+    }
+
+    var initHover = function (elem) {
+        
+        $(elem).mouseover(function () {
+            if ($(elem).hasClass('play') == false) {
                 $(elem).addClass('play');
             }
-        });
-    }
 
-    var initHover = function(elem)    {
-        $(elem).mouseover(function(){
-            $(elem).css('background-color','black');
-            $(elem).fadeTo( "fast" , 0.5, function() {
+            $(elem).css('background-color', 'black');
+            $(elem).fadeTo("fast", 1, function () {
 
             });
         });
 
-        $(elem).mouseout(function(){
-                $(elem).css('background-color','none');
-                $(elem).fadeTo( "fast" , 0, function() {
+        $(elem).mouseout(function () {
+            $(elem).css('background-color', 'none');
+            $(elem).fadeTo("fast", 0, function () {
             });
         });
     }
+
+     
 }());
 
 var p;

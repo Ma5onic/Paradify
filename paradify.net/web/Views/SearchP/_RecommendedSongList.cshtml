@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            @*<th scope="col"></th>*@
+            <th scope="col"></th>
             <th scope="col">Title</th>
             <th scope="col">Artist</th>
             @*<th scope="col">Album</th>*@
@@ -18,17 +18,17 @@
         {
 
             <tr>
-                @*<td scope="row">
-                    @if (track.Album.Images.Count > 0)
-                    {
-                        <img class="track-image" src="@track.Album.Images[0].Url" preview-url="@track.PreviewUrl" />
+                <td scope="row" style="width:47px;">
+                    @if(@track.PreviewUrl !=null && @track.PreviewUrl.Length > 0) { 
+                        <div class="number-playback-pic" playback="@track.PreviewUrl">
+                            <span class="player">
+                                <span class="play-pause"></span>
+                            </span>
+                            <img class="track-image" src="~/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />     
+                        </div>
                     }
-                    else
-                    {
-                        <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
-                    }
-                </td>*@
-                <td>
+                </td>
+                <td style="width:54px;">
                     <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false);"> + </button>
 
                 </td>

@@ -52,22 +52,22 @@ namespace web.Controllers
 
         }
 
-        private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
-        {
-            var playlist = _playlistService.GetPlaylists(token, profileId);
+        //private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
+        //{
+        //    var playlist = _playlistService.GetPlaylists(token, profileId);
 
-            if (playlist != null && playlist.Items.Count == 0)
-            {
-                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
+        //    if (playlist != null && playlist.Items.Count == 0)
+        //    {
+        //        FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
 
-                if (!string.IsNullOrEmpty(fullPlaylist.Id))
-                {
-                    playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
-                }
-            }
+        //        if (!string.IsNullOrEmpty(fullPlaylist.Id))
+        //        {
+        //            playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
+        //        }
+        //    }
 
-            return playlist;
-        }
+        //    return playlist;
+        //}
 
         private PrivateProfile GetMe(Token token)
         {

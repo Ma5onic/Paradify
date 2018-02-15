@@ -125,6 +125,7 @@
     <Content Include="Global.asax" />
     <Content Include="src\web\cssChrome\animate.css" />
     <Content Include="src\web\cssChrome\bootstrapCustom.css" />
+    <Content Include="src\web\cssChrome\playback.css" />
     <Content Include="src\web\cssChrome\searchresult.css" />
     <Content Include="src\web\css\modal-partial.css" />
     <Content Include="src\web\css\modal.css" />

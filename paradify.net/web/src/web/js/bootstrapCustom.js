@@ -80,7 +80,7 @@ function loadRecommendedSongs(trackId, trackName, artistId, artistName) {
                 $('.custom-recommendedSongs').show();
                 $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName + ' - ' + artistName);
                 $('.custom-title-recommendedSongs').show();
-                 
+                initPlayback();
 
             }
         },
