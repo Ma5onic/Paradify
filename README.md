@@ -2,24 +2,27 @@
 
 ![](https://ci.appveyor.com/api/projects/status/29hx49caxvqb2b44?svg=true)
 
-###### a chrome extension for Spotify users.
-###### when you listen a song on web sites which is supported below, you can easly add the song to your Spotify playlist by clicking Paradify icon
+###### a chrome extension & web application for Spotify users
+###### Supports finding the song on Spotify and adds it to your playlist while you are listening it on the following web sites
 
 * [youtube.com](http://www.youtube.com)
-* [tunein.com](http://www.tunein.com)
-* [vimeo.com](http://www.vimeo.com)
-* [dailymotion.com](http://www.dailymotion.com)
-* [soundcloud.com](https://soundcloud.com)
 * [radioparadise.com](http://www.radioparadise.com/)
-* [powerfm.com.tr](http://www.powerfm.com.tr)
+* [jango.com](http://www.jango.com/)
+* [qmusic.nl](http://qmusic.nl/)
+* [tunein.com](http://www.tunein.com)
+* [dailymotion.com](http://www.dailymotion.com)
+* [vimeo.com](http://www.vimeo.com)
+* [soundcloud.com](https://soundcloud.com)
+* [radioswissjazz.ch](http://www.radioswissjazz.ch/en)
 * [karnaval.com](http://www.karnaval.com)
+* [powerfm.com.tr](http://www.powerfm.com.tr)
 * [kralmuzik.com.tr](http://www.kralmuzik.com.tr)
 * or you also can search manually
 
 ### Projects ###
 
 * Chrome Extensions (client-side)
-* Nodejs or .net, MongoDb or mssql (server-side)
+* Nodejs(not supported anymore), .Net or MSSQL (server-side)
 
 ### Links ###
 ###### [Web Site](https://www.spotifydiscovery.com/)
