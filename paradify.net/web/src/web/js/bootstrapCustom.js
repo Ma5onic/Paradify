@@ -27,8 +27,9 @@
             },
             allow_dismiss: false,
         });
-    if (mustGetRecommendedSongs == true)
+    if (mustGetRecommendedSongs == true) {
         loadRecommendedSongs(trackId, trackName, artistId, artistName);
+    }
 }
 
 
@@ -60,6 +61,7 @@ function addToPlaylist(playlistId) {
     });
 
     customModal.close();
+    animateByClass('custom-title-recommendedSongs');
 
 }
 
@@ -118,4 +120,8 @@ var customNotify = {
                 allow_dismiss: false,
             });
     }
+}
+
+function animateByClass(className) {
+    $("html, body").animate({ scrollTop: $("." + className).offset().top }, 1000);
 }
