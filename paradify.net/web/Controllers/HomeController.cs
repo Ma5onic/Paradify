@@ -12,10 +12,6 @@ namespace web.Controllers
                 CookieManager.WriteCookie("firstVisit", "1");
                 ViewBag.firstVisit = 1;
             }
-            else
-            {
-                ViewBag.firstVisit = 2;
-            }
 
             return View();
         }
