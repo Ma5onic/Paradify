@@ -165,7 +165,7 @@ function readVimeo() {
     return result;
 }
 function readDailyMotion() {
-    var track = document.title.trim().replace(' - Video Dailymotion', '');
+    var track = document.getElementsByClassName('QueueInfoContent__title___2Gvkw')[0].innerHTML;
     var result;
     if (track != '') {
         result = { track: track, artist: '' };
@@ -185,7 +185,7 @@ function readKralmuzik() {
 }
 
 function readTunein() {
-    var track = document.getElementsByClassName('_navigateNowPlaying')[1].innerHTML;
+    var track = document.getElementById('playerTitle').innerHTML;
 
     var result = {track: track};
 
