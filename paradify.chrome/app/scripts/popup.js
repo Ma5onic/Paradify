@@ -64,12 +64,12 @@ $(document).ready(function () {
     initQuery();
 
     $(defaults.clickButtonClass).click(function () {
-        searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()),searchQueryResult);
+        searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()));
     });
 
     $(defaults.query).keypress(function (event) {
         if (event.which == defaults.events.ENTER) {
-            searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()), searchQueryResult);
+            searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()));
         }
     });
 
@@ -135,8 +135,8 @@ function getTrackFromStorageAndShowHtml() {
                     responseGet.foundTracks[i].artist == undefined ? "" : responseGet.foundTracks[i].artist
                     );
 
-                    var queryForPopup = query + 
-                    (responseGet.foundTracks[i].pageName == undefined ? "" : "- " + responseGet.foundTracks[i].pageName);
+                    var queryForPopup = (query.length > 33 ? query.substring(0, 33) + '...' : query) + 
+                    (responseGet.foundTracks[i].pageName == undefined ? "" : " - " + responseGet.foundTracks[i].pageName);
 
                     htmlFoundHistory += 
                     "<li>"
@@ -157,12 +157,15 @@ function getTrackFromStorageAndShowHtml() {
 
             } else {
                 $("#foundHistory").hide();
+                $("#search-history-head").hide();
                 $("#notFoundHistory").show();
             }
 
             
 
-        } else {
+        } else {  $("#foundHistory").hide();
+        $("#search-history-head").hide();
+        $("#notFoundHistory").show();
         }
     });
 }
@@ -180,17 +183,23 @@ function saveTrackToStorage(foundTrack, callback) {
             }
             
             var found = false;
+            var foundIndex = 0;
             for(var i = 0; i < tempfoundTracks.length; i++) {
-                if (tempfoundTracks[i].track == foundTrack.track) {
+                if (tempfoundTracks[i].track == foundTrack.track) {// && tempfoundTracks[i].artist == foundTrack.artist
                     found = true;
+                    foundIndex = i;
                     break;
                 }
             }
 
-            if (!found) {
-                tempfoundTracks.unshift(foundTrack);
+            if (found) {
+                if (foundIndex !== -1) {
+                    tempfoundTracks.splice(foundIndex, 1);
+                }
             }
-            
+
+            tempfoundTracks.unshift(foundTrack);
+
             if (tempfoundTracks.length > 50) {
                 tempfoundTracks = tempfoundTracks.splice(0, 50);
             }

@@ -17,24 +17,18 @@
 <div id="main">
     <div id="footer">
         <img src="images/head-logo.png"/>
-        Paradify</div>
-    <div class="footer-desc">Songs to your Spotify playlist</div>
-    <div id="form">
-
-            <div class="form-group margin-auto">
-                <input type="text" class="form-control searchBox" placeholder="Search Songs, Artists, Albums" id="q">
-            </div>
-            <button type="button" class="btn btn-success float-left clickButton">Search</button>
-            <div class="clearfix"></div>
-
+        Paradify
+        <span class="footer-desc">Songs to Spotify</span>
     </div>
+    
+    
     <div id="result" class="hidden"></div>
     <div id="waiting" class="hidden">
         <img src="images/loading-big.GIF" width="124"/>
     </div>
 
     <div class="found-history">
-        <h6 class="center">Search History</h6>
+        <h6 class="center" id="search-history-head">Songs</h6>
         <div id="foundHistory"></div>
         <div id="notFoundHistory">
             <div class="alert alert-dismissible alert-danger desc">
@@ -42,9 +36,19 @@
             </div>
         </div>
     </div>
-	
+    
+    <div id="form">
+        
+        <div class="form-group margin-auto">
+            <input type="text" class="form-control searchBox" placeholder="Search Songs, Artists, Albums" id="q">
+        </div>
+        <button type="button" class="btn btn-success float-left clickButton">Search</button>
+        <div class="clearfix"></div>
+
+    </div>
+    
 	 <div class="alert" style="font-size:11px">
-		Paradify does NOT ask you to enter your Spotify credential. It redirects you to Spotify page to login there, NOT in Paradiy.
+		Paradify does NOT ask you to enter your Spotify credential. It redirects you to Spotify page to login there.
      </div>
     
     <div class="supported-links">

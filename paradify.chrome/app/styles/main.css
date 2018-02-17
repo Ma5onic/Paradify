@@ -2,7 +2,7 @@ body, html {
     margin: 0;
     padding: 5px;
     height: 200px;
-    width: 400px;
+    width: 422px;
 
 }
 .center {
@@ -29,7 +29,7 @@ body, html {
 }
 
 #form {
-    margin: auto;
+    margin-top: 15px;
 
     text-align: center;
 }
@@ -40,11 +40,13 @@ body, html {
 
 #footer {
     font-size: 20px;
-    text-align: center;
+    text-align: left;
     color:#ffffff;
 }
 .footer-desc{
-    text-align: center;
+    text-align: left;
+    font-size: 14px;
+    color: #888888;
 }
 .margin-auto{
     margin:auto;
@@ -70,14 +72,18 @@ body, html {
 
 .history-ul li{
     margin: 2px 0;
+    font-size: 15px !important;
 }
 
 .history-ul li button{
     padding: 1px 1px 1px 1px;
     margin: 0px 6px 0px 0;
-    font-size: 13px !important;
-    width: 24px;
+    width: 35px;
+    height: 35px;
     font-weight: bold;
+}
+.found-history {
+margin:15px 0 0 0;
 }
 
 #notFoundHistory {

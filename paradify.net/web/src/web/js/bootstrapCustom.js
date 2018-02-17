@@ -1,12 +1,25 @@
-﻿function select(trackId, trackName, artistId, artistName, mustGetRecommendedSongs) {
+﻿function select(trackId, trackName, artistId, artistName, fromSonglistClick, fromRecommendationListClick) {
 
     $("#input_trackId").val(trackId);
     $("#input_trackName").val(trackName);
     $("#span-selected-song").html(trackName);
 
+
     $('.custom-modal-body-p').html($('.custom-playlistList').html());
     $('.modal-title').html(trackName);
     $('.modal').modal();
+
+    if (fromSonglistClick) {
+        gaEvent.track.addToPlaylist(trackName);
+        
+        $("#input_from").val('song');
+    }
+
+    if (fromRecommendationListClick) {
+        gaEvent.track.addToPlaylistForRecommendation(trackName);
+        $("#input_from").val('song');
+    }
+
 
     $.notify({
         // options
@@ -27,7 +40,7 @@
             },
             allow_dismiss: false,
         });
-    if (mustGetRecommendedSongs == true) {
+    if (fromSonglistClick == true) {
         loadRecommendedSongs(trackId, trackName, artistId, artistName);
     }
 }
@@ -80,20 +93,20 @@ function loadRecommendedSongs(trackId, trackName, artistId, artistName) {
             if (response != null && response != '') {
                 $('.custom-recommendedSongs').html(response);
                 $('.custom-recommendedSongs').show();
-                $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName + ' - ' + artistName);
+                $('.custom-title-recommendedSongs').html('Recommended songs based on \'' + trackName + ' - ' + artistName + '\'');
                 $('.custom-title-recommendedSongs').show();
                 initPlayback();
 
             }
         },
         error: function (xhr, textStatus, err) {
-           
+
         }
     });
 }
 
 var customModal = {
-    close: function() {
+    close: function () {
         $('.modal').modal('hide');
     }
 }

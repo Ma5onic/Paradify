@@ -30,7 +30,7 @@ function getPageName(url) {
         pageName = 'radioparadise';
     } else if (url.indexOf('powerapp') > -1) {
         pageName = 'powerapp';
-    } else if (url.indexOf('youtube.com') > -1) {
+    } else if (url.indexOf('youtube.com/watch') > -1) {
         pageName = 'youtube';
     } else if (url.indexOf('karnaval.com') > -1) {
         pageName = 'karnaval';
