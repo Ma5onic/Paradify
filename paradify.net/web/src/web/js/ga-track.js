@@ -42,13 +42,14 @@ var gaEvent = {
             ga('send', 'event', 'Track', 'AddToPlaylist', decodeURIComponent(trackName));
         },
 
-        addToPlaylistForRecommendation: function (trackName) {
-            ga('send', 'event', 'Track', 'AddToPlaylistForRecommendation', decodeURIComponent(trackName));
+        selectedToAddPlaylist: function (trackName) {
+            ga('send', 'event', 'Track', 'SelectedToAddPlaylist', decodeURIComponent(trackName));
         },
 
-        selected: function (trackName) {
-            ga('send', 'event', 'Track', 'Selected', decodeURIComponent(trackName));
+        selectedToAddPlaylistForRecommendation: function (trackName) {
+            ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecommendation', decodeURIComponent(trackName));
         },
+
       
     }
 }

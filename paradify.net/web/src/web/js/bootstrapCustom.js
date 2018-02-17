@@ -10,13 +10,13 @@
     $('.modal').modal();
 
     if (fromSonglistClick) {
-        gaEvent.track.addToPlaylist(trackName);
+        gaEvent.track.selectedToAddPlaylist(trackName);
         
         $("#input_from").val('song');
     }
 
     if (fromRecommendationListClick) {
-        gaEvent.track.addToPlaylistForRecommendation(trackName);
+        gaEvent.track.selectedToAddPlaylistForRecommendation(trackName);
         $("#input_from").val('song');
     }
 

@@ -232,6 +232,7 @@
     <Content Include="Views\SearchP\_SongList.cshtml" />
     <Content Include="Views\SearchP\_RecommendedSongList.cshtml" />
     <Content Include="Views\SearchP\_PlaylistList.cshtml" />
+    <Content Include="Views\Home\Installed.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
