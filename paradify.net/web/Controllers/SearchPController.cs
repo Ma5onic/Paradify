@@ -10,7 +10,7 @@ namespace web.Controllers
 {
     [ParadifyAuthorization]
 
-    public class SearchPController : BaseController
+    public class SearchPController : CustomControllerBase
     {
         private readonly IParadifyService _paradifyService;
         private readonly ITokenCookieService _tokenCookieService;
@@ -23,7 +23,8 @@ namespace web.Controllers
         public string _trackId { get; set; }
 
         public SearchPController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
-            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(sessionService)
+            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(paradifyService, tokenCookieService,
+            historyService, userService, sessionService, playlistService)
         {
             _paradifyService = paradifyService;
             _tokenCookieService = tokenCookieService;
@@ -70,7 +71,7 @@ namespace web.Controllers
                 searchResult.query = _search;
                 searchResult.track = _trackId;
 
-                searchResult.Playlists = GetPlaylists(token, profile.Id);
+                //searchResult.Playlists = GetPlaylists(token, profile.Id);
 
                 Task task = new Task(() =>
                 {
@@ -90,22 +91,22 @@ namespace web.Controllers
 
 
 
-        private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
-        {
-            var playlist = _playlistService.GetPlaylists(token, profileId);
+        //private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
+        //{
+        //    var playlist = _playlistService.GetPlaylists(token, profileId);
 
-            if (playlist != null && playlist.Items.Count == 0)
-            {
-                FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
+        //    if (playlist != null && playlist.Items.Count == 0)
+        //    {
+        //        FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
 
-                if (!string.IsNullOrEmpty(fullPlaylist.Id))
-                {
-                    playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
-                }
-            }
+        //        if (!string.IsNullOrEmpty(fullPlaylist.Id))
+        //        {
+        //            playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
+        //        }
+        //    }
 
-            return playlist;
-        }
+        //    return playlist;
+        //}
 
         private void AddSearchHistory(Token token, string profileId)
         {

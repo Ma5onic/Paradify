@@ -37,7 +37,7 @@
                          
                     </td>
                     <td><span class="trackName">@track.Name</span></td>
-                    <td><span class="artistName">@track.Artists[0].Name</span></td>
+                    <td><span class="artistName">@string.Join(" - ", track.Artists.Select(a=>a.Name))</span></td>
                     <td><span>@track.Album.Name</span></td>
                     <td>
                          

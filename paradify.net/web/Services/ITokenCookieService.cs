@@ -6,6 +6,7 @@ namespace web.Services
     {
         void SetToken(string accessToken, string refreshToken, int expiresIn);
         void SetToken(Token token);
+        void DeleteToken();
         Token Get();
         bool Signout();
     }

@@ -162,7 +162,7 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CustomControllerBase.cs" />
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
@@ -233,6 +233,9 @@
     <Content Include="Views\SearchP\_RecommendedSongList.cshtml" />
     <Content Include="Views\SearchP\_PlaylistList.cshtml" />
     <Content Include="Views\Home\Installed.cshtml" />
+    <Content Include="Views\Home\_RecentlyPlayedTracks.cshtml" />
+    <Content Include="Views\Home\_Playlist.cshtml" />
+    <Content Include="Views\Home\_SavedTracks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

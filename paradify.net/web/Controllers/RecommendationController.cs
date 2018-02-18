@@ -10,7 +10,7 @@ namespace web.Controllers
 {
     [ParadifyAuthorization]
 
-    public class RecommendationController : BaseController
+    public class RecommendationController : CustomControllerBase
     {
         private readonly IParadifyService _paradifyService;
         private readonly ITokenCookieService _tokenCookieService;
@@ -21,7 +21,8 @@ namespace web.Controllers
 
 
         public RecommendationController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
-            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(sessionService)
+            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(paradifyService, tokenCookieService,
+            historyService, userService, sessionService, playlistService)
         {
             _paradifyService = paradifyService;
             _tokenCookieService = tokenCookieService;
@@ -31,7 +32,7 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
-        public ActionResult Playlist(string trackId, string artistId)
+        public ActionResult Index(string trackId, string artistId)
         {
             Token token = ViewBag.Token;
 

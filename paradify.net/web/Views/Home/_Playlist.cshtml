@@ -1,30 +1,33 @@
 ﻿@using SpotifyAPI.Web.Models
-@model List<SimpleTrack>
+@model  CursorPaging<PlayHistory>
 
+@if (Model != null && Model.Items != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Artist</th>
+                <th scope="col">Played At</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col"></th>
-            <th scope="col">Title</th>
-            <th scope="col">Artist</th>
-            @*<th scope="col">Album</th>*@
-            <th scope="col">Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (SimpleTrack track in Model)
-        {
-
+            @foreach (PlayHistory playlistHistory in Model.Items)
+            {
+            SimpleTrack track = playlistHistory.Track;
             <tr>
                 <td scope="row" style="width:47px;">
-                    @if(@track.PreviewUrl !=null && @track.PreviewUrl.Length > 0) { 
+                    @if (@track.PreviewUrl != null && @track.PreviewUrl.Length > 0)
+                    {
                         <div class="number-playback-pic" playback="@track.PreviewUrl">
                             <span class="player">
                                 <span class="play-pause"></span>
                             </span>
-                            <img class="track-image" src="~/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />     
+                            <img class="track-image" src="~/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
                         </div>
                     }
                 </td>
@@ -34,7 +37,7 @@
                 </td>
                 <td><span class="trackName">@track.Name</span></td>
                 <td><span class="artistName">@string.Join(" - ", track.Artists.Select(a => a.Name))</span></td>
-                @*<td><span>@track.Album.Name</span></td>*@
+                <td><span>@playlistHistory.PlayedAt</span></td>
                 <td>
 
                     @{
@@ -49,9 +52,11 @@
                 </td>
             </tr>
 
+            }
+
+
+
+
+        </tbody>
+    </table>
                         }
-
-
-
-    </tbody>
-</table> 

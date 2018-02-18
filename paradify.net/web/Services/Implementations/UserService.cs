@@ -37,9 +37,7 @@ namespace web.Services.Implementations
         {
             Token token = tokenCookieService.Get();
 
-            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
-
-            return api.GetPrivateProfile();
+            return GetMe(token);
         }
 
         public PrivateProfile GetMe(Token token)

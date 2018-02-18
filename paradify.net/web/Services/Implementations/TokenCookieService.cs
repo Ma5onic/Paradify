@@ -13,6 +13,12 @@ namespace web.Services.Implementations
             CookieManager.WriteCookie("refresh_token", refreshToken, DateTime.Now.AddYears(1));
         }
 
+        public void DeleteToken()
+        {
+            CookieManager.WriteCookie("access_token", null, DateTime.Now.AddSeconds(-1));
+            CookieManager.WriteCookie("refresh_token", null, DateTime.Now.AddSeconds(-1));
+        }
+
         public void SetToken(Token token)
         {
             SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);

@@ -1,6 +1,33 @@
-﻿@if (ViewBag.firstVisit == 1)
+﻿@using SpotifyAPI.Web.Models
+
+@if (ViewBag.firstVisit == 1)
 {
     <div style="text-align:center">
         <h6>Paradify does NOT ask you to enter Spotify credential. It redirects you to to Spotify to login.</h6>
     </div>
 }
+
+@{
+    CursorPaging<PlayHistory> recentlyPlayedTracks = ViewBag.RecentlyPlayedTracks as CursorPaging<PlayHistory>;
+}
+@if (recentlyPlayedTracks != null && recentlyPlayedTracks.Items != null && recentlyPlayedTracks.Items.Count > 0)
+{
+    <h3>Recently Played Tracks</h3>
+  
+    @Html.Partial("_RecentlyPlayedTracks", recentlyPlayedTracks);
+}
+
+
+@{
+    Paging<SavedTrack> savedTracks = ViewBag.SavedTracks as Paging<SavedTrack>;
+}
+
+@if (savedTracks != null && savedTracks.Items != null && savedTracks.Items.Count > 0)
+{
+    <h3 style="margin-top: 60px;">Saved Tracks</h3>
+
+    @Html.Partial("_SavedTracks", savedTracks);
+}
+
+<h3 class="custom-title-recommendedSongs" style="display:none;margin-top: 60px;"></h3>
+<span class="custom-recommendedSongs" style="display:none;"></span>

@@ -5,7 +5,7 @@
     <title>Paradify - Spotify Discovery - Songs to Spotify</title>
     <script src="~/src/web/js/ga.js?v=12"></script>
     <script src="~/src/web/js/jquery-3.3.1.min.js?v=12"></script>
-    
+
     <script src="~/src/web/js/bootstrap.min.js?v=12"></script>
     <script src="~/src/web/js/bootstrap-notify.min.js?v=12"></script>
     <script src="~/src/web/js/bootstrapCustom.js?v=13"></script>
@@ -23,14 +23,21 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
             <a class="nav-link" href="~/">Paradify<span class="sr-only">(current)</span></a>
-            
-            <ul class="navbar-nav mr-auto">
 
+            <ul class="navbar-nav mr-auto">
 
 
                 <li class="nav-item active custom-li-me">
                     <img id="profile_pic" class="profile_pic" />
                     <span id="profile_id"></span>
+
+                </li>
+
+                <li class="nav-item active custom-li-me">
+
+                    <span id="profile_login" style="display:none;" class="profile_login">
+                        @(Html.ActionLink("Login", "Index", "Authorize", null, new { @class = "nav-link" }))
+                    </span>
                 </li>
 
             </ul>
@@ -39,9 +46,14 @@
                 <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
                 <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
             }
-          
+
         </nav>
         @RenderBody()
+        <div style="text-align:right">
+            <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
+                <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
+            </a>
+        </div>
     </div>
     <script>
         $(document).ready(function () {
@@ -55,15 +67,17 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (response) {
-                    if (response.images != null && response.images.length > 0) {
-                        $('#profile_pic').attr('src', response.images[0].url);
-                        $('#profile_pic').show();
-                        $('.custom-li-me').show();
-                        $('#profile_id').html(response.id);
+                    if (response.error == null) {
+                        if (response.images != null && response.images.length > 0) {
+                            $('#profile_pic').attr('src', response.images[0].url);
+                            $('#profile_pic').show();
+                            $('.custom-li-me').show();
+                        }
 
+                        $('#profile_id').html(response.display_name != null ? response.display_name : response.id);
+                    } else {
+                        $('#profile_login').show();
                     }
-
-
                 },
                 error: function (xhr, textStatus, err) {
                 }
@@ -86,11 +100,16 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
+
     </div>
+
+    <input type="hidden" id="input_trackId" />
+    <input type="hidden" id="input_trackName" />
+    <input type="hidden" id="input_from" />
 </body>
 </html>

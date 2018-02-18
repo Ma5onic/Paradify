@@ -36,9 +36,9 @@
     display:none;
 }
 
-.custom-playlistList {
+/*.custom-playlistList {
     display: none;
-}
+}*/
 
 .table th, .table td {
     vertical-align: inherit !important;

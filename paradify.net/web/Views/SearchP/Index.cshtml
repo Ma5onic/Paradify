@@ -5,9 +5,9 @@
 {
     if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
     {
-
+        <h3>Search Result</h3>
         @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
-        <span class="custom-playlistList" style="display:none;">@Html.Partial("_PlaylistList", Model.Playlists.Items)</span>
+        
         <h3 class="custom-title-recommendedSongs" style="display:none;margin-top: 60px;"></h3>
         <span class="custom-recommendedSongs" style="display:none;"></span>
 
@@ -35,6 +35,4 @@
             </script>
 
             }
-            <input type="hidden" id="input_trackId" />
-            <input type="hidden" id="input_trackName" />
-            <input type="hidden" id="input_from" />
+        

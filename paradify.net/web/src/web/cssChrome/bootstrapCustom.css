@@ -30,3 +30,7 @@
     width: 43px;
     border-radius: 100%;
 }
+
+.profile_login {
+    display: none;
+}

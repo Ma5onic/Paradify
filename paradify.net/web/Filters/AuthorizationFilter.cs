@@ -1,6 +1,7 @@
 ﻿using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
 using System.Web.Mvc;
+using System.Web.Routing;
 using web.IoC;
 using web.Services;
 
@@ -21,24 +22,48 @@ namespace web.Filters
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var token = _tokenCookieService.Get();
-
-            if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+            if (CookieManager.GetCookieValue("resetedRefreshToken") != "1")
             {
-                _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
+                _tokenCookieService.DeleteToken();
 
-                //filterContext.Result = new RedirectToRouteResult("Authorize", null);
+                CookieManager.WriteCookie("resetedRefreshToken", "1");
+
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+
             }
-            else if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
+            else
             {
-                token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
+                var token = _tokenCookieService.Get();
 
-                _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+                if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+                {
+                    _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
+
+                    filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+                }
+                else if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
+                {
+                    token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
+                    if (string.IsNullOrEmpty(token.AccessToken))
+                    {
+                        filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+                    }
+                    else
+                    {
+                        _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+                    }
+                }
+
+                filterContext.Controller.ViewBag.Token = token;
             }
 
-            
 
-            filterContext.Controller.ViewBag.Token = token;
+
+
+
 
             base.OnActionExecuting(filterContext);
         }
