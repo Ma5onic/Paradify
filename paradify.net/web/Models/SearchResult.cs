@@ -8,5 +8,6 @@ namespace web.Models
         public string query { get; set; }
         public string track { get; set; }
         public Paging<SimplePlaylist> Playlists { get; set; }
+       
     }
 }

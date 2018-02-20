@@ -166,11 +166,12 @@
     <Compile Include="Controllers\CallbackController.cs" />
     <Compile Include="Controllers\AuthorizeController.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\RecommendationController.cs" />
+    <Compile Include="Controllers\AsyncController.cs" />
     <Compile Include="Controllers\SearchPController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Filters\AsyncFilter.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="ControllerHelper.cs" />
@@ -230,12 +231,14 @@
     <Content Include="Views\SearchP\Index.cshtml" />
     <Content Include="Views\Recommendation\Playlist.cshtml" />
     <Content Include="Views\SearchP\_SongList.cshtml" />
-    <Content Include="Views\SearchP\_RecommendedSongList.cshtml" />
-    <Content Include="Views\SearchP\_PlaylistList.cshtml" />
+    <Content Include="Views\Shared\_RecommendedSongList.cshtml" />
+    <Content Include="Views\Shared\_PlaylistList.cshtml" />
     <Content Include="Views\Home\Installed.cshtml" />
-    <Content Include="Views\Home\_RecentlyPlayedTracks.cshtml" />
-    <Content Include="Views\Home\_Playlist.cshtml" />
-    <Content Include="Views\Home\_SavedTracks.cshtml" />
+    <Content Include="Views\Shared\_RecentlyPlayedTracks.cshtml" />
+    <Content Include="Views\Shared\_SavedTracks.cshtml" />
+    <Content Include="Views\Shared\_RecommendedSongListShort.cshtml" />
+    <Content Include="Views\Shared\_SavedTracksShort.cshtml" />
+    <Content Include="Views\Shared\_RecentlyPlayedTracksShort.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

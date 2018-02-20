@@ -1,0 +1,31 @@
+﻿@using SpotifyAPI.Web.Models
+@model  CursorPaging<PlayHistory>
+
+@if (Model != null && Model.Items != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title - Artist</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PlayHistory playlistHistory in Model.Items)
+            {
+                SimpleTrack track = playlistHistory.Track;
+                <tr>
+
+                    <td style="width:54px;">
+                        <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false, false, true, false);"> + </button>
+
+                    </td>
+                    <td>
+                        <span class="trackName">@track.Name</span>
+                        <span class="artistName">@track.Artists.First().Name</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

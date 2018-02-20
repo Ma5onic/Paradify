@@ -3,19 +3,18 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Paradify - Spotify Discovery - Songs to Spotify</title>
-    <script src="~/src/web/js/ga.js?v=12"></script>
-    <script src="~/src/web/js/jquery-3.3.1.min.js?v=12"></script>
-
-    <script src="~/src/web/js/bootstrap.min.js?v=12"></script>
-    <script src="~/src/web/js/bootstrap-notify.min.js?v=12"></script>
-    <script src="~/src/web/js/bootstrapCustom.js?v=13"></script>
-    <script src="~/src/web/js/ga-track.js?v=13"></script>
-    <script src="~/src/web/js/playback.js?v=4"></script>
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=12' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=13' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=13' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=12' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=13' type='text/css' />
+    <script src="~/src/web/js/ga.js?v=14"></script>
+    <script src="~/src/web/js/jquery-3.3.1.min.js?v=14"></script>
+    <script src="~/src/web/js/bootstrap.min.js?v=14"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=14"></script>
+    <script src="~/src/web/js/bootstrapCustom.js?v=14"></script>
+    <script src="~/src/web/js/ga-track.js?v=14"></script>
+    <script src="~/src/web/js/playback.js?v=14"></script>
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=14' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=14' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=14' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=14' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=14' type='text/css' />
 </head>
 <body>
 
@@ -48,12 +47,16 @@
             }
 
         </nav>
-        @RenderBody()
-        <div style="text-align:right">
-            <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
-                <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
-            </a>
+        <div class="row">
+
+            @RenderBody()
+
         </div>
+        <div style="text-align:right">
+                <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
+                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
+                </a>
+            </div>
     </div>
     <script>
         $(document).ready(function () {

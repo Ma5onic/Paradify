@@ -10,6 +10,7 @@
             <th scope="col">Artist</th>
             <th scope="col">Album</th>
             <th scope="col">Time</th>
+            <th scope="col" style="width:200px">Recommend New Tracks</th>
         </tr>
     </thead>
     <tbody>
@@ -28,7 +29,7 @@
                             }
                             else
                             {
-                                <img class="track-image" src="/src/web/images/noimage.png" preview-url="@track.PreviewUrl" />
+                                <img class="track-image" src="~/src/web/images/head-logo.png" preview-url="@track.PreviewUrl" />
                             }
                         </div>
                     </td>
@@ -50,6 +51,9 @@
                             }
                             @time
                          
+                    </td>
+                    <td style="text-align:right">
+                        <button type="button" class="btn btn-info" onclick="javascript:recommend('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> R </button>
                     </td>
                 </tr>
             

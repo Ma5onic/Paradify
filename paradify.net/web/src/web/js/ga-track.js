@@ -49,8 +49,14 @@ var gaEvent = {
         selectedToAddPlaylistForRecommendation: function (trackName) {
             ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecommendation', decodeURIComponent(trackName));
         },
-        selectedToAddPlaylistForRecentlyPlayedTracksClickn: function (trackName) {
-            ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecentlyPlayedTracksClickn', decodeURIComponent(trackName));
+        selectedToAddPlaylistForRecentlyPlayedTracksClick: function (trackName) {
+            ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecentlyPlayedTracksClick', decodeURIComponent(trackName));
+        },
+        selectedSaveClick: function (trackName) {
+            ga('send', 'event', 'Track', 'SelectedSaveClick', decodeURIComponent(trackName));
+        },
+        recommend: function (search) {
+            ga('send', 'event', 'Track', 'Recommend', decodeURIComponent(search));
         },
       
     }

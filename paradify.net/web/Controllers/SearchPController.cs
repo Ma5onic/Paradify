@@ -71,8 +71,6 @@ namespace web.Controllers
                 searchResult.query = _search;
                 searchResult.track = _trackId;
 
-                //searchResult.Playlists = GetPlaylists(token, profile.Id);
-
                 Task task = new Task(() =>
                 {
                     AddSearchHistory(token, profile.Id);

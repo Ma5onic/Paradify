@@ -1,19 +1,26 @@
-﻿@using SpotifyAPI.Web.Models
+﻿@using System.Linq;
 @model web.Models.SearchResult
 
-@if (Model != null && Model.SearchItem != null)
-{
-    if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+<div class="col-lg-9">
+    @if (Model != null && Model.SearchItem != null)
     {
-        <h3>Search Result</h3>
-        @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
-        
-        <h3 class="custom-title-recommendedSongs" style="display:none;margin-top: 60px;"></h3>
-        <span class="custom-recommendedSongs" style="display:none;"></span>
+        if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+        {
+            <h3>Search Result</h3>
+            @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
 
-            }
-            else
-            {
+            <script type="text/javascript">
+            loadRecommendedSongs('@(string.Join(",", Model.SearchItem.Tracks.Items.Take(5).Select(t => t.Id)))',
+                '', function (response) {
+                    $('.custom-recommendedSongs').html(response);
+                    $('.custom-recommendedSongs').show();
+                    $('.custom-title-recommendedSongs').show();
+                });
+            </script>
+
+        }
+        else
+        {
             <div class="alert alert-dismissible alert-primary">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Ooops!</strong>
@@ -29,10 +36,22 @@
             <script type="text/javascript">
         gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
             </script>
-            }
-            <script type="text/javascript">
+        }
+        <script type="text/javascript">
         gaEvent.track.searched('@HttpUtility.JavaScriptStringEncode(Model.query)');
-            </script>
+        </script>
+    }
 
-            }
-        
+</div>
+<div class="col-lg-3">
+    <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
+    <span class="custom-recommendedSongs" style="display:none;"></span>
+    <h3 class="custom-title-recentlyPlayedTracks" style="display:none;">Recently Played</h3>
+    <span class="custom-recentlyPlayedTracks" style="display:none;"></span>
+    <h3 class="custom-title-savedTracks" style="display:none;">Saved Tracks</h3>
+    <span class="custom-savedTracks" style="display:none;"></span>
+</div>
+
+<script>
+        loadSearch();
+</script>
