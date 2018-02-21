@@ -27,7 +27,7 @@ namespace web.Controllers
         {
             _sessionService.SetReturnUrl(HttpContext.Request.Url.ToString());
 
-            return RedirectToAction("Index", "Authorize");
+            return RedirectToAction("Index", "Authorize", new { url = HttpContext.Request.Url.ToString() });
         }
 
         protected Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)

@@ -13,10 +13,10 @@ namespace web.Controllers
             _sessionService = sessionService;
         }
 
-        public ActionResult Index(string q, string t)
+        public ActionResult Index(string url)
         {
-            if (Request.UrlReferrer != null && string.IsNullOrEmpty(_sessionService.GetReturnUrl()))
-                _sessionService.SetReturnUrl(Request.UrlReferrer.ToString());
+            if (!string.IsNullOrEmpty(url))
+                _sessionService.SetReturnUrl(url);
 
             return
                 Redirect(

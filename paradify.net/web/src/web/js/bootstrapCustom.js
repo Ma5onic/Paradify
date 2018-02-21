@@ -120,7 +120,7 @@ function openPlaylistPopup(trackName) {
 function loadPlaylist() {
     $.ajax({
         type: "GET",
-        url: "Async/Playlists",
+        url: "/Search/Async/Playlists",
 
         success: function (response) {
             if (response != null && response != '') {
@@ -134,7 +134,7 @@ function loadPlaylist() {
 function loadSavedTracks(callback) {
     $.ajax({
         type: "GET",
-        url: "Async/SavedTracks",
+        url: "/Search/Async/SavedTracks",
 
         success: function (response) {
             if (response != null && response != '') {
@@ -150,7 +150,7 @@ function loadSavedTracks(callback) {
 function loadRecentlyPlayedTracksShort(callback) {
     $.ajax({
         type: "GET",
-        url: "Async/RecentlyPlayedTracksShort",
+        url: "/Search/Async/RecentlyPlayedTracksShort",
 
         success: function (response) {
             if (response != null && response != '') {
@@ -165,7 +165,7 @@ function loadRecentlyPlayedTracksShort(callback) {
 function loadRecentlyPlayedTracks(callback) {
     $.ajax({
         type: "GET",
-        url: "Async/RecentlyPlayedTracks",
+        url: "/Search/Async/RecentlyPlayedTracks",
 
         success: function (response) {
             if (response != null && response != '') {
@@ -180,7 +180,7 @@ function loadRecentlyPlayedTracks(callback) {
 function loadRecommendedSongs(trackId, artistId, callback) {
     $.ajax({
         type: "GET",
-        url: "Async/Recommendations",
+        url: "/Search/Async/Recommendations",
         data: {
             "trackId": trackId,
             "artistId": artistId

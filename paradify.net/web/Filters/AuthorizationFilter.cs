@@ -28,8 +28,7 @@ namespace web.Filters
 
                 CookieManager.WriteCookie("resetedRefreshToken", "1");
 
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+                RedirectToAuthorize(filterContext);
 
             }
             else
@@ -40,16 +39,16 @@ namespace web.Filters
                 {
                     _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
 
-                    filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+                    RedirectToAuthorize(filterContext);
                 }
                 else if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
                 {
                     token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
                     if (string.IsNullOrEmpty(token.AccessToken))
                     {
-                        filterContext.Result = new RedirectToRouteResult(
-                        new RouteValueDictionary { { "controller", "Authorize" }, { "action", "Index" } });
+                        _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
+
+                        RedirectToAuthorize(filterContext);
                     }
                     else
                     {
@@ -60,12 +59,15 @@ namespace web.Filters
                 filterContext.Controller.ViewBag.Token = token;
             }
 
-
-
-
-
-
             base.OnActionExecuting(filterContext);
+        }
+
+        private void RedirectToAuthorize(ActionExecutingContext filterContext)
+        {
+            filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary { { "controller", "Authorize" },
+                        { "action", "Index" },
+                        { "url", filterContext.HttpContext.Request.Url.ToString() } });
         }
 
         private Token RefreshToken(string refreshToken, string clientSecret)
