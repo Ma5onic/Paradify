@@ -91,13 +91,19 @@ var initQuery = function () {
                             }
 
                             try{
-                                saveTrackToStorage(trackInfo, function() {
-                                    getTrackFromStorageAndShowHtml();
+                                saveTrackToStorage(trackInfo, function(found) {
+                                    if (found) {
+                                        getTrackFromStorageAndShowHtml();
+                                    } else {
+                                        var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+                                        searchQuery(encodeURIComponent(query), pageName);
+                                    }
+                                    
                                 });
                             } catch (err){
                              var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
                              $('#q').val(query);
-                             searchQuery(encodeURIComponent(query), searchQueryResult, pageName);
+                             searchQuery(encodeURIComponent(query), pageName);
                             }
                             
                         } else {
@@ -207,7 +213,7 @@ function saveTrackToStorage(foundTrack, callback) {
             chrome.storage.sync.set({
                 foundTracks: tempfoundTracks
                 }, function(responseSet) {
-                    callback();
+                    callback(found);
             });
     });
 }
