@@ -172,6 +172,7 @@
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Filters\AsyncFilter.cs" />
+    <Compile Include="Filters\BaseFilter.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />
     <Compile Include="ControllerHelper.cs" />

@@ -27,5 +27,11 @@ namespace web
 
             return source;
         }
+
+        public static bool IsTokenEmpty(this Token token)
+        {
+
+            return token == null || string.IsNullOrEmpty(token.AccessToken);
+        }
     }
 }

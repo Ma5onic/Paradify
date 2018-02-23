@@ -40,6 +40,11 @@ namespace web.Controllers
         {
             Token token = ViewBag.Token;
 
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
+
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
 
             var recommendations = api.GetRecommendations(
@@ -66,6 +71,11 @@ namespace web.Controllers
         {
             Token token = ViewBag.Token;
 
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
+
             PrivateProfile profile = GetMe(token);
 
             var playlists = base.GetPlaylists(token, profile.Id);
@@ -82,7 +92,10 @@ namespace web.Controllers
         public JsonResult Playlists(PlaylistModel model)
         {
             Token token = ViewBag.Token;
-
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
             PrivateProfile profile = GetMe(token);
 
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
@@ -96,7 +109,10 @@ namespace web.Controllers
         public ActionResult SavedTracks()
         {
             Token token = ViewBag.Token;
-
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
             PrivateProfile profile = GetMe(token);
 
             var paginSavedTracks = _paradifyService.GetSavedTracks(token, 10);
@@ -118,7 +134,10 @@ namespace web.Controllers
         public ActionResult RecentlyPlayedTracksShort()
         {
             Token token = ViewBag.Token;
-
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
             PrivateProfile profile = GetMe(token);
 
             var cursorPagingPlayHistory = _paradifyService.GetUsersRecentlyPlayedTracks(token, 10);
@@ -140,7 +159,10 @@ namespace web.Controllers
         public ActionResult RecentlyPlayedTracks()
         {
             Token token = ViewBag.Token;
-
+            if (token.IsTokenEmpty())
+            {
+                return null;
+            }
             PrivateProfile profile = GetMe(token);
 
             var cursorPagingPlayHistory = _paradifyService.GetUsersRecentlyPlayedTracks(token, 10);

@@ -50,7 +50,11 @@ namespace web.Services.Implementations
         {
             AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
 
-            return auth.RefreshToken(refreshToken, clientSecret);
+            var result = auth.RefreshToken(refreshToken, clientSecret);
+            if (result != null)
+                result.RefreshToken = refreshToken;
+
+            return result;
         }
 
         private Token GetTokenFromCookie()
