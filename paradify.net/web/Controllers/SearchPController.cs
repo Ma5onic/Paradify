@@ -5,6 +5,7 @@ using web.Enums;
 using web.Filters;
 using web.Models;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace web.Controllers
 {
@@ -43,6 +44,9 @@ namespace web.Controllers
 
             if (!_search.NullCheck())
             {
+                _search = _search.Decode();
+
+                ViewBag.Title = string.Format("{0} - {1}", Constants.SingleTitle, _search);
 
                 Token token = ViewBag.Token;
 
@@ -67,6 +71,13 @@ namespace web.Controllers
                     return RedirectToAuthorization();
                 }
 
+                if (searchItem != null && searchItem.Tracks != null && 
+                    searchItem.Tracks.Items != null && searchItem.Tracks.Items.Count == 0)
+                {
+                    var tempSearch = Regex.Replace(_search, "\\([^\\]]*\\)", "");
+                    searchItem = Search(tempSearch, token);
+                }
+
                 searchResult.SearchItem = searchItem;
                 searchResult.query = _search;
                 searchResult.track = _trackId;
@@ -86,25 +97,6 @@ namespace web.Controllers
         {
             return _userService.GetMe(token);
         }
-
-
-
-        //private Paging<SimplePlaylist> GetPlaylists(Token token, string profileId)
-        //{
-        //    var playlist = _playlistService.GetPlaylists(token, profileId);
-
-        //    if (playlist != null && playlist.Items.Count == 0)
-        //    {
-        //        FullPlaylist fullPlaylist = _paradifyService.CreatePlaylist(profileId, "Paradify Playlist", _tokenCookieService.Get());
-
-        //        if (!string.IsNullOrEmpty(fullPlaylist.Id))
-        //        {
-        //            playlist = _playlistService.GetPlaylists(_tokenCookieService, profileId);
-        //        }
-        //    }
-
-        //    return playlist;
-        //}
 
         private void AddSearchHistory(Token token, string profileId)
         {

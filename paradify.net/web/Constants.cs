@@ -10,6 +10,10 @@ namespace web
         public static string StateKey { get; set; }
         public static string Scope { get; set; }
         public static string Domain { get; set; }
+        public static string FullTitle = "Paradify - Spotify Discovery - Songs to Spotify";
+
+        public static string SingleTitle = "Paradify";
+
 
         static Constants()
         {

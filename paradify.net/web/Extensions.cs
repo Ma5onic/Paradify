@@ -1,4 +1,5 @@
 ﻿using SpotifyAPI.Web.Models;
+using System.Web;
 
 namespace web
 {
@@ -6,7 +7,7 @@ namespace web
     {
         public static bool NullCheck<T>(this T obj)
         {
-            
+
             return obj == null || (obj.GetType() == typeof(string) && string.IsNullOrEmpty(obj as string));
         }
 
@@ -18,6 +19,13 @@ namespace web
         public static bool IsNotAuthorized(this BasicModel model)
         {
             return (model != null && model.Error != null && model.Error.Status == 401);
+        }
+
+        public static string Decode(this string source)
+        {
+            source = HttpUtility.UrlDecode(HttpUtility.HtmlDecode(source));
+
+            return source;
         }
     }
 }
