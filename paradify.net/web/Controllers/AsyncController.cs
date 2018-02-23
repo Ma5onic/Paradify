@@ -1,10 +1,10 @@
 ﻿using log4net;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using web.Filters;
+using web.Models;
 using web.Services;
 
 namespace web.Controllers
@@ -76,6 +76,20 @@ namespace web.Controllers
             }
 
             return null;
+        }
+
+        [HttpPost]
+        public JsonResult Playlists(PlaylistModel model)
+        {
+            Token token = ViewBag.Token;
+
+            PrivateProfile profile = GetMe(token);
+
+            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
+
+            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.trackId);
+
+            return Json(errorResponse, JsonRequestBehavior.DenyGet);
         }
 
         [HttpGet]

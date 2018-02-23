@@ -30,10 +30,14 @@ namespace web.Controllers
             Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
 
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+            _sessionService.SetToken(token);
+
+
 
             PrivateProfile profile = _userService.GetMe(_tokenService);
 
             _userService.AddUser(profile);
+
 
             var returnUrl = _sessionService.GetReturnUrl();
 
@@ -45,24 +49,5 @@ namespace web.Controllers
             return Redirect("~/");
         }
 
-        //public ActionResult CallbackWithChromeExtension(string code = null)
-        //{
-        //    AutorizationCodeAuth auth = new AutorizationCodeAuth
-        //    {
-        //        ClientId = Constants.ClientId,
-        //        RedirectUri = Constants.RedirectUri,
-        //        State = Constants.StateKey
-        //    };
-
-        //    Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
-
-        //    _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
-
-        //    PrivateProfile profile = _userService.GetMe(_tokenService);
-
-        //    _userService.AddUser(profile);
-
-        //    return Redirect(string.Format("/?access_token={0}&refresh_token={1}", token.AccessToken, token.RefreshToken));
-        //}
     }
 }

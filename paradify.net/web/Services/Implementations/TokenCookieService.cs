@@ -46,7 +46,7 @@ namespace web.Services.Implementations
             return true;
         }
 
-        private Token RefreshToken(string refreshToken, string clientSecret)
+        public Token RefreshToken(string refreshToken, string clientSecret)
         {
             AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
 
@@ -61,6 +61,7 @@ namespace web.Services.Implementations
                 RefreshToken = CookieManager.GetCookieValue("refresh_token"),
                 TokenType = "Bearer"
             };
+
             return token;
         }
     }

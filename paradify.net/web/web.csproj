@@ -203,7 +203,6 @@
     <Compile Include="Services\ISessionService.cs" />
     <Compile Include="Services\IPlaylistService.cs" />
     <Compile Include="Services\IUserService.cs" />
-    <Compile Include="Controllers\PlaylistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

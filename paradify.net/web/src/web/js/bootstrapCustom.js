@@ -73,7 +73,7 @@ function addToPlaylist(playlistId) {
     customNotify.notify('Adding...');
     $.ajax({
         type: "POST",
-        url: "api/playlist",
+        url: "/Search/Async/Playlists",
         data: dataJson,
         success: function (errorResponse) {
             if (errorResponse.error == null) {

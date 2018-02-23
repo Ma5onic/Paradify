@@ -9,5 +9,6 @@ namespace web.Services
         void DeleteToken();
         Token Get();
         bool Signout();
+        Token RefreshToken(string refreshToken, string clientSecret);
     }
 }
