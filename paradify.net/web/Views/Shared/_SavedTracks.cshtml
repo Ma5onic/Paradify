@@ -24,7 +24,7 @@
                 <td scope="row" style="width:47px;">
                     @if (@track.PreviewUrl != null && @track.PreviewUrl.Length > 0)
                     {
-                        <div class="number-playback-pic" playback="@track.PreviewUrl">
+                        <div class="number-playback-pic" playback="@track.PreviewUrl"  trackName="@HttpUtility.JavaScriptStringEncode(track.Name)">
                             <span class="player">
                                 <span class="play-pause"></span>
                             </span>
