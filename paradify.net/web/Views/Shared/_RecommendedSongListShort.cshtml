@@ -6,6 +6,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col"></th>
             <th scope="col">Title - Artist</th>
         </tr>
     </thead>
@@ -13,6 +14,15 @@
         @foreach (SimpleTrack track in Model)
         {
             <tr>
+                <td scope="row" style="width:47px;">
+                    <div class="number-playback-pic" playback="@track.PreviewUrl" trackName="@HttpUtility.JavaScriptStringEncode(track.Name)">
+                        <span class="player">
+                            <span class="play-pause"></span>
+                        </span>
+
+                        <img class="track-image" src="~/src/web/images/head-logo.png" preview-url="@track.PreviewUrl" />
+                    </div>
+                </td>
                 <td style="width:54px;">
                     <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false, true);"> + </button>
                 </td>

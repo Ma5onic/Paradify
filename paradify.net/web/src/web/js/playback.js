@@ -13,7 +13,6 @@
 
             if (url != undefined && url != '') {
                 var first = $(this).find(defaults.playPauseClass)[0];
-                //setBackgroud(first,'play');
                 initClick(first, url, trackName);
                 initHover(first);
             }
@@ -25,6 +24,8 @@
     }
 
     var initClick = function (elem, preview_url, trackName) {
+        $(elem).unbind("click");
+
         $(elem).click(function () {
 
             if ($(elem).hasClass('pause')) {

@@ -56,6 +56,7 @@ function recommend(trackId, trackName, artistId) {
         $('.custom-recommendedSongs').show();
         $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName);
         $('.custom-title-recommendedSongs').show();
+        initPlayback();
     });
 
     gaEvent.track.recommend(trackName);
@@ -107,9 +108,8 @@ function openPlaylistPopup(trackName) {
     if (variable.playlist == null) {
         setTimeout(function () {
             openPlaylistPopupCount++;
-            console.log(openPlaylistPopupCount);
             openPlaylistPopup(trackName);
-        }, 500);
+        }, 700);
     }
 
     $('.custom-modal-body-p').html(variable.playlist);
@@ -265,20 +265,20 @@ function paypal() {
 
 function loadSearch() {
     $(document).ready(function () {
-        console.log('document ready');
-
         loadPlaylist();
 
         loadRecentlyPlayedTracksShort(function () {
             $('.custom-title-recentlyPlayedTracks').show();
             $('.custom-recentlyPlayedTracks').show();
             $('.custom-recentlyPlayedTracks').html(variable.recentlyPlayedTracks);
+            initPlayback();
         });
 
         loadSavedTracks(function () {
             $('.custom-title-savedTracks').show();
             $('.custom-savedTracks').show();
             $('.custom-savedTracks').html(variable.savedTracks);
+            initPlayback();
         });
 
     });
@@ -301,6 +301,7 @@ function loadHome() {
             $('.custom-title-savedTracks').show();
             $('.custom-savedTracks').show();
             $('.custom-savedTracks').html(variable.savedTracks);
+            initPlayback();
         });
 
     });
