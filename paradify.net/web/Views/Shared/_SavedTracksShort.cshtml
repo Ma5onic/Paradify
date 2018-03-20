@@ -30,7 +30,7 @@
                         <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false, false, false, true);"> + </button>
                     </td>
                     <td>
-                        <span class="trackName">@track.Name</span>
+                        <span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span>
                         <span class="artistName">@track.Artists.First().Name</span>
                     </td>
                 </tr>

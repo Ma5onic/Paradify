@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace web.Controllers
 {
-    [ParadifyAuthorization]
+    [FilterClientToken]
     public class SearchPController : CustomControllerBase
     {
         private readonly IParadifyService _paradifyService;
@@ -47,27 +47,32 @@ namespace web.Controllers
 
                 ViewBag.Title = string.Format("{0} - {1}", Constants.SingleTitle, _search);
 
-                Token token = ViewBag.Token;
+                CustomToken token = ViewBag.Token;
 
-                if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+                //if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
+                //{
+                //    //SetSearchReturnUrl(_search);
+
+                //    //return RedirectToAuthorization();
+                //    return null;
+                //}
+                PrivateProfile profile = new PrivateProfile();
+
+                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Client)
                 {
-                    SetSearchReturnUrl(_search);
-
-                    return RedirectToAuthorization();
+                    profile = GetMe(token);
                 }
-
-                PrivateProfile profile = GetMe(token);
 
                 if (profile.IsNotAuthorized())
                 {
-                    return RedirectToAuthorization();
+                   // return RedirectToAuthorization();
                 }
 
                 SearchItem searchItem = Search(_search, token);
 
                 if (searchItem.IsNotAuthorized())
                 {
-                    return RedirectToAuthorization();
+                    //return RedirectToAuthorization();
                 }
 
                 if (searchItem != null && searchItem.Tracks != null && 

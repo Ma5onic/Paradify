@@ -10,6 +10,12 @@ namespace web.App_Start
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "Search",
+              url: "SearchP",
+              defaults: new { controller = "SearchP", action = "Index" }
+
+          );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

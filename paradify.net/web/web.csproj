@@ -171,7 +171,9 @@
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Enums\AppSource.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Filters\AsyncFilter.cs" />
+    <Compile Include="Filters\FilterClientToken.cs" />
+    <Compile Include="Filters\FilterUserToken.cs" />
+    <Compile Include="Filters\FilterUserTokenMust.cs" />
     <Compile Include="Filters\BaseFilter.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="Filters\AuthorizationFilter.cs" />

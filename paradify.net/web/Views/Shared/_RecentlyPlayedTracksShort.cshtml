@@ -31,7 +31,7 @@
 
                     </td>
                     <td>
-                        <span class="trackName">@track.Name</span>
+                        <span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span>
                         <span class="artistName">@track.Artists.First().Name</span>
                     </td>
                 </tr>

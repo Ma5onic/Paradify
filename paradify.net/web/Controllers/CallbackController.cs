@@ -30,7 +30,7 @@ namespace web.Controllers
 
             Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
 
-            _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+            _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, TokenCredentialType.Auth);
             _sessionService.SetToken(token.ToCustomToken(TokenCredentialType.Auth));
 
             PrivateProfile profile = _userService.GetMe(_tokenService);

@@ -10,7 +10,7 @@ using web.Services;
 
 namespace web.Controllers
 {
-    [AsyncFilter]
+    [FilterUserToken()]
     public class AsyncController : CustomControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(AsyncController));
@@ -180,20 +180,10 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterClientToken()]
         public ActionResult GetNewReleasedTracks(string countryCode)
         {
             CustomToken customToken = ViewBag.Token;
-
-            if (customToken.IsTokenEmpty())
-            {
-                SpotifyAPI.Web.Auth.ClientCredentialsAuth clientCredentialsAuth =
-                     new SpotifyAPI.Web.Auth.ClientCredentialsAuth();
-
-                clientCredentialsAuth.ClientId = Constants.ClientId;
-                clientCredentialsAuth.ClientSecret = Constants.ClientSecret;
-                Token token = clientCredentialsAuth.DoAuth();
-                customToken = token.ToCustomToken(CustomToken.TokenCredentialType.Client);
-            }
 
             if (customToken.IsTokenEmpty())
             {

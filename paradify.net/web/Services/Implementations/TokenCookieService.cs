@@ -2,29 +2,33 @@
 using SpotifyAPI.Web.Models;
 using web.IoC;
 using SpotifyAPI.Web.Auth;
+using web.Models;
+using static web.Models.CustomToken;
 
 namespace web.Services.Implementations
 {
     public class TokenCookieService : ITokenCookieService
     {
-        public void SetToken(string accessToken, string refreshToken, int expiresIn)
+        public void SetToken(string accessToken, string refreshToken, int expiresIn, TokenCredentialType tokenCredentialType)
         {
             CookieManager.WriteCookie("access_token", accessToken, DateTime.Now.AddSeconds(expiresIn));
             CookieManager.WriteCookie("refresh_token", refreshToken, DateTime.Now.AddYears(1));
+            CookieManager.WriteCookie("token_type", refreshToken, DateTime.Now.AddYears(1));
         }
 
         public void DeleteToken()
         {
             CookieManager.WriteCookie("access_token", null, DateTime.Now.AddSeconds(-1));
             CookieManager.WriteCookie("refresh_token", null, DateTime.Now.AddSeconds(-1));
+            CookieManager.WriteCookie("token_type", null, DateTime.Now.AddSeconds(-1));
         }
 
-        public void SetToken(Token token)
+        public void SetToken(CustomToken token)
         {
-            SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+            SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, token.tokenCredentialType);
         }
 
-        public Token Get()
+        public CustomToken Get()
         {
             var token = GetTokenFromCookie();
 
@@ -43,28 +47,36 @@ namespace web.Services.Implementations
         {
             CookieManager.DeleteCookie("access_token");
             CookieManager.DeleteCookie("refresh_token");
+            CookieManager.DeleteCookie("token_type");
             return true;
         }
 
-        public Token RefreshToken(string refreshToken, string clientSecret)
+        public CustomToken RefreshToken(string refreshToken, string clientSecret)
         {
             AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
 
-            var result = auth.RefreshToken(refreshToken, clientSecret);
+            Token response = auth.RefreshToken(refreshToken, clientSecret);
+
+            CustomToken result = response.ToCustomToken();
+
             if (result != null)
                 result.RefreshToken = refreshToken;
 
             return result;
         }
 
-        private Token GetTokenFromCookie()
+        private CustomToken GetTokenFromCookie()
         {
-            Token token = new Token
+            CustomToken token = new CustomToken
             {
                 AccessToken = CookieManager.GetCookieValue("access_token"),
                 RefreshToken = CookieManager.GetCookieValue("refresh_token"),
                 TokenType = "Bearer"
             };
+
+            TokenCredentialType type = TokenCredentialType.Auth;
+            Enum.TryParse(CookieManager.GetCookieValue("token_type"), out type);
+            token.tokenCredentialType = type;
 
             return token;
         }

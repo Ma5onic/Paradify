@@ -5,12 +5,13 @@ using web.Services;
 
 namespace web.Filters
 {
-    public abstract class BaseFilter : ActionFilterAttribute
+
+    public class FilterUserTokenMust : ActionFilterAttribute
     {
         private ITokenCookieService _tokenCookieService;
         private ISessionService _sessionService;
 
-        public BaseFilter()
+        public FilterUserTokenMust()
         {
             var container = ContainerManager.Container;
             _tokenCookieService = container.Resolve<ITokenCookieService>();
@@ -38,7 +39,7 @@ namespace web.Filters
                 {
                     _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
 
-                    RedirectToAuthorize2(filterContext);
+                    RedirectToAuthorize(filterContext);
                 }
                 else if (string.IsNullOrEmpty(token.AccessToken)
                     && !string.IsNullOrEmpty(token.RefreshToken))
@@ -49,13 +50,13 @@ namespace web.Filters
                     {
                         _sessionService.SetReturnUrl(filterContext.HttpContext.Request.Url.ToString());
 
-                        RedirectToAuthorize2(filterContext);
+                        RedirectToAuthorize(filterContext);
                     }
                     else
                     {
                         _sessionService.SetToken(token.ToCustomToken());
 
-                        _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
+                        _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, Models.CustomToken.TokenCredentialType.Auth);
                     }
                 }
 
@@ -71,9 +72,11 @@ namespace web.Filters
 
             _sessionService.DeleteToken();
 
-            ForceReset2(_sessionService);
+            _sessionService.SetResetedRefreshToken("1");
 
-            RedirectToAuthorize2(filterContext);
+            CookieManager.WriteCookie("resetedRefreshToken", "1");
+
+            RedirectToAuthorize(filterContext);
         }
 
         private bool IsForceReset(ActionExecutingContext filterContext)
@@ -99,13 +102,18 @@ namespace web.Filters
             return result;
         }
 
+        private void RedirectToAuthorize(ActionExecutingContext filterContext)
+        {
+            filterContext.Result = new RedirectToRouteResult(
+                    new System.Web.Routing.RouteValueDictionary { { "controller", "Authorize" },
+                        { "action", "Index" },
+                        { "url", filterContext.HttpContext.Request.Url.ToString() } });
+
+        }
+
         private Token RefreshToken(string refreshToken, string clientSecret)
         {
             return _tokenCookieService.RefreshToken(refreshToken, clientSecret);
         }
-
-        public abstract void ForceReset2(ISessionService sessionService);
-        public abstract void RedirectToAuthorize2(ActionExecutingContext filterContext);
-         
     }
 }
