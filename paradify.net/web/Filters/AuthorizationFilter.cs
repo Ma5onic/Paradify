@@ -21,11 +21,5 @@ namespace web.Filters
                         { "url", filterContext.HttpContext.Request.Url.ToString() } });
 
         }
-        //public ParadifyAuthorization(ITokenCookieService tokenCookieService,
-        //    ISessionService sessionService) : base(tokenCookieService, sessionService)
-        //{
-        //    _tokenCookieService = tokenCookieService;
-        //    _sessionService = sessionService;
-        //}
     }
 }

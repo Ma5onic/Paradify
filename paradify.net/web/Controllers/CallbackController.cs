@@ -2,6 +2,7 @@
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
 using web.Services;
+using static web.Models.CustomToken;
 
 namespace web.Controllers
 {
@@ -30,14 +31,11 @@ namespace web.Controllers
             Token token = auth.ExchangeAuthCode(code, Constants.ClientSecret);
 
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
-            _sessionService.SetToken(token);
-
-
+            _sessionService.SetToken(token.ToCustomToken(TokenCredentialType.Auth));
 
             PrivateProfile profile = _userService.GetMe(_tokenService);
 
             _userService.AddUser(profile);
-
 
             var returnUrl = _sessionService.GetReturnUrl();
 
@@ -48,6 +46,5 @@ namespace web.Controllers
 
             return Redirect("~/");
         }
-
     }
 }

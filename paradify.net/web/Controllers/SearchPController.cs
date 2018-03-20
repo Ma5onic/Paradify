@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 namespace web.Controllers
 {
     [ParadifyAuthorization]
-
     public class SearchPController : CustomControllerBase
     {
         private readonly IParadifyService _paradifyService;

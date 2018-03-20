@@ -1,4 +1,4 @@
-﻿using SpotifyAPI.Web.Models;
+﻿using web.Models;
 
 namespace web.Services
 {
@@ -8,8 +8,8 @@ namespace web.Services
         string GetReturnUrl();
         string GetResetedRefreshToken();
         void SetResetedRefreshToken(string value);
-        Token GetToken();
-        void SetToken(Token token);
+        CustomToken GetToken();
+        void SetToken(CustomToken token);
         void DeleteToken();
     }
 }

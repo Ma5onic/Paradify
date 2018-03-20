@@ -30,7 +30,7 @@ function select(trackId, trackName, artistId, artistName, fromSonglistClick,
         gaEvent.track.selectedToAddPlaylistForRecentlyPlayedTracksClick(trackName);
 
         $("#input_from").val('fromRecentlyPlayedTracksClick');
-       
+
     }
 
 
@@ -46,7 +46,7 @@ function select(trackId, trackName, artistId, artistName, fromSonglistClick,
             $('.custom-title-recommendedSongs').show();
         });
     }
-    
+
 }
 
 function recommend(trackId, trackName, artistId) {
@@ -98,12 +98,12 @@ function addToPlaylist(playlistId) {
 var openPlaylistPopupCount = 0;
 
 function openPlaylistPopup(trackName) {
-   
+
     if (openPlaylistPopupCount >= 5) {
         openPlaylistPopupCount = 0;
         return;
     }
-    
+
 
     if (variable.playlist == null) {
         setTimeout(function () {
@@ -189,8 +189,8 @@ function loadRecommendedSongs(trackId, artistId, callback) {
         success: function (response) {
             if (response != null && response != '') {
                 callback(response);
-               
-                
+
+
 
             }
         },
@@ -260,7 +260,7 @@ function paypal() {
     gaTrack.paypalClick();
 }
 
- 
+
 
 
 function loadSearch() {
@@ -284,10 +284,68 @@ function loadSearch() {
     });
 }
 
+function loadNewReleasedSong(countryCode, callback) {
+    $.ajax({
+        type: "GET",
+        url: "/Search/Async/GetNewReleasedTracks",
+        data: {
+            "countryCode": countryCode
+        },
+        success: function (response) {
+            if (response != null && response != '') {
+                callback(response);
+            }
+        },
+        error: function (xhr, textStatus, err) {
+
+        }
+    });
+}
+
+function loadCountries(callback) {
+    $.ajax({
+        type: "GET",
+        url: "/Search/Async/Countries",
+        data: {
+        },
+        success: function (response) {
+            if (response != null && response != '') {
+                callback(response);
+            }
+        },
+        error: function (xhr, textStatus, err) {
+
+        }
+    });
+}
+
+function country_Onchanged(code) {
+    loadNewReleasedSong(code, function (response) {
+        newReleasedTrack_Callback(response);
+        initPlayback();
+    });
+}
+
+function newReleasedTrack_Callback(response) {
+    $('.custom-title-newReleasedSong').show();
+    $('.custom-newReleasedTracks').show();
+    $('.custom-newReleasedTracks').html(response);
+    initPlayback();
+}
+
 function loadHome() {
-    
     $(document).ready(function () {
-       
+
+        loadCountries(function (response) {
+            $('.custom-select-newReleasedSong').show();
+            $('.custom-select-newReleasedSong').html(response);
+            initCountries(response);
+        });
+
+        loadNewReleasedSong("US", function (response) {
+            newReleasedTrack_Callback(response);
+        });
+
         loadPlaylist();
 
         loadRecentlyPlayedTracks(function () {

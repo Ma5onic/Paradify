@@ -30,7 +30,7 @@ namespace web.Filters
                 if (token == null)
                 {
                     token = _tokenCookieService.Get();
-                    _sessionService.SetToken(token);
+                    _sessionService.SetToken(token.ToCustomToken());
                 }
 
                 if (string.IsNullOrEmpty(token.AccessToken)
@@ -53,7 +53,7 @@ namespace web.Filters
                     }
                     else
                     {
-                        _sessionService.SetToken(token);
+                        _sessionService.SetToken(token.ToCustomToken());
 
                         _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn);
                     }
@@ -106,5 +106,6 @@ namespace web.Filters
 
         public abstract void ForceReset2(ISessionService sessionService);
         public abstract void RedirectToAuthorize2(ActionExecutingContext filterContext);
+         
     }
 }

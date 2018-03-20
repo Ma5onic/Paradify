@@ -1,5 +1,5 @@
-﻿using SpotifyAPI.Web.Models;
-using System.Web;
+﻿using System.Web;
+using web.Models;
 
 namespace web.Services.Implementations
 {
@@ -33,28 +33,29 @@ namespace web.Services.Implementations
             HttpContext.Current.Session["resetedRefreshToken"] = value;
         }
 
-        public Token GetToken()
+        public CustomToken GetToken()
         {
-            Token token = null;
+            CustomToken token = null;
 
             object session = HttpContext.Current.Session["token"];
 
             if (session != null)
             {
-                token = (Token)session;
+                token = (CustomToken)session;
 
-                Token cokkie = new Token
+                CustomToken cokkie = new CustomToken
                 {
                     AccessToken = token.AccessToken,
                     RefreshToken = token.RefreshToken,
-                    TokenType = token.TokenType
+                    TokenType = token.TokenType,
+                    tokenCredentialType = token.tokenCredentialType
                 };
             }
 
             return token;
         }
 
-        public void SetToken(Token token)
+        public void SetToken(CustomToken token)
         {
             HttpContext.Current.Session["token"] = token;
         }

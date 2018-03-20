@@ -185,7 +185,10 @@
     <Compile Include="IoC\WindsorControllerFactory.cs" />
     <Compile Include="IoC\WindsorDependencyResolver.cs" />
     <Compile Include="IoC\WindsorDependencyScope.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\CreatePlaylistModel.cs" />
+    <Compile Include="Models\CustomSimpleTrack.cs" />
+    <Compile Include="Models\CustomToken.cs" />
     <Compile Include="Models\PlaylistModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Repositories\Context.cs" />
@@ -237,6 +240,11 @@
     <Content Include="Views\Shared\_RecommendedSongListShort.cshtml" />
     <Content Include="Views\Shared\_SavedTracksShort.cshtml" />
     <Content Include="Views\Shared\_RecentlyPlayedTracksShort.cshtml" />
+    <Content Include="src\static\countries.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\_Countries.cshtml" />
+    <Content Include="Views\Shared\_NewReleasedTracks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -265,7 +273,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52641</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

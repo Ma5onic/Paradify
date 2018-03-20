@@ -2,6 +2,7 @@
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using web.Filters;
 using web.Models;
@@ -9,8 +10,6 @@ using web.Services;
 
 namespace web.Controllers
 {
-
-
     [AsyncFilter]
     public class AsyncController : CustomControllerBase
     {
@@ -38,7 +37,7 @@ namespace web.Controllers
         [HttpGet]
         public ActionResult Recommendations(string trackId, string artistId)
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
 
             if (token.IsTokenEmpty())
             {
@@ -69,7 +68,7 @@ namespace web.Controllers
         [HttpGet]
         public ActionResult Playlists()
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
 
             if (token.IsTokenEmpty())
             {
@@ -91,7 +90,7 @@ namespace web.Controllers
         [HttpPost]
         public JsonResult Playlists(PlaylistModel model)
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
             if (token.IsTokenEmpty())
             {
                 return null;
@@ -108,7 +107,7 @@ namespace web.Controllers
         [HttpGet]
         public ActionResult SavedTracks()
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
             if (token.IsTokenEmpty())
             {
                 return null;
@@ -133,7 +132,7 @@ namespace web.Controllers
         [HttpGet]
         public ActionResult RecentlyPlayedTracksShort()
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
             if (token.IsTokenEmpty())
             {
                 return null;
@@ -158,7 +157,7 @@ namespace web.Controllers
         [HttpGet]
         public ActionResult RecentlyPlayedTracks()
         {
-            Token token = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
             if (token.IsTokenEmpty())
             {
                 return null;
@@ -180,7 +179,62 @@ namespace web.Controllers
             return null;
         }
 
-        private PrivateProfile GetMe(Token token)
+        [HttpGet]
+        public ActionResult GetNewReleasedTracks(string countryCode)
+        {
+            CustomToken customToken = ViewBag.Token;
+
+            if (customToken.IsTokenEmpty())
+            {
+                SpotifyAPI.Web.Auth.ClientCredentialsAuth clientCredentialsAuth =
+                     new SpotifyAPI.Web.Auth.ClientCredentialsAuth();
+
+                clientCredentialsAuth.ClientId = Constants.ClientId;
+                clientCredentialsAuth.ClientSecret = Constants.ClientSecret;
+                Token token = clientCredentialsAuth.DoAuth();
+                customToken = token.ToCustomToken(CustomToken.TokenCredentialType.Client);
+            }
+
+            if (customToken.IsTokenEmpty())
+            {
+                return null;
+            }
+
+            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = customToken.AccessToken, UseAuth = true, TokenType = customToken.TokenType };
+
+            CustomSimpleTrack result = new CustomSimpleTrack();
+
+            NewAlbumReleases newAlbumReleases = api.GetNewAlbumReleases(countryCode);
+
+            if (newAlbumReleases.Albums != null && newAlbumReleases.Albums.Items != null)
+            {
+                foreach (var album in newAlbumReleases.Albums.Items)
+                {
+                    Paging<SimpleTrack> tracksOfTheAlbum = api.GetAlbumTracks(album.Id);
+
+                    if (tracksOfTheAlbum.Items != null)
+                    {
+                        Parallel.ForEach(tracksOfTheAlbum.Items, (track) =>
+                        {
+                            result.TrackAlbumIds.Add(track.Id, album);
+
+                            result.Paging.Items.Add(track);
+                        });
+
+                    }
+                }
+            }
+
+            return PartialView("~/Views/Shared/_NewReleasedTracks.cshtml", result);
+        }
+
+        [HttpGet]
+        public ActionResult Countries()
+        {
+            return PartialView("~/Views/Shared/_Countries.cshtml", Constants.CountryCodes);
+        }
+
+        private PrivateProfile GetMe(CustomToken token)
         {
             return _userService.GetMe(token);
         }

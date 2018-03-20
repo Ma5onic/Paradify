@@ -1,5 +1,7 @@
 ﻿using SpotifyAPI.Web.Models;
 using System.Web;
+using web.Models;
+using static web.Models.CustomToken;
 
 namespace web
 {
@@ -32,6 +34,21 @@ namespace web
         {
 
             return token == null || string.IsNullOrEmpty(token.AccessToken);
+        }
+
+        public static CustomToken ToCustomToken(this Token token, TokenCredentialType tokenCredentialType = TokenCredentialType.Auth)
+        {
+            return new CustomToken()
+            {
+                AccessToken = token.AccessToken,
+                CreateDate = token.CreateDate,
+                TokenType = token.TokenType,
+                Error = token.Error,
+                ErrorDescription = token.ErrorDescription,
+                ExpiresIn = token.ExpiresIn,
+                RefreshToken = token.RefreshToken,
+                tokenCredentialType = tokenCredentialType
+            };
         }
     }
 }
