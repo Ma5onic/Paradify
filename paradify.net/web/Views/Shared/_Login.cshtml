@@ -1,0 +1,17 @@
+﻿@using SpotifyAPI.Web.Models
+@model PrivateProfile
+
+@if (Model == null || string.IsNullOrEmpty(Model.Id))
+{
+    <span id="profile_id">@(Html.ActionLink("Login", "Index", "Authorize", null, new { @class = "nav-link" }))</span>
+}
+else
+{
+    var firstImage = Model.Images.FirstOrDefault();
+
+    if (firstImage != null)
+    {
+        <img id="profile_pic" class="profile_pic" src="@firstImage.Url" />
+    }
+    <span id="profile_id">@(Model.DisplayName != null ? Model.DisplayName : Model.Id)</span>
+}

@@ -4,7 +4,6 @@ using web.IoC;
 using web.Models;
 using web.Services;
 
-
 namespace web.Filters
 {
     public class FilterClientToken : ActionFilterAttribute
@@ -25,26 +24,30 @@ namespace web.Filters
 
             if (token == null)
             {
-                //todo: read from different cookie and session.
                 token = _tokenCookieService.Get();
 
                 if (!string.IsNullOrEmpty(token.AccessToken))
-                    _sessionService.SetToken(token.ToCustomToken());
+                    _sessionService.SetToken(token.ToCustomToken(token.tokenCredentialType));
             }
 
-            if (string.IsNullOrEmpty(token.AccessToken)
-                    && !string.IsNullOrEmpty(token.RefreshToken))
+            if (token == null || (string.IsNullOrEmpty(token.AccessToken)
+                    && !string.IsNullOrEmpty(token.RefreshToken)))
             {
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
             }
 
-            if (string.IsNullOrEmpty(token.AccessToken))
+            if (token == null || string.IsNullOrEmpty(token.AccessToken))
             {
                 token = GetClientToken();
 
-                if (!string.IsNullOrEmpty(token.AccessToken))
+                if (token == null || string.IsNullOrEmpty(token.AccessToken))
                 {
-                    //TODO: write to cookie and session. Not into the same cookie
+                    //Just Die
+                }
+                else
+                {
+                    _tokenCookieService.SetToken(token);
+                    _sessionService.SetToken(token);
                 }
             }
 

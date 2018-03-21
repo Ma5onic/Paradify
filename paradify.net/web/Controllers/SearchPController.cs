@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace web.Controllers
 {
-    [FilterClientToken]
+    
     public class SearchPController : CustomControllerBase
     {
         private readonly IParadifyService _paradifyService;
@@ -34,6 +34,7 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
+        [FilterClientToken]
         public ActionResult Index(string q)
         {
             _search = q;
@@ -97,6 +98,7 @@ namespace web.Controllers
             return View("Index", searchResult);
         }
 
+        [FilterClientToken]
         private PrivateProfile GetMe(Token token)
         {
             return _userService.GetMe(token);

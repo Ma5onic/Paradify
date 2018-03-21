@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using web.IoC;
 using web.Models;
 using web.Services;
-
+using static web.Models.CustomToken;
 
 namespace web.Filters
 {
@@ -27,25 +27,33 @@ namespace web.Filters
             {
                 token = _tokenCookieService.Get();
 
-                if (!string.IsNullOrEmpty(token.AccessToken))
-                    _sessionService.SetToken(token.ToCustomToken());
-
+                if (!string.IsNullOrEmpty(token.AccessToken)
+                    && token.tokenCredentialType == TokenCredentialType.Auth)
+                    _sessionService.SetToken(token.ToCustomToken(token.tokenCredentialType));
             }
 
-            if (string.IsNullOrEmpty(token.AccessToken)
-                    && !string.IsNullOrEmpty(token.RefreshToken))
+            if (token == null || (string.IsNullOrEmpty(token.AccessToken)
+                && !string.IsNullOrEmpty(token.RefreshToken)))
             {
                 token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
 
-                if (!string.IsNullOrEmpty(token.AccessToken))
+                if (token == null || string.IsNullOrEmpty(token.AccessToken))
                 {
-                    _sessionService.SetToken(token.ToCustomToken());
-
-                    _tokenCookieService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, CustomToken.TokenCredentialType.Auth);
+                    //Just Die
+                }
+                else
+                {
+                    _tokenCookieService.SetToken(token);
+                    _sessionService.SetToken(token);
                 }
             }
 
-            filterContext.Controller.ViewBag.Token = token;
+            if (token.tokenCredentialType != TokenCredentialType.Auth)
+            {
+                filterContext.Controller.ViewBag.Token = null;
+            }
+            else
+                filterContext.Controller.ViewBag.Token = token;
 
             base.OnActionExecuting(filterContext);
         }

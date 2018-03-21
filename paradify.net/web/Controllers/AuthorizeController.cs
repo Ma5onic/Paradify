@@ -17,6 +17,8 @@ namespace web.Controllers
         {
             if (!string.IsNullOrEmpty(url))
                 _sessionService.SetReturnUrl(url);
+            else
+                _sessionService.SetReturnUrl(Request.UrlReferrer.ToString());
 
             return
                 Redirect(

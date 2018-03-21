@@ -37,7 +37,7 @@
                         <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', true, false);"> + </button>
                          
                     </td>
-                    <td><span class="trackName">@track.Name</span></td>
+                    <td><span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span></td>
                     <td><span class="artistName">@string.Join(" - ", track.Artists.Select(a=>a.Name))</span></td>
                     <td><span>@track.Album.Name</span></td>
                     <td>

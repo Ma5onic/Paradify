@@ -10,7 +10,6 @@ using web.Services;
 
 namespace web.Controllers
 {
-    [FilterUserToken()]
     public class AsyncController : CustomControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(AsyncController));
@@ -35,6 +34,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterClientToken]
         public ActionResult Recommendations(string trackId, string artistId)
         {
             CustomToken token = ViewBag.Token;
@@ -66,13 +66,14 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterUserToken]
         public ActionResult Playlists()
         {
             CustomToken token = ViewBag.Token;
 
             if (token.IsTokenEmpty())
             {
-                return null;
+                return PartialView("~/Views/Shared/_LoginMessage.cshtml");
             }
 
             PrivateProfile profile = GetMe(token);
@@ -88,6 +89,7 @@ namespace web.Controllers
         }
 
         [HttpPost]
+        [FilterUserToken]
         public JsonResult Playlists(PlaylistModel model)
         {
             CustomToken token = ViewBag.Token;
@@ -105,6 +107,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterUserToken]
         public ActionResult SavedTracks()
         {
             CustomToken token = ViewBag.Token;
@@ -130,6 +133,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterUserToken]
         public ActionResult RecentlyPlayedTracksShort()
         {
             CustomToken token = ViewBag.Token;
@@ -155,6 +159,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
+        [FilterUserToken]
         public ActionResult RecentlyPlayedTracks()
         {
             CustomToken token = ViewBag.Token;

@@ -13,7 +13,7 @@ namespace web.Services.Implementations
         {
             CookieManager.WriteCookie("access_token", accessToken, DateTime.Now.AddSeconds(expiresIn));
             CookieManager.WriteCookie("refresh_token", refreshToken, DateTime.Now.AddYears(1));
-            CookieManager.WriteCookie("token_type", refreshToken, DateTime.Now.AddYears(1));
+            CookieManager.WriteCookie("token_type", tokenCredentialType.ToString(), DateTime.Now.AddYears(1));
         }
 
         public void DeleteToken()
@@ -29,6 +29,21 @@ namespace web.Services.Implementations
         }
 
         public CustomToken Get()
+        {
+            var token = GetTokenFromCookie();
+
+            if (string.IsNullOrEmpty(token.AccessToken) && !string.IsNullOrEmpty(token.RefreshToken))
+            {
+                string oldRefreshToken = token.RefreshToken;
+                token = RefreshToken(token.RefreshToken, Constants.ClientSecret);
+                token.RefreshToken = oldRefreshToken;
+                SetToken(token);
+            }
+
+            return token;
+        }
+
+        public CustomToken CustomClientCredentialToken()
         {
             var token = GetTokenFromCookie();
 

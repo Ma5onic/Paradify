@@ -1,10 +1,12 @@
 ﻿using SpotifyAPI.Web.Models;
-using System.Web.Http;
+using System.Web.Mvc;
+using web.Filters;
+using web.Models;
 using web.Services;
 
 namespace web.Controllers
 {
-    public class UsersController : ApiController
+    public class UsersController : Controller
     {
         private readonly ITokenCookieService _tokenService;
         private readonly IUserService _userService;
@@ -17,9 +19,13 @@ namespace web.Controllers
 
         [HttpGet]
         [Route("users/me")]
-        public PrivateProfile Me()
+        [FilterUserToken]
+        public ActionResult Me()
         {
-            return _userService.GetMe(_tokenService);
+            CustomToken token = ViewBag.Token;
+
+            return PartialView("~/Views/Shared/_Login.cshtml", token.IsTokenEmpty() ? null :
+                _userService.GetMe(_tokenService));
         }
 
         [HttpGet]
