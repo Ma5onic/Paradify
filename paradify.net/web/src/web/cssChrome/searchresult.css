@@ -31,15 +31,6 @@
     color: #EB6864;
 }
 
-
-.custom-recommendedSongs {
-    display:none;
-}
-
-/*.custom-playlistList {
-    display: none;
-}*/
-
 .table th, .table td {
     vertical-align: inherit !important;
     padding: 0.40em;

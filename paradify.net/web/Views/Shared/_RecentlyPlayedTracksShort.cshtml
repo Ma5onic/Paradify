@@ -31,7 +31,11 @@
 
                     </td>
                     <td>
-                        <span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span>
+                        @{
+                            var artistNames = string.Join(" - ", track.Artists.Select(a => a.Name));
+                            var trackNameArtistNames = string.Format("{0} - {1}", track.Name, artistNames);
+                        }
+                        <span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = trackNameArtistNames }, new { title = trackNameArtistNames })</span>
                         <span class="artistName">@track.Artists.First().Name</span>
                     </td>
                 </tr>

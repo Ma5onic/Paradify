@@ -1,7 +1,6 @@
 ﻿using log4net;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using web.Filters;
@@ -44,12 +43,7 @@ namespace web.Controllers
                 return null;
             }
 
-            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
-
-            var recommendations = api.GetRecommendations(
-                    artistId.Split(',').ToList(), null
-                , trackId.Split(',').ToList()
-                );
+            var recommendations = _paradifyService.GetRecommendations(token, trackId, artistId);
 
             if (recommendations != null && recommendations.Error != null && !string.IsNullOrEmpty(recommendations.Error.Message))
             {
@@ -141,7 +135,6 @@ namespace web.Controllers
             {
                 return null;
             }
-            PrivateProfile profile = GetMe(token);
 
             var cursorPagingPlayHistory = _paradifyService.GetUsersRecentlyPlayedTracks(token, 10);
 
@@ -227,11 +220,6 @@ namespace web.Controllers
         public ActionResult Countries()
         {
             return PartialView("~/Views/Shared/_Countries.cshtml", Constants.CountryCodes);
-        }
-
-        private PrivateProfile GetMe(CustomToken token)
-        {
-            return _userService.GetMe(token);
         }
     }
 }

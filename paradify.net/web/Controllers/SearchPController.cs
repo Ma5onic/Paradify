@@ -46,7 +46,7 @@ namespace web.Controllers
             {
                 _search = _search.Decode();
 
-                ViewBag.Title = string.Format("{0} - {1}", Constants.SingleTitle, _search);
+                ViewBag.Title = string.Format("{0}", _search);
 
                 CustomToken token = ViewBag.Token;
 

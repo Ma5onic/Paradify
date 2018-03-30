@@ -335,32 +335,34 @@ function newReleasedTrack_Callback(response) {
 
 function loadHome() {
     $(document).ready(function () {
-
-        loadCountries(function (response) {
-            $('.custom-select-newReleasedSong').show();
-            $('.custom-select-newReleasedSong').html(response);
-            initCountries(response);
-        });
-
-        loadNewReleasedSong("US", function (response) {
-            newReleasedTrack_Callback(response);
-        });
-
         loadPlaylist();
+        //initCountries();
+        //initPlayback();
+        //loadCountries(function (response) {
+        //    $('.custom-select-newReleasedSong').show();
+        //    $('.custom-select-newReleasedSong').html(response);
+        //    initCountries();
+        //});
 
-        loadRecentlyPlayedTracks(function () {
-            $('.custom-title-recentlyPlayedTracks').show();
-            $('.custom-recentlyPlayedTracks').show();
-            $('.custom-recentlyPlayedTracks').html(variable.recentlyPlayedTracks);
-            initPlayback();
-        });
+        //loadNewReleasedSong("US", function (response) {
+        //    newReleasedTrack_Callback(response);
+        //});
 
-        loadSavedTracks(function () {
-            $('.custom-title-savedTracks').show();
-            $('.custom-savedTracks').show();
-            $('.custom-savedTracks').html(variable.savedTracks);
-            initPlayback();
-        });
+        //loadPlaylist();
+
+        //loadRecentlyPlayedTracks(function () {
+        //    $('.custom-title-recentlyPlayedTracks').show();
+        //    $('.custom-recentlyPlayedTracks').show();
+        //    $('.custom-recentlyPlayedTracks').html(variable.recentlyPlayedTracks);
+        //    initPlayback();
+        //});
+
+        //loadSavedTracks(function () {
+        //    $('.custom-title-savedTracks').show();
+        //    $('.custom-savedTracks').show();
+        //    $('.custom-savedTracks').html(variable.savedTracks);
+        //    initPlayback();
+        //});
 
     });
 }

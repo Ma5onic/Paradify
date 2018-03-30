@@ -1,61 +1,60 @@
 ﻿@using SpotifyAPI.Web.Models
 @model  CursorPaging<PlayHistory>
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col"></th>
-            <th scope="col">Title</th>
-            <th scope="col">Artist</th>
-            
-            <th scope="col">Time</th>
-            <th scope="col" style="width: 116px;text-align: right;">Recommend New Tracks</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (PlayHistory history in Model.Items)
-        {
-            var track = history.Track;
-
+@if (Model != null && Model.Items != null)
+{
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <td scope="row" style="width:47px;">
-                    <div class="number-playback-pic" playback="@track.PreviewUrl" trackName="@HttpUtility.JavaScriptStringEncode(track.Name)">
-                        <span class="player">
-                            <span class="play-pause"></span>
-                        </span>
+                <th scope="col">#</th>
+                <th scope="col"></th>
+                <th scope="col">Title</th>
+                <th scope="col">Artist</th>
 
-                        <img class="track-image" src="~/src/web/images/head-logo.png" preview-url="@track.PreviewUrl" />
-
-                    </div>
-                </td>
-                <td style="width:54px;">
-                    <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false, false, true);"> + </button>
-
-                </td>
-                <td><span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span></td>
-                <td><span class="artistName">@string.Join(" - ", track.Artists.Select(a => a.Name))</span></td>
-               
-                <td>
-
-                    @{
-                        TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
-                        string time = string.Format("{0:D2}:{1:D2}",
-                        t.Minutes,
-                        t.Seconds
-                        );
-                    }
-                    @time
-
-                </td>
-                <td style="text-align:right">
-                    <button type="button" class="btn btn-info" onclick="javascript:recommend('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> R </button>
-                </td>
+                <th scope="col">Time</th>
+                <th scope="col" style="width: 116px;text-align: right;">Recommend New Tracks</th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (PlayHistory history in Model.Items)
+            {
+                var track = history.Track;
 
+                <tr>
+                    <td scope="row" style="width:47px;">
+                        <div class="number-playback-pic" playback="@track.PreviewUrl" trackName="@HttpUtility.JavaScriptStringEncode(track.Name)">
+                            <span class="player">
+                                <span class="play-pause"></span>
+                            </span>
+
+                            <img class="track-image" src="~/src/web/images/head-logo.png" preview-url="@track.PreviewUrl" />
+
+                        </div>
+                    </td>
+                    <td style="width:54px;">
+                        <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)', false, false, true);"> + </button>
+
+                    </td>
+                    <td><span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = track.Name }, new { title = track.Name })</span></td>
+                    <td><span class="artistName">@string.Join(" - ", track.Artists.Select(a => a.Name))</span></td>
+
+                    <td>
+
+                        @{
+                            TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
+                            string time = string.Format("{0:D2}:{1:D2}",
+                            t.Minutes,
+                            t.Seconds
+                            );
                         }
+                        @time
 
+                    </td>
+                    <td style="text-align:right">
+                        <button type="button" class="btn btn-info" onclick="javascript:recommend('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> R </button>
+                    </td>
+                </tr>
 
-
-    </tbody>
-</table> 
+            }
+        </tbody>
+    </table>
+}

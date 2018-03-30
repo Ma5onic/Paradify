@@ -189,6 +189,7 @@
     <Compile Include="Models\CreatePlaylistModel.cs" />
     <Compile Include="Models\CustomSimpleTrack.cs" />
     <Compile Include="Models\CustomToken.cs" />
+    <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\PlaylistModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Repositories\Context.cs" />

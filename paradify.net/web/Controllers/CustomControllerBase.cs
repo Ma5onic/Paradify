@@ -1,5 +1,6 @@
 ﻿using SpotifyAPI.Web.Models;
 using System.Web.Mvc;
+using web.Models;
 using web.Services;
 
 namespace web.Controllers
@@ -45,6 +46,11 @@ namespace web.Controllers
             }
 
             return playlist;
+        }
+
+        protected PrivateProfile GetMe(CustomToken token)
+        {
+            return _userService.GetMe(token);
         }
     }
 }

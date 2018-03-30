@@ -21,7 +21,7 @@ namespace web
         public static string SingleTitle = "Paradify";
         private static List<Country> _countryCodes;
         public static List<Country> CountryCodes { get { return GetCountryCodes(); } }
-
+        public static string DefaultCountryCode { get { return "US"; } }
         private static List<Country> GetCountryCodes()
         {
             if (_countryCodes == null)
