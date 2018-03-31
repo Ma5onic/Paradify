@@ -6,7 +6,7 @@
     {
         if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
         {
-            <h3>Search Result</h3>
+            <h4>Search Result: @Html.RouteLink(Model.query, "Search", new { q = Model.query }, new { title = Model.query })</h4>
             @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
 
             var top5 = Model.SearchItem.Tracks.Items.Take(1);
