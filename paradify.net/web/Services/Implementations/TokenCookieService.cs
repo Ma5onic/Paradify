@@ -11,7 +11,7 @@ namespace web.Services.Implementations
     {
         public void SetToken(string accessToken, string refreshToken, int expiresIn, TokenCredentialType tokenCredentialType)
         {
-            CookieManager.WriteCookie("access_token", accessToken, DateTime.Now.AddSeconds(expiresIn));
+            CookieManager.WriteCookie("access_token", accessToken, DateTime.Now.AddSeconds(expiresIn).AddSeconds(-60));
             CookieManager.WriteCookie("refresh_token", refreshToken, DateTime.Now.AddYears(1));
             CookieManager.WriteCookie("token_type", tokenCredentialType.ToString(), DateTime.Now.AddYears(1));
         }

@@ -58,6 +58,9 @@ var gaEvent = {
         recommend: function (search) {
             ga('send', 'event', 'Track', 'Recommend', decodeURIComponent(search));
         },
+        countryChange: function (code) {
+            ga('send', 'event', 'Track', 'NewReleaseCountryChange', code);
+        },
       
     }
 }

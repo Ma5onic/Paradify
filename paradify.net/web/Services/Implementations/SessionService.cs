@@ -23,9 +23,10 @@ namespace web.Services.Implementations
 
         public string GetResetedRefreshToken()
         {
-            var session = HttpContext.Current.Session["resetedRefreshToken"];
+            return null;
+            //var session = HttpContext.Current.Session["resetedRefreshToken"];
 
-            return session == null ? null : session.ToString();
+            //return session == null ? null : session.ToString();
         }
 
         public void SetResetedRefreshToken(string value)
@@ -35,34 +36,35 @@ namespace web.Services.Implementations
 
         public CustomToken GetToken()
         {
-            CustomToken token = null;
+            return null;
+            //CustomToken token = null;
 
-            object session = HttpContext.Current.Session["token"];
+            //object session = HttpContext.Current.Session["token"];
 
-            if (session != null)
-            {
-                token = (CustomToken)session;
+            //if (session != null)
+            //{
+            //    token = (CustomToken)session;
 
-                CustomToken cokkie = new CustomToken
-                {
-                    AccessToken = token.AccessToken,
-                    RefreshToken = token.RefreshToken,
-                    TokenType = token.TokenType,
-                    tokenCredentialType = token.tokenCredentialType
-                };
-            }
+            //    CustomToken cokkie = new CustomToken
+            //    {
+            //        AccessToken = token.AccessToken,
+            //        RefreshToken = token.RefreshToken,
+            //        TokenType = token.TokenType,
+            //        tokenCredentialType = token.tokenCredentialType
+            //    };
+            //}
 
-            return token;
+            //return token;
         }
 
         public void SetToken(CustomToken token)
         {
-            HttpContext.Current.Session["token"] = token;
+            //HttpContext.Current.Session["token"] = token;
         }
 
         public void DeleteToken()
         {
-            HttpContext.Current.Session["token"] = null;
+           // HttpContext.Current.Session["token"] = null;
         }
     }
 }

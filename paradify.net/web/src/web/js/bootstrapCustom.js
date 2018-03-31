@@ -324,6 +324,8 @@ function country_Onchanged(code) {
         newReleasedTrack_Callback(response);
         initPlayback();
     });
+
+    gaEvent.track.countryChange(code);
 }
 
 function newReleasedTrack_Callback(response) {

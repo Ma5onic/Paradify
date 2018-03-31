@@ -9,9 +9,11 @@
             <h3>Search Result</h3>
             @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
 
+            var top5 = Model.SearchItem.Tracks.Items.Take(1);
+
             <script type="text/javascript">
-            loadRecommendedSongs('@(string.Join(",", Model.SearchItem.Tracks.Items.Take(5).Select(t => t.Id)))',
-                '', function (response) {
+            loadRecommendedSongs('@(string.Join(",", top5.Select(t => t.Id)))',
+                '@string.Join(",", top5.Select(t => t.Artists.First().Id))', function (response) {
                     $('.custom-recommendedSongs').html(response);
                     $('.custom-recommendedSongs').show();
                     $('.custom-title-recommendedSongs').show();
@@ -53,5 +55,5 @@
 </div>
 
 <script>
-        loadSearch();
+    loadSearch();
 </script>

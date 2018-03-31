@@ -173,7 +173,6 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Filters\FilterClientToken.cs" />
     <Compile Include="Filters\FilterUserToken.cs" />
-    <Compile Include="Filters\FilterUserTokenMust.cs" />
     <Compile Include="Filters\ExceptionFilter.cs" />
     <Compile Include="ControllerHelper.cs" />
     <Compile Include="Helper.cs" />
