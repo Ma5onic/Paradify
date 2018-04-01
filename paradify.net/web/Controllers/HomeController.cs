@@ -47,27 +47,27 @@ namespace web.Controllers
 
             try
             {
+                PrivateProfile profile = null;
+
+                string profileCountryCode = null;
+
+                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
+                {
+                    profile = GetMe(token);
+
+                    profileCountryCode = GetCountryOfProfile(profile, profileCountryCode);
+                }
+
+                model.CountryCode = GetCountryCodeOrDefault(country, profileCountryCode);
+
                 Task tasktNewReleasedTracks = Task.Factory.StartNew(() =>
                     {
-                        PrivateProfile profile = null;
-
-                        string profileCountryCode = null;
-
-                        if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
-                        {
-                            profile = GetMe(token);
-
-                            profileCountryCode = GetCountryOfProfile(profile, profileCountryCode);
-                        }
-
-                        model.CountryCode = GetCountryCodeOrDefault(country, profileCountryCode);
-
                         model.NewReleasedTracks = GetNewReleasedTracks(token, model.CountryCode);
 
                         if (model.NewReleasedTracks != null && model.NewReleasedTracks.Paging.Items != null
                             && model.NewReleasedTracks.Paging.Items.Any())
                         {
-                            var track = model.NewReleasedTracks.Paging.Items.First();
+                            var track = model.NewReleasedTracks.Paging.Items.RandomItem();
 
                             model.Recommendations = GetRecommendations(token, track.Id, track.Artists.First().Id);
                         }

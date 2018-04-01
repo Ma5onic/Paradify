@@ -1,4 +1,7 @@
 ﻿using SpotifyAPI.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using web.Models;
 using static web.Models.CustomToken;
@@ -49,6 +52,15 @@ namespace web
                 RefreshToken = token.RefreshToken,
                 tokenCredentialType = tokenCredentialType
             };
+        }
+
+        public static T RandomItem<T>(this List<T> list)
+        {
+            if (list.Count == 0)
+                return default(T);
+
+            Random random = new Random(DateTime.Now.Millisecond);
+            return list.ElementAt(random.Next(0, list.Count));
         }
     }
 }
