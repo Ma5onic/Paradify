@@ -7,7 +7,9 @@
         <h3 class="custom-title-newReleasedSong">New Releases</h3>
         <span class="custom-select-newReleasedSong col-lg-4">@Html.Partial("_Countries", Constants.CountryCodes)</span>
         <span class="custom-newReleasedTracks">@Html.Partial("_NewReleasedTracks", Model.NewReleasedTracks)</span>
-        <script>initCountries();</script>
+        <script>
+            selectCountry('@Model.CountryCode');
+            initCountries();</script>
     }
 
 

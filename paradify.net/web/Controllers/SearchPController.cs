@@ -46,7 +46,7 @@ namespace web.Controllers
             {
                 _search = _search.Decode();
 
-                ViewBag.Title = string.Format("{0}", _search);
+                ViewBag.Title = string.Format("{0} - {1}", _search, Constants.SingleTitle);
 
                 CustomToken token = ViewBag.Token;
 
@@ -59,7 +59,7 @@ namespace web.Controllers
                 //}
                 PrivateProfile profile = new PrivateProfile();
 
-                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Client)
+                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
                 {
                     profile = GetMe(token);
                 }

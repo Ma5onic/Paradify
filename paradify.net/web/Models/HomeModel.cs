@@ -8,5 +8,6 @@ namespace web.Models
         public Paging<SavedTrack> SavedTracks { get; internal set; }
         public CustomSimpleTrack NewReleasedTracks { get; internal set; }
         public Recommendations Recommendations { get; internal set; }
+        public string CountryCode { get; internal set; }
     }
 }

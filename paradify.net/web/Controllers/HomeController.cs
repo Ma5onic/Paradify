@@ -49,7 +49,20 @@ namespace web.Controllers
             {
                 Task tasktNewReleasedTracks = Task.Factory.StartNew(() =>
                     {
-                        model.NewReleasedTracks = GetNewReleasedTracks(token, GetCountryCodeOrDefault(country));
+                        PrivateProfile profile = null;
+
+                        string profileCountryCode = null;
+
+                        if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
+                        {
+                            profile = GetMe(token);
+
+                            profileCountryCode = GetCountryOfProfile(profile, profileCountryCode);
+                        }
+
+                        model.CountryCode = GetCountryCodeOrDefault(country, profileCountryCode);
+
+                        model.NewReleasedTracks = GetNewReleasedTracks(token, model.CountryCode);
 
                         if (model.NewReleasedTracks != null && model.NewReleasedTracks.Paging.Items != null
                             && model.NewReleasedTracks.Paging.Items.Any())
@@ -80,21 +93,42 @@ namespace web.Controllers
             return View(model);
         }
 
+        private static string GetCountryOfProfile(PrivateProfile profile, string profileCountryCode)
+        {
+            if (profile != null && !string.IsNullOrEmpty(profile.Country))
+            {
+                profileCountryCode = profile.Country;
+            }
+
+            return profileCountryCode;
+        }
+
         public ActionResult Installed()
         {
             return View();
         }
 
-        private string GetCountryCodeOrDefault(string country)
+        private string GetCountryCodeOrDefault(string country, string profileCountry)
         {
-            if (string.IsNullOrEmpty(country))
+            string result = Constants.DefaultCountryCode;
+
+            string countryCode = string.IsNullOrEmpty(country) ? profileCountry : country;
+
+            if (countryCode == null)
             {
-                return Constants.DefaultCountryCode;
+                return result;
             }
 
-            var firstCountry = Constants.CountryCodes.FirstOrDefault(c => c.Code == country.ToUpperInvariant());
+            var firstCountry = Constants.CountryCodes.FirstOrDefault(c => c.Code == countryCode.ToUpperInvariant());
 
-            return firstCountry == null ? Constants.DefaultCountryCode : firstCountry.Code;
+            if (firstCountry == null)
+            {
+                return result;
+            }
+
+            result = firstCountry.Code;
+
+            return result;
         }
 
         private CursorPaging<PlayHistory> GetRecentlyPlayedTracks(CustomToken token)

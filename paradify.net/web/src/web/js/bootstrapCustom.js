@@ -207,6 +207,10 @@ var customModal = {
 }
 
 var customNotify = {
+    loading: function (message) {
+        this.notify('loading...');
+    },
+
     notify: function (message) {
         $.notify({
             // options
@@ -320,6 +324,8 @@ function loadCountries(callback) {
 }
 
 function country_Onchanged(code) {
+    customNotify.loading();
+
     loadNewReleasedSong(code, function (response) {
         newReleasedTrack_Callback(response);
         initPlayback();

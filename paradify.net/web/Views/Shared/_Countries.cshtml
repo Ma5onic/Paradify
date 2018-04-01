@@ -8,9 +8,12 @@
             <option value="@item.Code">@item.Name</option>
         }
     </select>
-    <script> 
+    <script>
+        function selectCountry(countryCode) {
+            $('.custom-select').val(countryCode);
+        }
         function initCountries() {
-            $('#select-countries').change(function () {
+            $('.custom-select').change(function () {
                 country_Onchanged($('#select-countries option:selected').val());
             });
         }
