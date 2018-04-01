@@ -1,0 +1,24 @@
+﻿@model List<web.Models.History>
+
+@if (Model != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Search Text</th>
+                <th scope="col">User</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (web.Models.History item in Model)
+            {
+                <tr>
+                    <td>@item.Query</td>
+                    <td>@item.UserId</td>
+                    <td>@item.CreatedDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

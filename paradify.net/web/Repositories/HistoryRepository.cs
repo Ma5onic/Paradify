@@ -1,4 +1,6 @@
-﻿using web.Enums;
+﻿using System.Collections.Generic;
+using web.Enums;
+using web.Models;
 
 namespace web.Repositories
 {
@@ -14,6 +16,14 @@ namespace web.Repositories
                 .Column("UserId", userId)
                 .Column("source", appsource)
                 .ExecuteReturnLastId<int>("Id");
+        }
+
+        public List<History> GetHistories(int max)
+        {
+            Context context = new Context();
+
+            return context.DbContext.Sql("select top " + max + " Query, LEFT(UserId, 1) as UserId, CreatedDate from history order by CreatedDate desc")
+                .QueryMany<History>();
         }
     }
 }

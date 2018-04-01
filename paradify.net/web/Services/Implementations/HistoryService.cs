@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using web.Enums;
+using web.Models;
 using web.Repositories;
 
 namespace web.Services.Implementations
@@ -27,6 +29,20 @@ namespace web.Services.Implementations
 
             return 0;
             
+        }
+
+        public List<History> GetHistories(int max)
+        {
+            try
+            {
+                return _historyRepository.GetHistories(max);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return null;
         }
     }
 }

@@ -93,6 +93,13 @@ namespace web.Controllers
             return View(model);
         }
 
+        public ActionResult Histories()
+        {
+            var histories = _historyService.GetHistories(100);
+
+            return View(histories);
+        }
+
         private static string GetCountryOfProfile(PrivateProfile profile, string profileCountryCode)
         {
             if (profile != null && !string.IsNullOrEmpty(profile.Country))

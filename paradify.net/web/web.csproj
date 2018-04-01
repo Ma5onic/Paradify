@@ -188,6 +188,7 @@
     <Compile Include="Models\CreatePlaylistModel.cs" />
     <Compile Include="Models\CustomSimpleTrack.cs" />
     <Compile Include="Models\CustomToken.cs" />
+    <Compile Include="Models\History.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\PlaylistModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
@@ -247,6 +248,7 @@
     <Content Include="Views\Shared\_NewReleasedTracks.cshtml" />
     <Content Include="Views\Shared\_LoginMessage.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Home\Histories.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
