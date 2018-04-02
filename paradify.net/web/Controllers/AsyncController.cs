@@ -179,39 +179,17 @@ namespace web.Controllers
 
         [HttpGet]
         [FilterClientToken()]
+        [OutputCache(Duration = 86400, VaryByParam = "countryCode")]
         public ActionResult GetNewReleasedTracks(string countryCode)
         {
-            CustomToken customToken = ViewBag.Token;
+            CustomToken token = ViewBag.Token;
 
-            if (customToken.IsTokenEmpty())
+            if (token.IsTokenEmpty())
             {
                 return null;
             }
 
-            SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = customToken.AccessToken, UseAuth = true, TokenType = customToken.TokenType };
-
-            CustomSimpleTrack result = new CustomSimpleTrack();
-
-            NewAlbumReleases newAlbumReleases = api.GetNewAlbumReleases(countryCode);
-
-            if (newAlbumReleases.Albums != null && newAlbumReleases.Albums.Items != null)
-            {
-                foreach (var album in newAlbumReleases.Albums.Items)
-                {
-                    Paging<SimpleTrack> tracksOfTheAlbum = api.GetAlbumTracks(album.Id);
-
-                    if (tracksOfTheAlbum.Items != null)
-                    {
-                        Parallel.ForEach(tracksOfTheAlbum.Items, (track) =>
-                        {
-                            result.TrackAlbumIds.Add(track.Id, album);
-
-                            result.Paging.Items.Add(track);
-                        });
-
-                    }
-                }
-            }
+            var result = _paradifyService.GetNewReleasedTracks(token, countryCode);
 
             return PartialView("~/Views/Shared/_NewReleasedTracks.cshtml", result);
         }

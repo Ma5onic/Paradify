@@ -34,6 +34,7 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
+        [OutputCache(Duration = 86400, VaryByParam = "country")]
         public ActionResult Index(string country = null)
         {
             HomeModel model = new HomeModel();

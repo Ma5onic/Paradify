@@ -95,7 +95,7 @@ namespace web.Services.Implementations
 
             try
             {
-                NewAlbumReleases newAlbumReleases = api.GetNewAlbumReleases(countryCode);
+                NewAlbumReleases newAlbumReleases = api.GetNewAlbumReleases(countryCode, limit: 5);
 
                 if (newAlbumReleases.Albums != null && newAlbumReleases.Albums.Items != null)
                 {
