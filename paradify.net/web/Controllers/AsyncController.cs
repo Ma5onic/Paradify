@@ -14,18 +14,16 @@ namespace web.Controllers
 
         private readonly IParadifyService _paradifyService;
         private readonly ITokenCookieService _tokenCookieService;
-        private readonly IHistoryService _historyService;
         private readonly IUserService _userService;
         private readonly ISessionService _sessionService;
         private readonly IPlaylistService _playlistService;
 
         public AsyncController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
-            IHistoryService historyService, IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(paradifyService, tokenCookieService,
-            historyService, userService, sessionService, playlistService)
+             IUserService userService, ISessionService sessionService, IPlaylistService playlistService) : base(paradifyService, tokenCookieService,
+             userService, sessionService, playlistService)
         {
             _paradifyService = paradifyService;
             _tokenCookieService = tokenCookieService;
-            _historyService = historyService;
             _userService = userService;
             _sessionService = sessionService;
             _playlistService = playlistService;
