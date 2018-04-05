@@ -1,7 +1,6 @@
 ﻿using log4net;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using web.Filters;
 using web.Models;
@@ -179,7 +178,6 @@ namespace web.Controllers
 
         [HttpGet]
         [FilterClientToken()]
-        [OutputCache(Duration = 86400, VaryByParam = "countryCode")]
         public ActionResult GetNewReleasedTracks(string countryCode)
         {
             CustomToken token = ViewBag.Token;

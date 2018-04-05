@@ -1,1 +1,11 @@
-﻿@(Html.ActionLink("Login", "Index", "Authorize", null, new { @class = "nav-link" }))
+﻿<p style="text-align:center;">
+    <button type="button" class="btn btn-success"
+            onclick="javascript:location.href = '@(Url.Action("Index", "Authorize"))'">
+        Login on Spotify
+    </button>
+    </p>
+
+<p>
+    Paradify doesn't ask you to enter any user name / password. You only need to login to Spotify.
+    You only will be redirected to Spotify to be authenticated.
+</p>

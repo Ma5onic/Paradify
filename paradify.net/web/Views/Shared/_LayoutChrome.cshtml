@@ -6,47 +6,48 @@
     <meta name="description" content="Paradify helps you to find songs and add them to your spotify playlist easly">
     <meta name="keywords" content="Spotify, Songs, discovery, playlist, chrome Extension, recommendations, new released">
     <meta name="author" content="Volkan Akin">
-    <script src="~/src/web/js/jquery-3.3.1.min.js?v=17"></script>
-    <script src="~/src/web/js/bootstrap.min.js?v=17"></script>
-    <script src="~/src/web/js/bootstrap-notify.min.js?v=17"></script>
-    <script src="~/src/web/js/bootstrapCustom.js?v=17.1"></script>
-    <script src="~/src/web/js/playback.js?v=17"></script>
-    <script src="~/src/web/js/ga.js?v=17"></script>
-    <script src="~/src/web/js/ga-track.js?v=17"></script>
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=17' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=17' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=17' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=17' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=17' type='text/css' />
+    <script src="~/src/web/js/jquery-3.3.1.min.js?v=18"></script>
+    <script src="~/src/web/js/bootstrap.min.js?v=18"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=18"></script>
+    <script src="~/src/web/js/bootstrapCustom.js?v=18.1"></script>
+    <script src="~/src/web/js/playback.js?v=18"></script>
+    <script src="~/src/web/js/ga.js?v=18"></script>
+    <script src="~/src/web/js/ga-track.js?v=18"></script>
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=18' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=18' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=18' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=18' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=18' type='text/css' />
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bocdilfmhiggklhdifohjfghbdncgele">
 </head>
 <body>
 
     <div class="jumbotron">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
-            <a class="nav-link" href="~/">Paradify<span class="sr-only">(current)</span></a>
-
+            <a class="nav-link" href="~/">Paradify, Spotify Discovery</a>
             <ul class="navbar-nav mr-auto">
+             
                 <li class="nav-item active custom-li-me" id="profile_login">
                 </li>
             </ul>
             @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
-            {
-                <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
-                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-            }
+    {
+        <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+}
 
         </nav>
         <div class="row">
 
             @RenderBody()
-
+            @Html.Partial("_Bottom")
         </div>
         <div style="text-align:right">
-                <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
-                    <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
-                </a>
-            </div>
+            <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
+                <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
+            </a>
+        </div>
     </div>
     <script>
         $(document).ready(function () {

@@ -33,10 +33,6 @@ namespace web.Controllers
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, TokenCredentialType.Auth);
             _sessionService.SetToken(token.ToCustomToken(TokenCredentialType.Auth));
 
-            PrivateProfile profile = _userService.GetMe(_tokenService);
-
-            _userService.AddUser(profile);
-
             var returnUrl = _sessionService.GetReturnUrl();
 
             if (returnUrl != null && !string.IsNullOrEmpty(returnUrl))

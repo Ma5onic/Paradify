@@ -13,26 +13,6 @@ namespace web.Services.Implementations
             _userRepository = userRepository;
         }
 
-        public bool AddUser(PrivateProfile profile)
-        {
-            if (profile.NullOrEmptyCheck())
-                return false;
-
-            try
-            {
-                if (_userRepository.IsUserExist(profile.Id))
-                    return false;
-
-                return _userRepository.AddUser(profile) > 0;
-            }
-            catch
-            {
-
-            }
-
-            return false;
-        }
-
         public PrivateProfile GetMe(ITokenCookieService tokenCookieService)
         {
             Token token = tokenCookieService.Get();

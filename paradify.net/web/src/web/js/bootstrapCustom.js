@@ -113,7 +113,7 @@ function openPlaylistPopup(trackName) {
     }
 
     $('.custom-modal-body-p').html(variable.playlist);
-    $('.modal-title').html(trackName);
+    $('.modal-title').html('Add to Playlist : ' + trackName);
     $('.modal').modal();
 }
 

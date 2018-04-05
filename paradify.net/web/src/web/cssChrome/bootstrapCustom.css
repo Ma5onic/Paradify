@@ -2,7 +2,9 @@
     background-color: white !important;
 }
 
-
+.center {
+    text-align: center;
+}
 
 .jumbotron {
     padding: 1rem 2rem;

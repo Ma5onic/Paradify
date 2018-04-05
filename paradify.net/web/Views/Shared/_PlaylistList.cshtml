@@ -4,13 +4,17 @@
 <div class="list-group">
     @foreach (SimplePlaylist playlist in Model)
     {
-        <a href="javascript:addToPlaylist('@(playlist.Id)')" class="list-group-item list-group-item-action custom-list-group-item-playlist"
-           data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top">
-            @if (playlist.Images != null && playlist.Images.Count > 0)
+        <span class="list-group-item list-group-item-action custom-list-group-item-playlist">
+            @*@if (playlist.Images != null && playlist.Images.Count > 0)
             {
-                <img src="@playlist.Images[0].Url">
-            }
-            @playlist.Name
-        </a>
+            <img src="@playlist.Images[0].Url">
+            }*@
+            <button type="button" class="btn btn-success" onclick="javascript:addToPlaylist('@(playlist.Id)')"> + </button>
+            <a href="javascript:addToPlaylist('@(playlist.Id)')"
+               data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top">
+                @(playlist.Name)
+                <span>(@(playlist.Tracks != null ? playlist.Tracks.Total.ToString() : "0" ))</span>
+            </a>
+        </span>
     }
 </div>

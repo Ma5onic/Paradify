@@ -1,0 +1,62 @@
+﻿
+    <div class="col-lg-4" style="margin-top:20px">
+        <h4>Why do you need Paradify?</h4>
+        <p>
+            While you are surfing on internet(<abbr title="Supported web sites are below">on supported web sites</abbr>), listening to musics, watching video clips, Paradify helps you to find the songs on Spotify and adds them to your playlist <em>easly</em>.
+
+
+        </p>
+        <p>To be able to add a song to your playlist, you need to login on Spotify.</p>
+        <p class="text-success">Paradify doesn't ask you to enter any user name / password. You only need to login to Spotify</p>
+
+    </div>
+
+    <div class="col-lg-4" style="margin-top:20px">
+        <h4>Paradify is a Chrome Extension</h4>
+        <p>
+            1. In case you want to use Paradify application, here is the <a id="install-button" href="javascript:install()">link to install</a> (on Chrome browser).
+
+        </p>
+        <p>
+            2. Visit one the of web sites which Paradify supports, find a music/video clip and click Paradify application.
+        </p>
+        <p>
+            3. It will find the song on Spotify and will let you to add it to your playlist.
+        </p>
+
+        <p>
+            <strong>Supported web sites</strong>
+            <ul>
+                <li>YouTube</li>
+                <li>Jango</li>
+                <li>Radio Paradise</li>
+                <li>Daily Motion</li>
+                <li>Vimeo</li>
+                <li>Sound Cloud</li>
+                <li>Deezer</li>
+                <li>Q Music</li>
+                <li>Radio Swiss Jazz</li>
+                <li>Power Fm</li>
+                <li>Kral Fm</li>
+                <li>Karnaval</li>
+            </ul>
+        </p>
+    </div>
+
+
+    <div class="col-lg-4" style="margin-top:20px">
+        <h4>It is also a web site</h4>
+        <p>
+            If you don't want to install the application, you stil can use this web site by searching the songs or find <em>recommended songs</em>
+        </p>
+    </div>
+
+<script>
+
+    function install() {
+        chrome.webstore.install('https://chrome.google.com/webstore/detail/bocdilfmhiggklhdifohjfghbdncgele', function () {
+           
+        }, function (err) {
+        });
+    }
+</script>

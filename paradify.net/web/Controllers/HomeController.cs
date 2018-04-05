@@ -34,7 +34,6 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
-        [OutputCache(Duration = 86400, VaryByParam = "country")]
         public ActionResult Index(string country = null)
         {
             HomeModel model = new HomeModel();
@@ -92,13 +91,6 @@ namespace web.Controllers
             }
 
             return View(model);
-        }
-
-        public ActionResult Histories()
-        {
-            var histories = _historyService.GetHistories(100);
-
-            return View(histories);
         }
 
         private static string GetCountryOfProfile(PrivateProfile profile, string profileCountryCode)

@@ -50,13 +50,6 @@ namespace web.Controllers
 
                 CustomToken token = ViewBag.Token;
 
-                //if (string.IsNullOrEmpty(token.AccessToken) && string.IsNullOrEmpty(token.RefreshToken))
-                //{
-                //    //SetSearchReturnUrl(_search);
-
-                //    //return RedirectToAuthorization();
-                //    return null;
-                //}
                 PrivateProfile profile = new PrivateProfile();
 
                 if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
@@ -64,17 +57,7 @@ namespace web.Controllers
                     profile = GetMe(token);
                 }
 
-                if (profile.IsNotAuthorized())
-                {
-                   // return RedirectToAuthorization();
-                }
-
                 SearchItem searchItem = Search(_search, token);
-
-                if (searchItem.IsNotAuthorized())
-                {
-                    //return RedirectToAuthorization();
-                }
 
                 if (searchItem != null && searchItem.Tracks != null && 
                     searchItem.Tracks.Items != null && searchItem.Tracks.Items.Count == 0)
@@ -86,13 +69,6 @@ namespace web.Controllers
                 searchResult.SearchItem = searchItem;
                 searchResult.query = _search;
                 searchResult.track = _trackId;
-
-                Task task = new Task(() =>
-                {
-                    AddSearchHistory(token, profile.Id);
-                });
-
-                task.Start();
             }
 
             return View("Index", searchResult);
@@ -102,14 +78,6 @@ namespace web.Controllers
         private PrivateProfile GetMe(Token token)
         {
             return _userService.GetMe(token);
-        }
-
-        private void AddSearchHistory(Token token, string profileId)
-        {
-            if (profileId != null)
-            {
-                _historyService.AddSearchHistory(_search, _trackId, profileId, AppSource.WebSite);
-            }
         }
 
         private SearchItem Search(string query, Token token)

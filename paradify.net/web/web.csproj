@@ -193,12 +193,8 @@
     <Compile Include="Models\PlaylistModel.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Repositories\Context.cs" />
-    <Compile Include="Repositories\HistoryRepository.cs" />
-    <Compile Include="Repositories\IHistoryRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Services\IHistoryService.cs" />
-    <Compile Include="Services\Implementations\HistoryService.cs" />
     <Compile Include="Services\Implementations\ParadifyService.cs" />
     <Compile Include="Services\Implementations\TokenCookieService.cs" />
     <Compile Include="Services\Implementations\SessionService.cs" />
@@ -249,6 +245,7 @@
     <Content Include="Views\Shared\_LoginMessage.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Home\Histories.cshtml" />
+    <Content Include="Views\Shared\_Bottom.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
