@@ -10,7 +10,7 @@ namespace web.Services.Implementations
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(ParadifyService));
 
-        public SearchItem SearchResult(string query, Token token, int limit = 20, int offset = 0, string market = "")
+        public SearchItem SearchResult(string query, Token token, int limit = 10, int offset = 0, string market = "")
         {
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, UseAuth = true, TokenType = token.TokenType };
             try
@@ -43,7 +43,7 @@ namespace web.Services.Implementations
             return null;
         }
 
-        public Paging<SavedTrack> GetSavedTracks(CustomToken token, int limit = 20, int offset = 0, string market = "")
+        public Paging<SavedTrack> GetSavedTracks(CustomToken token, int limit = 10, int offset = 0, string market = "")
         {
             if (token.tokenCredentialType == CustomToken.TokenCredentialType.Client)
             {

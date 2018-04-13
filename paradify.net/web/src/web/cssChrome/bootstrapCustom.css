@@ -36,3 +36,17 @@
 .profile_login {
     display: none;
 }
+
+.ul-supported-web-sites {
+    display: inline;
+    list-style: none;
+    padding: 0;
+}
+
+    .ul-supported-web-sites li {
+        display: inline;
+    }
+
+    .ul-supported-web-sites li + li:before {
+        content: ", ";
+    }

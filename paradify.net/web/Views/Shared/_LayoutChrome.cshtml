@@ -6,50 +6,69 @@
     <meta name="description" content="Paradify helps you to find songs and add them to your spotify playlist easly">
     <meta name="keywords" content="Spotify, Songs, discovery, playlist, chrome Extension, recommendations, new released">
     <meta name="author" content="Volkan Akin">
-    <script src="~/src/web/js/jquery-3.3.1.min.js?v=18"></script>
-    <script src="~/src/web/js/bootstrap.min.js?v=18"></script>
-    <script src="~/src/web/js/bootstrap-notify.min.js?v=18"></script>
-    <script src="~/src/web/js/bootstrapCustom.js?v=18.1"></script>
-    <script src="~/src/web/js/playback.js?v=18"></script>
-    <script src="~/src/web/js/ga.js?v=18"></script>
-    <script src="~/src/web/js/ga-track.js?v=18"></script>
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=18' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=18' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=18' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=18' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=18' type='text/css' />
+    <script src="~/src/web/js/jquery-3.3.1.min.js?v=v=19"></script>
+    <script src="~/src/web/js/bootstrap.min.js?v=v=19"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=v=19"></script>
+    <script src="~/src/web/js/bootstrapCustom.js?v=v=19.2"></script>
+    <script src="~/src/web/js/playback.js?v=v=19"></script>
+    <script src="~/src/web/js/ga.js?v=v=19"></script>
+    <script src="~/src/web/js/ga-track.js?v=v=19"></script>
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=v=19' type='text/css' />
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bocdilfmhiggklhdifohjfghbdncgele">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 </head>
 <body>
 
     <div class="jumbotron">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
-            <a class="nav-link" href="~/">Paradify, Spotify Discovery</a>
+            <a class="nav-link" href="~/">Paradify</a>
             <ul class="navbar-nav mr-auto">
-             
+
                 <li class="nav-item active custom-li-me" id="profile_login">
                 </li>
             </ul>
             @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
-    {
-        <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
-        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-}
+            {
+                <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            }
 
         </nav>
         <div class="row">
 
             @RenderBody()
-            @Html.Partial("_Bottom")
+
         </div>
-        <div style="text-align:right">
-            <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
-                <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
-            </a>
+        @if (ViewBag.Token == null)
+        {
+            <div style="text-align:center;">
+                <div class="col-lg-8 alert alert-dismissible alert-warning" style="margin:0 auto;">
+                    <h1>Paradify</h1>
+                    <h2>The quickest way to add songs into your playlist.</h2>
+                    <p>
+                        To be able to add a song to your playlist, you need to login on Spotify.
+
+                        Paradify doesn't ask you to enter any user name / password. You only need to login to Spotify
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-success"
+                                onclick="javascript:location.href = '@(Url.Action("Index", "Authorize"))'">
+                            Login on Spotify
+                        </button>
+                    </p>
+                </div>
+            </div>
+            }
+            <div class="row">
+                @Html.Partial("_Bottom")
+            </div>
         </div>
-    </div>
-    <script>
+        <script>
         $(document).ready(function () {
             getMe();
         });
@@ -66,33 +85,33 @@
                 }
             });
         }
-    </script>
+        </script>
 
-    <div class="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="custom-modal-body-p">
+        <div class="modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="custom-modal-body-p">
 
-                    </p>
-                </div>
-                <div class="modal-footer">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
-
-    <input type="hidden" id="input_trackId" />
-    <input type="hidden" id="input_trackName" />
-    <input type="hidden" id="input_from" />
-</body>
+        <input type="hidden" id="input_trackId" />
+        <input type="hidden" id="input_trackName" />
+        <input type="hidden" id="input_from" />
+    </body>
 </html>

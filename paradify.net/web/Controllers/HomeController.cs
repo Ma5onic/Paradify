@@ -10,7 +10,7 @@ using web.Services;
 
 namespace web.Controllers
 {
-    [FilterClientToken]
+    [FilterUserToken]
     public class HomeController : CustomControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(HomeController));
@@ -77,12 +77,7 @@ namespace web.Controllers
                     model.RecentlyPlayedTracks = GetRecentlyPlayedTracks(token);
                 });
 
-                Task taskSavedTracks = Task.Factory.StartNew(() =>
-                {
-                    model.SavedTracks = GetSavedTracks(token);
-                });
-
-                Task.WaitAll(new[] { tasktNewReleasedTracks, taskRecentlyPlayed, taskSavedTracks });
+                Task.WaitAll(new[] { tasktNewReleasedTracks, taskRecentlyPlayed });
             }
             catch (Exception ex)
             {

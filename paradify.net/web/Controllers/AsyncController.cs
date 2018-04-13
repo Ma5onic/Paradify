@@ -30,7 +30,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
-        [FilterClientToken]
+        [FilterUserToken]
         public ActionResult Recommendations(string trackId, string artistId)
         {
             CustomToken token = ViewBag.Token;

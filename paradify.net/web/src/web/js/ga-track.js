@@ -16,10 +16,17 @@ var gaTrack = {
 
 
     paypalClick: function () {
-        //if (ga != undefined) {
-        //    ga('set', 'page', '/paypal');
-        //        ga('send', 'pageview');
-        //}
+        if (ga != undefined) {
+            ga('set', 'page', '/paypal');
+                ga('send', 'pageview');
+        }
+    },
+
+    chromeStoreClick: function () {
+        if (ga != undefined) {
+            ga('set', 'page', '/chromeStore');
+            ga('send', 'pageview');
+        }
     }
 }
 
@@ -61,6 +68,8 @@ var gaEvent = {
         countryChange: function (code) {
             ga('send', 'event', 'Track', 'NewReleaseCountryChange', code);
         },
-      
+        canceledForAddPlaylist: function (trackName) {
+            ga('send', 'event', 'Track', 'canceledForAddPlaylist', decodeURIComponent(trackName));
+        }
     }
 }

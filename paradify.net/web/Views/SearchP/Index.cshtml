@@ -2,48 +2,57 @@
 @model web.Models.SearchResult
 
 <div class="col-lg-8">
-    @if (Model != null && Model.SearchItem != null)
+    @if (Model != null && !string.IsNullOrEmpty(Model.query))
     {
-        if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+
+        <h4>@Html.RouteLink(Model.query, "Search", new { q = Model.query }, new { title = Model.query })</h4>
+        if (Model != null && Model.SearchItem != null)
         {
-            <h4>Search Result: @Html.RouteLink(Model.query, "Search", new { q = Model.query }, new { title = Model.query })</h4>
-            @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
+            if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)
+            {
 
-            var top5 = Model.SearchItem.Tracks.Items.Take(1);
+                @Html.Partial("_SongList", Model.SearchItem.Tracks.Items)
 
-            <script type="text/javascript">
+                var top5 = Model.SearchItem.Tracks.Items.Take(1);
+
+                <script type="text/javascript">
             loadRecommendedSongs('@(string.Join(",", top5.Select(t => t.Id)))',
                 '@string.Join(",", top5.Select(t => t.Artists.First().Id))', function (response) {
                     $('.custom-recommendedSongs').html(response);
                     $('.custom-recommendedSongs').show();
                     $('.custom-title-recommendedSongs').show();
                 });
-            </script>
+                </script>
 
-        }
-        else
-        {
-            <div class="alert alert-dismissible alert-primary">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Ooops!</strong>
-                Your search <strong>"@(Model.query)"</strong> did not match any titles, artists in Spotify.<br />
-                Try<br />
-                <ul>
-                    <li>
-                        Using 'Song name Artist name' example: 'Hello Adele'
-                    </li>
-                    <li>Checking your spelling, Clean some invalid characters in search</li>
-                </ul>
-            </div>
-            <script type="text/javascript">
+            }
+            else
+            {
+                <div class="alert alert-dismissible alert-primary">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Ooops!</strong>
+                    Your search <strong>"@(Model.query)"</strong> did not match any titles, artists in Spotify.<br />
+                    Try<br />
+                    <ul>
+                        <li>
+                            Using 'Song name Artist name' example: 'Hello Adele'
+                        </li>
+                        <li>Checking your spelling, Clean some invalid characters in search</li>
+                    </ul>
+                </div>
+                <script type="text/javascript">
         gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
+                </script>
+            }
+
+            <script>
+                loadSearch();
             </script>
         }
+
         <script type="text/javascript">
         gaEvent.track.searched('@HttpUtility.JavaScriptStringEncode(Model.query)');
         </script>
     }
-
 </div>
 <div class="col-lg-4">
     <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
@@ -53,7 +62,3 @@
     <h3 class="custom-title-savedTracks" style="display:none;">Saved Tracks</h3>
     <span class="custom-savedTracks" style="display:none;"></span>
 </div>
-
-<script>
-    loadSearch();
-</script>

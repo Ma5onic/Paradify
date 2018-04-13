@@ -91,7 +91,7 @@ function addToPlaylist(playlistId) {
     });
 
     customModal.close();
-    animateByClass('custom-title-recommendedSongs');
+    //animateByClass('custom-title-recommendedSongs');
 
 }
 
@@ -201,9 +201,25 @@ function loadRecommendedSongs(trackId, artistId, callback) {
 }
 
 var customModal = {
+    init: function () {
+        $('.modal').on('hidden.bs.modal', function () {
+            if (!customModal.closedByUser) {
+                gaEvent.track.canceledForAddPlaylist($("#input_trackName").val());
+            }
+
+            customModal.closedByUser = false;
+        })
+    },
+
     close: function () {
+
+        customModal.closedByUser = true;
+
         $('.modal').modal('hide');
-    }
+       
+    }, 
+
+    closedByUser: false
 }
 
 var customNotify = {
@@ -265,6 +281,9 @@ function paypal() {
 }
 
 
+function chromeStoreClick() {
+    gaTrack.chromeStoreClick();
+}
 
 
 function loadSearch() {
@@ -275,13 +294,6 @@ function loadSearch() {
             $('.custom-title-recentlyPlayedTracks').show();
             $('.custom-recentlyPlayedTracks').show();
             $('.custom-recentlyPlayedTracks').html(variable.recentlyPlayedTracks);
-            initPlayback();
-        });
-
-        loadSavedTracks(function () {
-            $('.custom-title-savedTracks').show();
-            $('.custom-savedTracks').show();
-            $('.custom-savedTracks').html(variable.savedTracks);
             initPlayback();
         });
 
@@ -344,33 +356,8 @@ function newReleasedTrack_Callback(response) {
 function loadHome() {
     $(document).ready(function () {
         loadPlaylist();
-        //initCountries();
-        //initPlayback();
-        //loadCountries(function (response) {
-        //    $('.custom-select-newReleasedSong').show();
-        //    $('.custom-select-newReleasedSong').html(response);
-        //    initCountries();
-        //});
-
-        //loadNewReleasedSong("US", function (response) {
-        //    newReleasedTrack_Callback(response);
-        //});
-
-        //loadPlaylist();
-
-        //loadRecentlyPlayedTracks(function () {
-        //    $('.custom-title-recentlyPlayedTracks').show();
-        //    $('.custom-recentlyPlayedTracks').show();
-        //    $('.custom-recentlyPlayedTracks').html(variable.recentlyPlayedTracks);
-        //    initPlayback();
-        //});
-
-        //loadSavedTracks(function () {
-        //    $('.custom-title-savedTracks').show();
-        //    $('.custom-savedTracks').show();
-        //    $('.custom-savedTracks').html(variable.savedTracks);
-        //    initPlayback();
-        //});
-
     });
 }
+$(document).ready(function () {
+    customModal.init();
+});

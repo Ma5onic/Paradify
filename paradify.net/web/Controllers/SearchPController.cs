@@ -20,7 +20,7 @@ namespace web.Controllers
         public string _trackId { get; set; }
 
         public SearchPController(IParadifyService paradifyService, ITokenCookieService tokenCookieService,
-            IUserService userService, ISessionService sessionService, IPlaylistService playlistService) 
+            IUserService userService, ISessionService sessionService, IPlaylistService playlistService)
             : base(paradifyService, tokenCookieService,
              userService, sessionService, playlistService)
         {
@@ -31,7 +31,7 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
-        [FilterClientToken]
+        [FilterUserToken]
         public ActionResult Index(string q)
         {
             _search = q;
@@ -46,21 +46,24 @@ namespace web.Controllers
                 ViewBag.Title = string.Format("{0} - {1}", _search, Constants.SingleTitle);
 
                 CustomToken token = ViewBag.Token;
-
-                PrivateProfile profile = new PrivateProfile();
-
-                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
+                SearchItem searchItem = null;
+                if (token != null)
                 {
-                    profile = GetMe(token);
-                }
+                    PrivateProfile profile = new PrivateProfile();
 
-                SearchItem searchItem = Search(_search, token);
+                    if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
+                    {
+                        profile = GetMe(token);
+                    }
 
-                if (searchItem != null && searchItem.Tracks != null && 
-                    searchItem.Tracks.Items != null && searchItem.Tracks.Items.Count == 0)
-                {
-                    var tempSearch = Regex.Replace(_search, "\\([^\\]]*\\)", "");
-                    searchItem = Search(tempSearch, token);
+                    searchItem = Search(_search, token);
+
+                    if (searchItem != null && searchItem.Tracks != null &&
+                        searchItem.Tracks.Items != null && searchItem.Tracks.Items.Count == 0)
+                    {
+                        var tempSearch = Regex.Replace(_search, "\\([^\\]]*\\)", "");
+                        searchItem = Search(tempSearch, token);
+                    }
                 }
 
                 searchResult.SearchItem = searchItem;
@@ -71,7 +74,7 @@ namespace web.Controllers
             return View("Index", searchResult);
         }
 
-        [FilterClientToken]
+        [FilterUserToken]
         private PrivateProfile GetMe(Token token)
         {
             return _userService.GetMe(token);
