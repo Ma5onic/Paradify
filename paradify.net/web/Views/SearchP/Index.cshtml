@@ -1,6 +1,11 @@
 ﻿@using System.Linq;
 @model web.Models.SearchResult
 
+@section MetaTags
+{
+    <meta name="robots" content="noindex" />
+}
+
 <div class="col-lg-8">
     @if (Model != null && !string.IsNullOrEmpty(Model.query))
     {
