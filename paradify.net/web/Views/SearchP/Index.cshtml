@@ -10,7 +10,7 @@
     @if (Model != null && !string.IsNullOrEmpty(Model.query))
     {
 
-        <h4>@Html.RouteLink(Model.query, "Search", new { q = Model.query }, new { title = Model.query })</h4>
+        <h4>@Model.query</h4>
         if (Model != null && Model.SearchItem != null)
         {
             if (!Model.SearchItem.HasError() && Model.SearchItem.Tracks.Total > 0)

@@ -132,15 +132,12 @@
     <Content Include="src\web\css\back.css" />
     <Content Include="src\web\css\playback.css" />
     <Content Include="src\web\css\searchresult.css" />
-    <Content Include="src\web\images\facebook-share.png" />
     <Content Include="src\web\images\head-logo.png" />
-    <Content Include="src\web\images\loading.gif" />
     <Content Include="src\web\images\logo.png" />
     <Content Include="src\web\images\noimage.png" />
     <Content Include="src\web\images\pause-white.png" />
     <Content Include="src\web\images\play-white.png" />
     <Content Include="src\web\images\plus.png" />
-    <Content Include="src\web\images\twitter-share.png" />
     <Content Include="src\web\cssChrome\bootstrap.min.css" />
     <Content Include="src\web\js\bootstrap-notify.min.js" />
     <Content Include="src\web\js\bootstrapCustom.js" />
