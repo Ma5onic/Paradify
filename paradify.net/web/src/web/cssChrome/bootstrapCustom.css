@@ -7,7 +7,7 @@
 }
 
 .jumbotron {
-    padding: 1rem 2rem;
+    padding: 2% 4%;
     background-color: white !important;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .navbar {
-    padding: 0 0 2rem 0;
+    padding: 0;
 }
 
 .profile_pic {
@@ -50,3 +50,17 @@
     .ul-supported-web-sites li + li:before {
         content: ", ";
     }
+
+@media (min-width: 450px) and (max-width: 600px) {
+    .form-inline {
+        width:100%;
+    }
+
+    .form-inline input {
+        width: 80%;
+    }
+
+        .form-inline button {
+            width: 20%;
+        }
+}

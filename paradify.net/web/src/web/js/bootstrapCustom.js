@@ -51,12 +51,16 @@ function select(trackId, trackName, artistId, artistName, fromSonglistClick,
 
 function recommend(trackId, trackName, artistId) {
 
+    animateByClass('custom-scroll-recommendedSongs');
+    $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName);
+    $('.custom-title-recommendedSongs').show();
+
     loadRecommendedSongs(trackId, artistId, function (response) {
         $('.custom-recommendedSongs').html(response);
         $('.custom-recommendedSongs').show();
-        $('.custom-title-recommendedSongs').html('Recommended based on ' + trackName);
-        $('.custom-title-recommendedSongs').show();
+        
         initPlayback();
+        
     });
 
     gaEvent.track.recommend(trackName);
@@ -339,25 +343,73 @@ function country_Onchanged(code) {
     customNotify.loading();
 
     loadNewReleasedSong(code, function (response) {
-        newReleasedTrack_Callback(response);
+        $('.custom-title-newReleasedSong').show();
+        $('.custom-newReleasedTracks').show();
+        $('.custom-newReleasedTracks').html(response);
         initPlayback();
     });
 
     gaEvent.track.countryChange(code);
 }
 
-function newReleasedTrack_Callback(response) {
-    $('.custom-title-newReleasedSong').show();
-    $('.custom-newReleasedTracks').show();
-    $('.custom-newReleasedTracks').html(response);
-    initPlayback();
-}
-
 function loadHome() {
     $(document).ready(function () {
+        loadCountries(function (responseCountries) {
+            initCountries();
+            selectCountry("US");
+        });
+
         loadPlaylist();
     });
 }
+
+function inIframe() {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
+function populateLoginLinks() {
+    
+    if (inIframe()) {
+        $('.custom-link-login-popup').show();
+        $('.custom-link-login').hide();
+    } else {
+        $('.custom-link-login-popup').hide();
+        $('.custom-link-login').show();
+    }
+    
+}
+
+function populateBottom() {
+
+    if (inIframe()) {
+        $('.custom-bottom').hide();
+    } else {
+        $('.custom-bottom').show();
+    }
+
+}
+
+function redirectToLogin(url) {
+
+    this.loginWindow = window.open(url, 'self', 'height=500,width=450');
+    this.timer = setInterval(checkLoginPoup, 500);
+
+}
+
+function checkLoginPoup() {
+    if (this.loginWindow != undefined && this.loginWindow.closed) {
+
+        clearInterval(this.timer);
+        location.href = location.href;
+    }
+}
+
 $(document).ready(function () {
+
     customModal.init();
+
 });

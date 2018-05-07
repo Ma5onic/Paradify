@@ -16,8 +16,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse){
             clearBadge();
             break;
     }
-    
-    
 });
 
 function setBadgeText(text) {
@@ -34,6 +32,7 @@ function clearBadge() {
     chrome.browserAction.setBadgeText ( { text: '' } );
 }
 
+//When the page is loaded on youtube, this will let content.js know to show a notification.
 chrome.webNavigation.onCompleted.addListener(function(details) {
     
 
@@ -62,3 +61,9 @@ function contextMenuClicked(details)
 }
 
 chrome.contextMenus.create({title: "Add to Spotify Playlist", contexts:["selection"], onclick: contextMenuClicked});
+
+function getQueryStringValue (url, key) {  
+    return decodeURIComponent(url.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+} 
+ 
+

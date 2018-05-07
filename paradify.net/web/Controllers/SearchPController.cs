@@ -31,7 +31,7 @@ namespace web.Controllers
             _playlistService = playlistService;
         }
 
-        [FilterUserToken]
+        [FilterClientToken]
         public ActionResult Index(string q)
         {
             _search = q;
@@ -47,7 +47,7 @@ namespace web.Controllers
 
                 CustomToken token = ViewBag.Token;
                 SearchItem searchItem = null;
-                if (token != null)
+                if (!token.IsTokenEmpty())
                 {
                     PrivateProfile profile = new PrivateProfile();
 
@@ -65,6 +65,10 @@ namespace web.Controllers
                         searchItem = Search(tempSearch, token);
                     }
                 }
+                else
+                {
+                    searchResult.IsTokenEmpty = true;
+                }
 
                 searchResult.SearchItem = searchItem;
                 searchResult.query = _search;
@@ -74,11 +78,11 @@ namespace web.Controllers
             return View("Index", searchResult);
         }
 
-        [FilterUserToken]
-        private PrivateProfile GetMe(Token token)
-        {
-            return _userService.GetMe(token);
-        }
+        //[FilterUserToken]
+        //private PrivateProfile GetMe(Token token)
+        //{
+        //    return _userService.GetMe(token);
+        //}
 
         private SearchItem Search(string query, Token token)
         {

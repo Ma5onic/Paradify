@@ -30,7 +30,7 @@ namespace web.Controllers
         }
 
         [HttpGet]
-        [FilterUserToken]
+        [FilterClientToken]
         public ActionResult Recommendations(string trackId, string artistId)
         {
             CustomToken token = ViewBag.Token;
@@ -195,5 +195,7 @@ namespace web.Controllers
         {
             return PartialView("~/Views/Shared/_Countries.cshtml", Constants.CountryCodes);
         }
+
+     
     }
 }

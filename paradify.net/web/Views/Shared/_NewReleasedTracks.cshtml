@@ -9,11 +9,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col"></th>
-            <th scope="col">Title</th>
-            <th scope="col">Artist</th>
-            <th scope="col">Album</th>
-            <th scope="col">Time</th>
-            <th scope="col" style="width: 116px;text-align: right;">Recommend New Tracks</th>
+            <th scope="col">Title - Artist - Album</th>
+            <th scope="col" style="width: 116px;text-align: right;">Recommend</th>
         </tr>
     </thead>
     <tbody>
@@ -48,21 +45,10 @@
                     var trackNameArtistNames = string.Format("{0} - {1}", track.Name, artistNames);
                 }
                 
-                <td><span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = trackNameArtistNames }, new { title = trackNameArtistNames })</span></td>
-                <td><span class="artistName">@artistNames</span></td>
-                <td><span>@album.Value.Name</span></td>
-                <td>
-
-                    @{
-                        TimeSpan t = TimeSpan.FromMilliseconds(track.DurationMs);
-                        string time = string.Format("{0:D2}:{1:D2}",
-                        t.Minutes,
-                        t.Seconds
-                        );
-                    }
-                    @time
-
-                </td>
+                <td><span class="trackName">@Html.RouteLink(track.Name, "Search", new { q = trackNameArtistNames }, new { title = trackNameArtistNames })</span> -
+                <span class="artistName">@artistNames</span> -
+                <span>@album.Value.Name</span></td>
+               
                 <td style="text-align:right">
                     <button type="button" class="btn btn-info" onclick="javascript:recommend('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> R </button>
                 </td>

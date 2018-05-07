@@ -1,53 +1,12 @@
 ﻿@model web.Models.HomeModel
-<div class="col-lg-8">
-
-
-    @if (Model != null && Model.NewReleasedTracks != null && Model.NewReleasedTracks.TrackAlbumIds != null && Model.NewReleasedTracks.TrackAlbumIds.Any())
-    {
-        <h3 class="custom-title-newReleasedSong">New Releases</h3>
-        <span class="custom-select-newReleasedSong col-lg-4">@Html.Partial("_Countries", Constants.CountryCodes)</span>
-        <span class="custom-newReleasedTracks">@Html.Partial("_NewReleasedTracks", Model.NewReleasedTracks)</span>
-        <script>
-            selectCountry('@Model.CountryCode');
-            initCountries();</script>
-    }
-
-
+<div class="col-lg-12">
+    <h3 class="custom-title-newReleasedSong">New Releases</h3>
+    <span class="custom-select-newReleasedSong col-lg-4">@Html.Partial("_Countries", Constants.CountryCodes)</span>
+    <span class="custom-newReleasedTracks"></span>
 </div>
-<div class="col-lg-4">
-    @if (Model != null && Model.Recommendations != null && Model.Recommendations.Tracks != null && Model.Recommendations.Tracks.Any())
-    {
-        <h6 class="custom-title-recommendedSongs">Recommended</h6>
-        <span class="custom-recommendedSongs">@Html.Partial("_RecommendedSongListShort", Model.Recommendations.Tracks)</span>
-    }
-    else
-    {
-        <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
-        <span class="custom-recommendedSongs" style="display:none;"></span>
-    }
-
-    @if (Model != null && Model.RecentlyPlayedTracks != null && Model.RecentlyPlayedTracks.Items != null && Model.RecentlyPlayedTracks.Items.Any())
-    {
-        <h3 class="custom-title-recentlyPlayedTracks">Recently Played</h3>
-        <span class="custom-recentlyPlayedTracks">@Html.Partial("_RecentlyPlayedTracksShort", Model.RecentlyPlayedTracks)</span>
-    }
-    else
-    {
-        <h3 class="custom-title-recentlyPlayedTracks" style="display:none;">Recently Played</h3>
-        <span class="custom-recentlyPlayedTracks" style="display:none;"></span>
-    }
-
-    @if (Model != null && Model.SavedTracks != null && Model.SavedTracks.Items != null && Model.SavedTracks.Items.Any())
-    {
-        <h3 class="custom-title-savedTracks">Saved Tracks</h3>
-        <span class="custom-savedTracks">@Html.Partial("_SavedTracksShort", Model.SavedTracks)</span>
-    }
-    else
-    {
-        <h3 class="custom-title-savedTracks" style="display:none;">Saved Tracks</h3>
-        <span class="custom-savedTracks" style="display:none;"></span>
-    }
-
+<div class="col-lg-12 custom-scroll-recommendedSongs">
+    <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
+    <span class="custom-recommendedSongs" style="display:none;"></span>
 </div>
 <script>
     loadHome();

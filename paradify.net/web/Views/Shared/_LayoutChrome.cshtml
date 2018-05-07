@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>@(ViewBag.Title != null ? ViewBag.Title : Constants.FullTitle)</title>
+    <title>@(Constants.FullTitle)</title>
     <meta name="description" content="Paradify helps you to find songs and add them to your spotify playlist easly">
     <meta name="keywords" content="Spotify, Songs, discovery, playlist, chrome Extension, recommendations, new released">
     <meta name="author" content="Volkan Akin">
@@ -44,28 +44,12 @@
             @RenderBody()
 
         </div>
-        @if (ViewBag.Token == null)
-        {
-            <div style="text-align:center;">
-                <div class="col-lg-8 alert alert-dismissible alert-warning" style="margin:0 auto;">
-                    <h2>You must login to use Paradify</h2>
-                    <p>
-                        To be able to add a song to your playlist, you must login on Spotify.
-                    </p>
-                    <p>
-                        <button type="button" class="btn btn-success"
-                                onclick="javascript:location.href = '@(Url.Action("Index", "Authorize"))'">
-                            Login on Spotify
-                        </button>
-                    </p>
-                </div>
-            </div>
-            }
-            <div class="row">
-                @Html.Partial("_Bottom")
-            </div>
+        <div class="row custom-bottom">
+            @Html.Partial("_Bottom")
+            <script>populateBottom();</script>
         </div>
-        <script>
+    </div>
+    <script>
         $(document).ready(function () {
             getMe();
         });
@@ -82,33 +66,33 @@
                 }
             });
         }
-        </script>
+    </script>
 
-        <div class="modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="custom-modal-body-p">
+    <div class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="custom-modal-body-p">
 
-                        </p>
-                    </div>
-                    <div class="modal-footer">
+                    </p>
+                </div>
+                <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
-
         </div>
 
-        <input type="hidden" id="input_trackId" />
-        <input type="hidden" id="input_trackName" />
-        <input type="hidden" id="input_from" />
-    </body>
+    </div>
+
+    <input type="hidden" id="input_trackId" />
+    <input type="hidden" id="input_trackName" />
+    <input type="hidden" id="input_from" />
+</body>
 </html>

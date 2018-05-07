@@ -64,7 +64,29 @@ namespace web.Services.Implementations
 
         public void DeleteToken()
         {
-           // HttpContext.Current.Session["token"] = null;
+            // HttpContext.Current.Session["token"] = null;
+        }
+
+        public void setSession<T>(string key, T value)
+        {
+            HttpContext.Current.Session[key] = value;
+        }
+
+        public T getSession<T>(string key)
+        {
+            var sessionValue = HttpContext.Current.Session[key];
+
+            if (sessionValue is T)
+            {
+                return (T)sessionValue;
+            }
+
+            return default(T);
+        }
+
+        public void DeleteSession(string key)
+        {
+            HttpContext.Current.Session[key] = null;
         }
     }
 }

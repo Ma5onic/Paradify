@@ -33,11 +33,28 @@ namespace web.Controllers
             _tokenService.SetToken(token.AccessToken, token.RefreshToken, token.ExpiresIn, TokenCredentialType.Auth);
             _sessionService.SetToken(token.ToCustomToken(TokenCredentialType.Auth));
 
+            bool chromeToken = _sessionService.getSession<bool>("ChromeToken");
+
+            if (chromeToken)
+            {
+                _sessionService.DeleteSession("ChromeToken");
+
+                return Redirect(string.Format("~/?access_token={0}&refresh_token={1}&expires_in={2}", token.AccessToken, token.RefreshToken, token.ExpiresIn));
+            }
+
+            if (_sessionService.getSession<bool>("fromIframe"))
+            {
+                _sessionService.DeleteSession("fromIframe");
+
+                return RedirectToAction("CloseIframe", "Authorize");
+            }
+
             var returnUrl = _sessionService.GetReturnUrl();
 
             if (returnUrl != null && !string.IsNullOrEmpty(returnUrl))
             {
-                return Redirect(returnUrl);
+                if (!returnUrl.Contains(Url.RouteUrl("Authorize")))
+                    return Redirect(returnUrl);
             }
 
             return Redirect("~/");

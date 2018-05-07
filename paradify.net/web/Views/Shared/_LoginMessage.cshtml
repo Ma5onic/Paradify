@@ -1,11 +1,13 @@
 ﻿<p style="text-align:center;">
-    <button type="button" class="btn btn-success"
+    <button type="button" class="btn btn-success custom-link-login-popup"
+            onclick="redirectToLogin('@Url.Action("Index", "Authorize", new { fromIFrame = true })')">
+        Login on Spotify
+    </button>
+    <button type="button" class="btn btn-success custom-link-login"
             onclick="javascript:location.href = '@(Url.Action("Index", "Authorize"))'">
         Login on Spotify
     </button>
-    </p>
-
-<p>
-    Paradify doesn't ask you to enter any user name / password. You only need to login to Spotify.
-    You only will be redirected to Spotify to be authenticated.
 </p>
+<script>
+    populateLoginLinks();
+</script>

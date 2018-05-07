@@ -10,7 +10,7 @@ using web.Services;
 
 namespace web.Controllers
 {
-    [FilterUserToken]
+    [FilterClientToken]
     public class HomeController : CustomControllerBase
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(HomeController));
@@ -35,56 +35,7 @@ namespace web.Controllers
 
         public ActionResult Index(string country = null)
         {
-            HomeModel model = new HomeModel();
-
-            CustomToken token = ViewBag.Token;
-
-            if (token.IsTokenEmpty())
-            {
-                return View();
-            }
-
-            try
-            {
-                PrivateProfile profile = null;
-
-                string profileCountryCode = null;
-
-                if (token.tokenCredentialType == CustomToken.TokenCredentialType.Auth)
-                {
-                    profile = GetMe(token);
-
-                    profileCountryCode = GetCountryOfProfile(profile, profileCountryCode);
-                }
-
-                model.CountryCode = GetCountryCodeOrDefault(country, profileCountryCode);
-
-                Task tasktNewReleasedTracks = Task.Factory.StartNew(() =>
-                    {
-                        model.NewReleasedTracks = GetNewReleasedTracks(token, model.CountryCode);
-
-                        if (model.NewReleasedTracks != null && model.NewReleasedTracks.Paging.Items != null
-                            && model.NewReleasedTracks.Paging.Items.Any())
-                        {
-                            var track = model.NewReleasedTracks.Paging.Items.RandomItem();
-
-                            model.Recommendations = GetRecommendations(token, track.Id, track.Artists.First().Id);
-                        }
-                    });
-
-                Task taskRecentlyPlayed = Task.Factory.StartNew(() =>
-                {
-                    model.RecentlyPlayedTracks = GetRecentlyPlayedTracks(token);
-                });
-
-                Task.WaitAll(new[] { tasktNewReleasedTracks, taskRecentlyPlayed });
-            }
-            catch (Exception ex)
-            {
-                log.Error("HomeController => Index()", ex);
-            }
-
-            return View(model);
+            return View();
         }
 
         private static string GetCountryOfProfile(PrivateProfile profile, string profileCountryCode)

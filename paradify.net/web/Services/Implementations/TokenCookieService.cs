@@ -70,12 +70,25 @@ namespace web.Services.Implementations
         {
             AutorizationCodeAuth auth = new AutorizationCodeAuth() { ClientId = Constants.ClientId, State = Constants.StateKey };
 
-            Token response = auth.RefreshToken(refreshToken, clientSecret);
+            Token response;
+            CustomToken result = null;
+            try
+            {
+                response = auth.RefreshToken(refreshToken, clientSecret);
 
-            CustomToken result = response.ToCustomToken();
+                result = response.ToCustomToken();
 
-            if (result != null)
-                result.RefreshToken = refreshToken;
+                if (result != null)
+                    result.RefreshToken = refreshToken;
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+
 
             return result;
         }

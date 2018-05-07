@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex" />
 }
 
-<div class="col-lg-8">
+<div class="col-lg-12">
     @if (Model != null && !string.IsNullOrEmpty(Model.query))
     {
 
@@ -32,21 +32,24 @@
             }
             else
             {
-                <div class="alert alert-dismissible alert-primary">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Ooops!</strong>
-                    Your search <strong>"@(Model.query)"</strong> did not match any titles, artists in Spotify.<br />
-                    Try<br />
-                    <ul>
-                        <li>
-                            Using 'Song name Artist name' example: 'Hello Adele'
-                        </li>
-                        <li>Checking your spelling, Clean some invalid characters in search</li>
-                    </ul>
-                </div>
-                <script type="text/javascript">
-        gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
-                </script>
+                if (!Model.IsTokenEmpty)
+                {
+                    <div class="alert alert-dismissible alert-primary">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Ooops!</strong>
+                        Your search <strong>"@(Model.query)"</strong> did not match any titles, artists in Spotify.<br />
+                        Try<br />
+                        <ul>
+                            <li>
+                                Using 'Song name Artist name' example: 'Hello Adele'
+                            </li>
+                            <li>Checking your spelling, Clean some invalid characters in search</li>
+                        </ul>
+                    </div>
+                    <script type="text/javascript">
+            gaEvent.track.notFound('@HttpUtility.JavaScriptStringEncode(Model.query)');
+                    </script>
+                }
             }
 
             <script>
@@ -59,11 +62,7 @@
         </script>
     }
 </div>
-<div class="col-lg-4">
+<div class="col-lg-12 custom-scroll-recommendedSongs">
     <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
     <span class="custom-recommendedSongs" style="display:none;"></span>
-    <h3 class="custom-title-recentlyPlayedTracks" style="display:none;">Recently Played</h3>
-    <span class="custom-recentlyPlayedTracks" style="display:none;"></span>
-    <h3 class="custom-title-savedTracks" style="display:none;">Saved Tracks</h3>
-    <span class="custom-savedTracks" style="display:none;"></span>
 </div>

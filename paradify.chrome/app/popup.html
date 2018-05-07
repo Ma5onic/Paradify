@@ -7,71 +7,15 @@
     <script src="scripts/variable.js?v=4" type="text/javascript" charset="utf-8"></script>
     <script src="scripts/playback.js?v=4" type="text/javascript" charset="utf-8"></script>
     <script src="scripts/popup.js?v=4" type="text/javascript" charset="utf-8"></script>
-    <link href="styles/bootstrap.min.css?v=3" rel="stylesheet"/>
     <link href="styles/main.css?v=4" rel="stylesheet"/>
     <link href="styles/playback.css?v=4" rel="stylesheet"/>
     <link href="styles/searchresult.css?v=4" rel="stylesheet"/>
 </head>
 <body>
-
-<div id="main">
-    <div id="footer">
-        <img src="images/head-logo.png"/>
-        Paradify
-        <span class="footer-desc">Songs to Spotify</span>
-    </div>
-    
-    
-    <div id="result" class="hidden"></div>
-    <div id="waiting" class="hidden">
-        <img src="images/loading-big.GIF" width="124"/>
-    </div>
-
-    <div class="found-history">
-        <h6 class="center" id="search-history-head">Songs</h6>
-        <div id="foundHistory"></div>
-        <div id="notFoundHistory">
-            <div class="alert alert-dismissible alert-danger desc">
-                    Haven't you started yet? Don't worry! Just visit one of the web sites below, find a song and then click here up again.
-            </div>
-        </div>
-    </div>
-    
-    <div id="form">
-        
-        <div class="form-group margin-auto">
-            <input type="text" class="form-control searchBox" placeholder="Search Songs, Artists, Albums" id="q">
-        </div>
-        <button type="button" class="btn btn-success float-left clickButton">Search</button>
-        <div class="clearfix"></div>
-
-    </div>
-    
-	 <div class="alert" style="font-size:11px">
-		Paradify does NOT ask you to enter your Spotify credential. It redirects you to Spotify page to login there.
-     </div>
-    
-    <div class="supported-links">
-        <h6 class="center">Supported web sites</h6>
-        <div class="center">
-            <button class="btn btn-info" url="http://www.youtube.com">YouTube</button>
-            <button class="btn btn-danger" url="http://www.radioparadise.com">Radio Paradise</button>
-            <button class="btn btn-light" url="http://www.jango.com/">Jango</button>
-            <button class="btn btn-primary" url ="http://www.vimeo.com">Vimeo</button>
-            <button class="btn btn-warning" url="https://www.dailymotion.com">Daily Motion</button>
-            <button class="btn btn-success" url="https://soundcloud.com">Sound Cloud</button>
-            <button class="btn btn-warning" url="http://www.karnaval.com">Karnaval</button>
-            <button class="btn btn-warning" url="http://qmusic.nl">Q Music</button>
-            <button class="btn btn-light" url="https://www.deezer.com/en/">Deezer</button>
-            <button class="btn btn-primary" url="http://www.powerapp.com.tr/radio/powerFM">Power Fm</button>
-            <button class="btn btn-info" url="http://spotifydiscovery.com/more-sites.html">More? Tell us which one...</button>
-        </div>
-    </div>
-    <div class="paypal">
-            <a href="">
-                <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" border="0" alt="Donatem me" title="Donate me" />
-            </a>
-    </div>
+<iframe id="iframe" style="width: 100%; height: 100%;">
+</iframe>
+<div id="loading">
+    <img src="images/loading-big.GIF">
 </div>
 </body>
 </html>

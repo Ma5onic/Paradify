@@ -1,43 +1,3 @@
-chrome.runtime.sendMessage({type: 'clearBadge'});
-
-function searchQueryResult(htmlResult, query) {
-    $(defaults.waitingId).addClass('hidden');
-    $(defaults.resultId).removeClass('hidden');
-    $(defaults.resultId).html(htmlResult);
-    if (htmlResult.indexOf('Oh snap') == -1) {
-        initPlayback();
-        initTracksLink(query);
-    }
-    $(defaults.formId).removeClass('hidden');
-    initDuration();
-}
-
-function searchQuery(query, pageName) {
-    if (pageName == null || pageName == undefined) {
-        pageName = '';
-    }
-
-    var url = String.format("{0}{1}?q={2}&p={3}", defaults.url, defaults.searchPath, query, pageName);
-
-    setTimeout(function () {
-        chrome.tabs.create({url: url});
-    }, 100);
-}
-
-var initTracksLink = function (query) {
-    $(".trackId[trackId]").each(function () {
-        var trackId = $(this).attr("trackId");
-        if (trackId != undefined && trackId != '') {
-            $(this).click(function () {
-                var url = String.format("{0}{1}?q={2}&t={3}", defaults.url, defaults.searchPath, encodeURIComponent(query), trackId);
-                setTimeout(function () {
-                    chrome.tabs.create({url: url});
-                }, 100);
-            });
-        }
-    });
-}
-
 var showLoading = function () {
     $(defaults.waitingId).removeClass('hidden');
     $(defaults.resultId).addClass('hidden');
@@ -47,80 +7,6 @@ var hideLoading = function () {
     $(defaults.waitingId).addClass('hidden');
 }
 
-var initDuration = function () {
-    $('.duraion').each(function (index, val) {
-        $(this).html(millisToMinutesAndSeconds($(this).html()));
-    });
-}
-function millisToMinutesAndSeconds(millis) {
-
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-}
-
-
-$(document).ready(function () {
-    initQuery();
-
-    $(defaults.clickButtonClass).click(function () {
-        searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()));
-    });
-
-    $(defaults.query).keypress(function (event) {
-        if (event.which == defaults.events.ENTER) {
-            searchQuery(encodeURIComponent($(defaults.searchBoxClass).val()));
-        }
-    });
-
-    initButtonsLink();
-});
-
-var initQuery = function () {
-    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-
-        var url = tabs[0].url.toLowerCase();
-                var pageName = getPageName(url);
-                if (pageName != undefined) {
-                    chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
-        
-                        if (trackInfo != undefined && trackInfo.success && trackInfo.track != '') {
-
-                            if (trackInfo.artist == undefined) {
-                                trackInfo.artist = '';
-                            }
-
-                            try{
-                                saveTrackToStorage(trackInfo, function(found) {
-                                    if (found) {
-                                        getTrackFromStorageAndShowHtml();
-                                    } else {
-                                        var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-                                        searchQuery(encodeURIComponent(query), pageName);
-                                    }
-                                    
-                                });
-                            } catch (err){
-                             var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
-                             $('#q').val(query);
-                             searchQuery(encodeURIComponent(query), pageName);
-                            }
-                            
-                        } else {
-                            $(defaults.resultId).addClass('hidden');
-                            $(defaults.formId).removeClass('hidden');
-                            $(defaults.waitingId).addClass('hidden');
-                            getTrackFromStorageAndShowHtml();
-                        }
-                        
-                    });
-                } else {
-                    getTrackFromStorageAndShowHtml();
-                }
-
-        
-    });
-}
 function getTrackFromStorageAndShowHtml() {
     chrome.storage.sync.get({
         foundTracks: 'foundTracks'
@@ -218,14 +104,57 @@ function saveTrackToStorage(foundTrack, callback) {
     });
 }
 
-function initButtonsLink() {
-    $('.supported-links .btn').click(function () {
-        var url = $(this).attr('url');
-        chrome.tabs.create({url: url});        
-    });
+//this message can only be sent to background
+chrome.runtime.sendMessage({type: 'clearBadge'});
 
-    
-    $('.paypal a').click(function () {
-        chrome.tabs.create({url: 'https://www.paypal.com/paypalme/volkanakinpasa/5'});        
+function start() {
+
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+   
+        var url = tabs[0].url.toLowerCase();
+
+        var pageName = getPageName(url);
+
+        if (pageName != undefined) {
+
+            chrome.tabs.sendMessage(tabs[0].id, {type: 'getTrackInfo', pageName: pageName}, function (trackInfo) {
+
+                if (trackInfo != undefined && trackInfo.success && trackInfo.track != '') {
+
+                    if (trackInfo.artist == undefined) {
+                        trackInfo.artist = '';
+                    }
+
+                    var query = String.format("{0} {1}", trackInfo.track, trackInfo.artist);
+                    var url = String.format("{0}{1}?q={2}&p={3}&fromChrome=true", defaults.url, defaults.searchPath, encodeURIComponent(query), pageName);
+                    openIframe((url));
+                } else {
+                    var url = String.format("{0}", defaults.url);
+                    openIframe(url);
+                }
+                
+            });
+
+        } else {
+
+            var url = String.format("{0}", defaults.url);
+            openIframe(url);
+
+        }
+
     });
 }
+
+function openIframe(url) {
+    showIframe(url);
+}
+
+function showIframe(url) {
+    $('#iframe').show();
+    $('#loading').hide();
+    $('#iframe').attr('src', url);
+}
+
+$(document).ready(function () {
+    start();
+});

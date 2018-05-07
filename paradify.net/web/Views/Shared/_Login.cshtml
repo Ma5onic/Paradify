@@ -3,7 +3,13 @@
 
 @if (Model == null || string.IsNullOrEmpty(Model.Id))
 {
-    <span id="profile_id">@(Html.ActionLink("Login", "Index", "Authorize", null, new { @class = "nav-link" }))</span>
+    <span id="profile_id">
+        <a href="javascript:void(0)" onclick="redirectToLogin('@Url.Action("Index", "Authorize", new { fromIFrame = true })')" class="nav-link custom-link-login-popup">Login</a>
+        @(Html.ActionLink("Login", "Index", "Authorize", null, new { id = "loginLink", @class = "nav-link custom-link-login" }))
+    </span>
+    <script>
+        populateLoginLinks();
+    </script>
 }
 else
 {
@@ -13,6 +19,9 @@ else
     {
         <img id="profile_pic" class="profile_pic" src="@firstImage.Url" />
     }
-    <span id="profile_id">@(Model.DisplayName != null ? Model.DisplayName : Model.Id)</span>
-    
+    <span id="profile_id">
+        @(Model.DisplayName != null ? Model.DisplayName : Model.Id)
+        @(Html.ActionLink("Logout", "Logout", "Authorize"))
+    </span>
+
 }
