@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col"><button title="Add all songs to playlist" type="button" class="btn btn-success" onclick="selectAll(@string.Join(",", Model.Select(t => t.Id)))"> + </button></th>
+            <th scope="col"><button title="Add all songs to playlist" type="button" class="btn btn-success" onclick="selectAll('@string.Join(",", Model.Select(t => t.Id))')"> + </button></th>
             <th scope="col">Title - Artist</th>
             <th scope="col" style="width: 116px;text-align: right;">Recommend</th>
         </tr>

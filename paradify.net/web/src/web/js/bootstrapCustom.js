@@ -77,7 +77,7 @@ function addToPlaylist(playlistId) {
 
     var dataJson = {};
     dataJson.playlistId = playlistId;
-    dataJson.trackId = 'spotify:track:' + trackId;
+    dataJson.trackId = trackId;
 
     customNotify.notify('Adding...');
     $.ajax({

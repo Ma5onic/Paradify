@@ -100,7 +100,7 @@ namespace web.Controllers
 
             foreach (var tracksId in tracksIds)
             {
-                errorResponses.Add(api.AddPlaylistTrack(profile.Id, model.playlistId, tracksId));
+                errorResponses.Add(api.AddPlaylistTrack(profile.Id, model.playlistId, string.Format("spotify:track:{0}", tracksId)));
             }
 
             return Json(errorResponses.FirstOrDefault(e => e.Error == null), JsonRequestBehavior.DenyGet);
