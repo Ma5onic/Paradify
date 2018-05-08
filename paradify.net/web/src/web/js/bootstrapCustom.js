@@ -3,6 +3,10 @@
     recentlyPlayedTracks: null,
     savedTracks: null
 };
+function selectAll(trackIds) {
+    $("#input_trackId").val(trackIds);
+    openPlaylistPopup('All songs');
+}
 
 function select(trackId, trackName, artistId, artistName, fromSonglistClick,
     fromRecommendationListClick, fromRecentlyPlayedTracksClick, fromSavedClick) {
@@ -81,7 +85,7 @@ function addToPlaylist(playlistId) {
         url: "/Search/Async/Playlists",
         data: dataJson,
         success: function (errorResponse) {
-            if (errorResponse.error == null) {
+            if (errorResponse == null || errorResponse.error == null) {
                 customNotify.notify('Added to playlist!');
                 gaTrack.addToPlaylistUrl();
                 gaEvent.track.addToPlaylist(trackName);

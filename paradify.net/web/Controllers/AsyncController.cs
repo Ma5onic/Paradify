@@ -1,6 +1,8 @@
 ﻿using log4net;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using web.Filters;
 using web.Models;
@@ -92,9 +94,16 @@ namespace web.Controllers
 
             SpotifyWebAPI api = new SpotifyWebAPI() { AccessToken = token.AccessToken, TokenType = token.TokenType };
 
-            ErrorResponse errorResponse = api.AddPlaylistTrack(profile.Id, model.playlistId, model.trackId);
+            var tracksIds = model.trackId.Split(',');
 
-            return Json(errorResponse, JsonRequestBehavior.DenyGet);
+            List<ErrorResponse> errorResponses = new List<ErrorResponse>();
+
+            foreach (var tracksId in tracksIds)
+            {
+                errorResponses.Add(api.AddPlaylistTrack(profile.Id, model.playlistId, tracksId));
+            }
+
+            return Json(errorResponses.FirstOrDefault(e => e.Error == null), JsonRequestBehavior.DenyGet);
         }
 
         [HttpGet]
@@ -196,6 +205,6 @@ namespace web.Controllers
             return PartialView("~/Views/Shared/_Countries.cshtml", Constants.CountryCodes);
         }
 
-     
+
     }
 }

@@ -8,7 +8,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col"></th>
+            <th scope="col"><button title="Add all songs to playlist" type="button" class="btn btn-success" onclick="selectAll(@string.Join(",", Model.Paging.Items.Select(t => t.Id)))"> + </button></th>
             <th scope="col">Title - Artist - Album</th>
             <th scope="col" style="width: 116px;text-align: right;">Recommend</th>
         </tr>
@@ -37,7 +37,7 @@
                     }
                 </td>
                 <td style="width:54px;">
-                    <button type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> + </button>
+                    <button title="Add to playlist" type="button" class="btn btn-success" onclick="javascript:select('@track.Id', '@HttpUtility.JavaScriptStringEncode(track.Name)', '@track.Artists[0].Id', '@HttpUtility.JavaScriptStringEncode(track.Artists[0].Name)');"> + </button>
 
                 </td>
                 @{ 
@@ -54,10 +54,7 @@
                 </td>
             </tr>
 
-                        }
-
-
-
+        }
     </tbody>
 </table> 
 }
