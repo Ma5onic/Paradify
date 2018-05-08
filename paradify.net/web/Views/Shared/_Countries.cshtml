@@ -11,8 +11,8 @@
     <script>
         function selectCountry(countryCode) {
             $('.custom-select').val(countryCode);
-            country_Onchanged(countryCode);
         }
+
         function initCountries() {
             $('.custom-select').change(function () {
                 country_Onchanged($('#select-countries option:selected').val());

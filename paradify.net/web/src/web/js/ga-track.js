@@ -14,54 +14,55 @@ var gaTrack = {
         //}
     },
 
-    chromeStoreClick: function () {
-        //if (ga != undefined) {
-        //    ga('set', 'page', '/chromeStore');
-        //    ga('send', 'pageview');
-        //}
-    }
 }
 
 var gaEvent = {
     track: {
-        
+
         searched: function (search) {
-            //ga('send', 'event', 'Track', 'Searched', decodeURIComponent(search));
+            this.ga('send', 'event', 'Track', 'Searched', decodeURIComponent(search));
         },
 
         notFound: function (search) {
-           // ga('send', 'event', 'Track', 'NotFound', decodeURIComponent(search));
+            this.ga('send', 'event', 'Track', 'NotFound', decodeURIComponent(search));
         },
 
         play: function (trackName) {
-            //ga('send', 'event', 'Track', 'Play', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'Play', decodeURIComponent(trackName));
         },
 
         addToPlaylist: function (trackName) {
-            //ga('send', 'event', 'Track', 'AddToPlaylist', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'AddToPlaylist', decodeURIComponent(trackName));
         },
 
         selectedToAddPlaylist: function (trackName) {
-            //ga('send', 'event', 'Track', 'SelectedToAddPlaylist', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'SelectedToAddPlaylist', decodeURIComponent(trackName));
         },
 
         selectedToAddPlaylistForRecommendation: function (trackName) {
-            //ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecommendation', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecommendation', decodeURIComponent(trackName));
         },
         selectedToAddPlaylistForRecentlyPlayedTracksClick: function (trackName) {
-            //ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecentlyPlayedTracksClick', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'SelectedToAddPlaylistForRecentlyPlayedTracksClick', decodeURIComponent(trackName));
         },
         selectedSaveClick: function (trackName) {
-            //ga('send', 'event', 'Track', 'SelectedSaveClick', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'SelectedSaveClick', decodeURIComponent(trackName));
         },
         recommend: function (search) {
-           // ga('send', 'event', 'Track', 'Recommend', decodeURIComponent(search));
+            this.ga('send', 'event', 'Track', 'Recommend', decodeURIComponent(search));
         },
         countryChange: function (code) {
-           // ga('send', 'event', 'Track', 'NewReleaseCountryChange', code);
+            this.ga('send', 'event', 'Track', 'NewReleaseCountryChange', code);
         },
         canceledForAddPlaylist: function (trackName) {
-            //ga('send', 'event', 'Track', 'canceledForAddPlaylist', decodeURIComponent(trackName));
+            this.ga('send', 'event', 'Track', 'canceledForAddPlaylist', decodeURIComponent(trackName));
+        },
+
+        ga: function (del, del2, eventName, categoryName, label) {
+            gtag('event', eventName, {
+                'event_category': categoryName,
+                'event_label': label
+            });
         }
     }
 }

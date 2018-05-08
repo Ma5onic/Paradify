@@ -347,20 +347,30 @@ function country_Onchanged(code) {
     customNotify.loading();
 
     loadNewReleasedSong(code, function (response) {
-        $('.custom-title-newReleasedSong').show();
-        $('.custom-newReleasedTracks').show();
-        $('.custom-newReleasedTracks').html(response);
-        initPlayback();
+        callback_loadNewReleasedSong(response);
     });
 
     gaEvent.track.countryChange(code);
+}
+
+function callback_loadNewReleasedSong(response) {
+
+    $('.custom-title-newReleasedSong').show();
+    $('.custom-newReleasedTracks').show();
+    $('.custom-newReleasedTracks').html(response);
+    initPlayback();
+
 }
 
 function loadHome() {
     $(document).ready(function () {
         loadCountries(function (responseCountries) {
             initCountries();
-            selectCountry("US");
+            selectCountry('US');
+            loadNewReleasedSong('US', function (response) {
+                callback_loadNewReleasedSong(response);
+            });
+
         });
 
         loadPlaylist();
