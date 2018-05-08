@@ -20,7 +20,7 @@
         "https://*/*"
       ],
       "js": [
-        "jquery-1.11.1.min.js",
+        "scripts/jquery-1.11.1.min.js",
         "scripts/variable.js",
         "content.js"
       ]

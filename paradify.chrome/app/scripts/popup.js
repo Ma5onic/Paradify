@@ -129,7 +129,7 @@ function start() {
                     var url = String.format("{0}{1}?q={2}&p={3}&fromChrome=true", defaults.url, defaults.searchPath, encodeURIComponent(query), pageName);
                     openIframe((url));
                 } else {
-                    var url = String.format("{0}", defaults.url);
+                    var url = String.format("{0}?fromChrome=true", defaults.url);
                     openIframe(url);
                 }
                 
@@ -137,7 +137,7 @@ function start() {
 
         } else {
 
-            var url = String.format("{0}", defaults.url);
+            var url = String.format("{0}?fromChrome=true", defaults.url);
             openIframe(url);
 
         }
