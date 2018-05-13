@@ -244,6 +244,7 @@
     <Content Include="Views\Home\Histories.cshtml" />
     <Content Include="Views\Shared\_Bottom.cshtml" />
     <Content Include="Views\Authorize\CloseIframe.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

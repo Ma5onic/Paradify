@@ -2,108 +2,83 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Paradify - Spotify Discovery - Songs to Spotify</title>
-    <script src="~/src/web/js/ga.js"></script>
-    <script src="~/src/web/js/jquery.min.js?v=3"></script>
-    <script src="~/src/web/js/playback.js?v=3"></script>
-    <script src="~/src/web/js/ga-track.js?v=3"></script>
-    <link rel='stylesheet' href='~/src/web/css/searchresult.css?v=3' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/playback.css?v=3' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/modal-partial.css?v=3' type='text/css' />
-    <link rel='stylesheet' href='~/src/web/css/modal.css?v=3' type='text/css' />
+    <title>@(Constants.FullTitle)</title>
+    <meta name="description" content="Paradify helps you to find songs and add them to your spotify playlist easly">
+    <meta name="keywords" content="Spotify, Songs, discovery, playlist, chrome Extension, recommendations, new released">
+    @RenderSection("MetaTags", required: false)
+    <script src="~/src/web/js/jquery-3.3.1.min.js?v=19"></script>
+    <script src="~/src/web/js/bootstrap.min.js?v=19"></script>
+    <script src="~/src/web/js/bootstrap-notify.min.js?v=19"></script>
+    <script src="~/src/web/js/bootstrapCustom.js?v=19.3"></script>
+    <script src="~/src/web/js/playback.js?v=19"></script>
+    <script src="~/src/web/js/ga-track.js?v=19.3"></script>
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrap.min.css?v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/bootstrapCustom.css?v=19.5' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/searchresult.css?v=19.3' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/animate.css?v=19' type='text/css' />
+    <link rel='stylesheet' href='~/src/web/cssChrome/playback.css?v=19' type='text/css' />
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bocdilfmhiggklhdifohjfghbdncgele">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-3218083-16"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-3218083-16');
+    </script>
 </head>
 <body>
-    <div id="main">
-        <div id="main-top">
-            <div id="left-bar-container">
-                <div id="logo-menu">
-                    <a href="~/"><img src="~/src/web/images/logo.png" /></a>
-                   <br/>    Spotify Discovery
-                </div>
 
-                <div id="profile">
-                    <div id="profile_container">
-                        <img id="profile_pic" />
-                        <div id="profile_id">
-                        </div>
-                    </div>
-                    <div id="signout">
-                        <a href="javascript:signout()"></a>
-                    </div>
+    <div class="jumbotron">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="~/"><img src="~/src/web/images/head-logo.png" /></a>
+            <a class="nav-link" href="~/">Paradify</a>
+            <ul class="navbar-nav mr-auto">
 
+                <li class="nav-item active custom-li-me" id="profile_login">
+                </li>
+            </ul>
+            @using (Html.BeginForm("Index", "SearchP", FormMethod.Get, new { @class = "form-inline my-2 my-lg-0" }))
+            {
+                <input id="q" name="q" class="form-control mr-sm-2 form-control is-valid custom-search" type="text" placeholder="Search like Hello Adele" value="@(Request.QueryString["q"])">
+                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+            }
+
+        </nav>
+        <div class="row">
+
+            @RenderBody()
+
+        </div>
+        <div class="row custom-bottom">
+            @Html.Partial("_Bottom")
+            <script>populateBottom();</script>
+        </div>
+    </div>
+
+    <div class="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                
+                <div class="modal-body">
+                    <p class="custom-modal-body-p">
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div id="right-bar-container">
-                <div id="header">
-                    <div class="searchBox">
-                        <div class="searchBox-content">
-                            <div class="desc">
-                                Search for an Artist, Song, Album
-                            </div>
-                            <div class="searchBox-input">
-                                @using (Html.BeginForm("Index", "SearchP", FormMethod.Get))
-                                {
-                                    <input type="text" id="q" name="q" placeholder="Search..." class="searchBox-input" value="@(Model != null ? Model.query : "")">
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @RenderBody()
-                <div style="text-align: right;
-                position: absolute;
-                top: 12px;
-                right: 13px;">
-                    <a href="https://www.paypal.me/volkanakinpasa?locale.x=en_US&country.x=NL" onclick="paypal()" target="_blank">
-                        <img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png" alt="PayPal" width="90" />
-                    </a>
-                </div>    
-            </div>
-
         </div>
 
     </div>
-    <script>
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("Me","Users")',
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if (response.images != null && response.images.length > 0) {
-                    $('#profile_pic').attr('src', response.images[0].url);
-                    $('#profile_pic').show();
-                    $('#signout').show();
-                }
-
-                $('#profile_id').html(response.id);
-            },
-            error: function (xhr, textStatus, err) {
-            }
-        });
-
-        function signout() {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("Signout", "Users")',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (response) {
-                    $('#profile').hide();
-                    gaTrack.signout($('#profile_id').html());
-                },
-                error: function (xhr, textStatus, err) {
-                }
-            });
-        }
-
-        function paypal() {
-            gaTrack.paypalClick();
-        }
-
-        ga('send', 'pageview');
-
-    </script>
 </body>
 </html>

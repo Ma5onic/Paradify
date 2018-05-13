@@ -1,13 +1,5 @@
-﻿@model web.Models.HomeModel
-<div class="col-lg-12">
-    <h3 class="custom-title-newReleasedSong">New Releases</h3>
-    <span class="custom-select-newReleasedSong col-lg-4">@Html.Partial("_Countries", Constants.CountryCodes)</span>
-    <span class="custom-newReleasedTracks"></span>
-</div>
-<div class="col-lg-12 custom-scroll-recommendedSongs">
-    <h6 class="custom-title-recommendedSongs" style="display:none;">Recommended</h6>
-    <span class="custom-recommendedSongs" style="display:none;"></span>
-</div>
-<script>
-    loadHome();
-</script>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model web.Models.HomeModel
