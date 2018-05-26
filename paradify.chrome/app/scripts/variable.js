@@ -56,6 +56,10 @@ function getPageName(url) {
     else if (url.indexOf('radioswissjazz') > -1) {
         pageName = 'radioswissjazz'
     }
+    else if (url.indexOf('open.spotify') > -1) {
+        pageName = 'spotify'
+    }
+    
     
     return pageName;
 }
@@ -96,9 +100,10 @@ function readNowPlayingText(pageName) {
         return readQMusic();
     } else if (pageName == 'deezer') {
         return readDeezer();
-    }
-    else if (pageName == 'radioswissjazz') {
+    } else if (pageName == 'radioswissjazz') {
         return readRadioswissjazz();
+    } else if (pageName == 'spotify') {
+        return readSpotify();
     }
     
     else {
@@ -149,9 +154,11 @@ function readKarnaval() {
 
 function readsoundCloud() {
     var track = document.getElementsByClassName('playbackSoundBadge__titleLink sc-truncate')[0].getAttribute("title");
+
+    var artist = document.getElementsByClassName('playbackSoundBadge__lightLink sc-link-light sc-truncate')[0].getAttribute("title");
     var result;
     if (track != '') {
-        result = {track: track, artist: ''};
+        result = {track: track, artist: artist};
     }
     return result;
 }
@@ -178,6 +185,11 @@ function readKralmuzik() {
     var track = currentSongDiv.getElementsByTagName('h2')[0].innerText;
 
     var artist = currentSongDiv.getElementsByTagName('h1')[0].innerText;
+
+
+    radio-stream-next-song
+
+
 
     var result = {track: track, artist: artist};
 
@@ -219,9 +231,19 @@ function readDeezer() {
 }
 
 function readRadioswissjazz() {
-    var track = document.getElementsByClassName('title')[0].getElementsByClassName('titletag')[0].innerHTML;
+    var track = document.getElementsByClassName('current-airplay')[0].getElementsByClassName('titletag')[0].innerHTML;
     
-    var artist = document.getElementsByClassName('artist')[0].innerHTML;
+    var artist = document.getElementsByClassName('current-airplay')[0].getElementsByClassName('artist')[0].innerHTML;
+
+    var result = {track: track, artist: artist};
+
+    return result;
+}
+
+function readSpotify() {
+    var track = document.getElementsByClassName('track-info__name ellipsis-one-line')[0].getElementsByTagName('a')[0].innerHTML;
+    
+    var artist = document.getElementsByClassName('track-info__artists')[0].getElementsByTagName('a')[0].innerHTML;
 
     var result = {track: track, artist: artist};
 
